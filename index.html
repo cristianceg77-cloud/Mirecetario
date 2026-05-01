@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mi Cuaderno de Repostería</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --pink-50:#FFF0F5;--pink-100:#FFD6E7;--pink-200:#FFB3CC;--pink-400:#F472A8;--pink-600:#C85B8A;
+  --lavender-50:#F3F0FF;--lavender-100:#E0D9FF;--lavender-400:#A78BFA;--lavender-600:#7C5CBF;
+  --peach-50:#FFF5ED;--peach-100:#FFE2CC;--peach-400:#FFAC75;--peach-600:#D97042;
+  --mint-50:#EDFFF8;--mint-100:#C6FADF;--mint-400:#52D99A;--mint-600:#2C8E5C;
+  --butter-50:#FFFAED;--butter-100:#FFF1C2;--butter-400:#FFDB6B;--butter-600:#C9960B;
+  --cream:#FFFBF5;--white:#FFFFFF;
+  --text-dark:#3D2B1F;--text-mid:#7A5C50;--text-soft:#B09490;
+  --border:rgba(200,160,145,0.22);--border-mid:rgba(200,160,145,0.40);
+  --shadow-sm:0 2px 12px rgba(180,100,80,0.08);--shadow-md:0 6px 28px rgba(180,100,80,0.12);
+  --radius-sm:10px;--radius-md:16px;--radius-lg:24px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--text-dark);min-height:100vh;line-height:1.6}
+
+/* Header */
+.header{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:var(--shadow-sm)}
+.header-inner{max-width:1400px;margin:0 auto;padding:0 1.5rem;height:68px;display:flex;align-items:center;justify-content:space-between}
+.header-logo{display:flex;align-items:center;gap:12px}
+.logo-icon{font-size:32px}
+.logo-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:600;color:var(--text-dark);line-height:1.1}
+.logo-sub{font-size:11px;color:var(--pink-600);letter-spacing:0.08em;text-transform:uppercase;font-weight:600}
+
+/* Buttons */
+.btn-primary{background:linear-gradient(135deg,var(--pink-400),var(--lavender-400));color:white;border:none;border-radius:50px;padding:.55rem 1.4rem;font-family:'Nunito',sans-serif;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;transition:transform .18s,box-shadow .18s;box-shadow:0 3px 14px rgba(167,139,250,.35)}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(167,139,250,.45)}
+.btn-primary:active{transform:scale(.97)}
+.btn-secondary{background:transparent;color:var(--text-mid);border:1.5px solid var(--border-mid);border-radius:50px;padding:.55rem 1.4rem;font-family:'Nunito',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:background .15s}
+.btn-secondary:hover{background:var(--pink-50)}
+.btn-add{background:var(--pink-50);color:var(--pink-600);border:1.5px dashed var(--pink-200);border-radius:var(--radius-sm);padding:.5rem 1rem;font-family:'Nunito',sans-serif;font-size:13px;font-weight:600;cursor:pointer;width:100%;margin-top:8px;transition:background .15s}
+.btn-add:hover{background:var(--pink-100)}
+.icon-btn{background:none;border:none;font-size:18px;cursor:pointer;padding:6px 8px;border-radius:var(--radius-sm);transition:background .15s}
+.icon-btn:hover{background:var(--pink-50)}
+
+/* Layout */
+.main-layout{max-width:1400px;margin:0 auto;padding:1.5rem;display:grid;grid-template-columns:240px 1fr;gap:1.5rem;align-items:start}
+
+/* Sidebar */
+.sidebar{background:var(--white);border-radius:var(--radius-lg);border:1px solid var(--border);padding:1.25rem;position:sticky;top:84px;display:flex;flex-direction:column;gap:1.25rem}
+.sidebar-search{width:100%}
+.input-search{width:100%;padding:.6rem 1rem;border:1.5px solid var(--border-mid);border-radius:50px;font-family:'Nunito',sans-serif;font-size:13px;outline:none;background:var(--cream);transition:border-color .15s}
+.input-search:focus{border-color:var(--pink-400)}
+.sidebar-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-soft);margin-bottom:8px}
+.category-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.cat-item,.diff-item{padding:.45rem .75rem;border-radius:var(--radius-sm);font-size:13.5px;font-weight:500;color:var(--text-mid);cursor:pointer;display:flex;align-items:center;gap:8px;transition:background .14s,color .14s}
+.cat-item:hover,.diff-item:hover{background:var(--pink-50);color:var(--pink-600)}
+.cat-item.active,.diff-item.active{background:var(--pink-50);color:var(--pink-600);font-weight:700}
+.cat-icon{font-size:15px}
+.stats-box{background:linear-gradient(135deg,var(--lavender-50),var(--pink-50));border:1px solid var(--lavender-100);border-radius:var(--radius-md);padding:1rem}
+.stats-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--lavender-600);margin-bottom:10px}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stat-item{display:flex;flex-direction:column;align-items:center;background:white;border-radius:var(--radius-sm);padding:8px 4px}
+.stat-num{font-size:22px;font-weight:700;color:var(--lavender-600);font-family:'Playfair Display',serif}
+.stat-label{font-size:10px;color:var(--text-soft);font-weight:600}
+
+/* Content */
+.content-area{min-width:0}
+.content-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem}
+.content-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;color:var(--text-dark)}
+.view-toggle{display:flex;gap:4px}
+.view-btn{background:none;border:1.5px solid var(--border-mid);border-radius:var(--radius-sm);width:34px;height:34px;font-size:16px;cursor:pointer;color:var(--text-soft);transition:all .14s}
+.view-btn.active,.view-btn:hover{background:var(--pink-50);border-color:var(--pink-200);color:var(--pink-600)}
+
+/* Recipe Grid */
+.recipe-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.1rem}
+.recipe-grid.list-view{grid-template-columns:1fr}
+
+/* Recipe Card */
+.recipe-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;transition:transform .2s,box-shadow .2s;position:relative;animation:fadeIn .3s ease}
+.recipe-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md)}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.card-banner{height:8px}
+.card-banner.tortas{background:linear-gradient(90deg,var(--pink-200),var(--pink-400))}
+.card-banner.galletas{background:linear-gradient(90deg,var(--butter-100),var(--butter-400))}
+.card-banner.tartas{background:linear-gradient(90deg,var(--peach-100),var(--peach-400))}
+.card-banner.cupcakes{background:linear-gradient(90deg,var(--pink-100),var(--lavender-400))}
+.card-banner.panes{background:linear-gradient(90deg,var(--peach-100),var(--butter-400))}
+.card-banner.cremas{background:linear-gradient(90deg,var(--mint-100),var(--mint-400))}
+.card-banner.otros{background:linear-gradient(90deg,var(--lavender-100),var(--lavender-400))}
+.card-body{padding:1rem 1.1rem}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:6px}
+.card-title{font-family:'Playfair Display',serif;font-size:15px;font-weight:600;color:var(--text-dark);line-height:1.3;flex:1}
+.fav-btn{background:none;border:none;font-size:16px;cursor:pointer;padding:2px;line-height:1;flex-shrink:0}
+.card-desc{font-size:12.5px;color:var(--text-soft);margin-bottom:10px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card-meta{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+.meta-chip{font-size:11px;font-weight:600;padding:3px 9px;border-radius:50px;background:var(--cream);color:var(--text-mid);border:1px solid var(--border)}
+.meta-chip.tiempo{background:var(--butter-50);color:var(--butter-600)}
+.meta-chip.dif-fácil{background:var(--mint-50);color:var(--mint-600)}
+.meta-chip.dif-media{background:var(--butter-50);color:var(--butter-600)}
+.meta-chip.dif-avanzada{background:var(--pink-50);color:var(--pink-600)}
+.card-footer{display:flex;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid var(--border)}
+.card-cat-tag{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-soft)}
+.card-porciones{font-size:11.5px;color:var(--text-soft)}
+.recipe-grid.list-view .recipe-card{display:grid;grid-template-columns:8px 1fr}
+.recipe-grid.list-view .card-banner{width:8px;height:auto}
+.recipe-grid.list-view .card-body{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.recipe-grid.list-view .card-title{font-size:14px;min-width:160px}
+.recipe-grid.list-view .card-desc{display:none}
+.recipe-grid.list-view .card-footer{border:none;padding:0}
+
+/* Empty State */
+.empty-state{grid-column:1/-1;text-align:center;padding:4rem 2rem}
+.empty-icon{font-size:56px;margin-bottom:1rem}
+.empty-state h3{font-family:'Playfair Display',serif;font-size:20px;color:var(--text-dark);margin-bottom:6px}
+.empty-state p{font-size:14px;color:var(--text-soft)}
+
+/* Modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(61,43,31,.35);backdrop-filter:blur(3px);z-index:200;display:flex;align-items:flex-start;justify-content:center;padding:1.5rem;overflow-y:auto}
+.modal-box{background:var(--white);border-radius:var(--radius-lg);width:100%;max-width:680px;box-shadow:0 20px 60px rgba(60,40,30,.2);animation:slideUp .25s ease;overflow:hidden}
+.modal-box--wide{max-width:780px}
+@keyframes slideUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.modal-header{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 1.5rem 0}
+.modal-header h2{font-family:'Playfair Display',serif;font-size:20px;font-weight:600;color:var(--text-dark)}
+.modal-close{background:var(--cream);border:1px solid var(--border);border-radius:50%;width:32px;height:32px;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .14s}
+.modal-close:hover{background:var(--pink-50)}
+.modal-actions-top{display:flex;align-items:center;gap:4px}
+.modal-body{padding:1.25rem 1.5rem 1.5rem;max-height:80vh;overflow-y:auto}
+
+/* Form */
+.form-section{margin-bottom:1.5rem;background:var(--cream);border:1px solid var(--border);border-radius:var(--radius-md);padding:1.1rem 1.25rem}
+.form-section-title{font-family:'Playfair Display',serif;font-size:15px;font-weight:600;color:var(--text-dark);margin-bottom:12px}
+.form-row{display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.form-row.cols-3{display:grid;grid-template-columns:repeat(3,1fr)}
+.form-group{display:flex;flex-direction:column;gap:5px;flex:1;font-size:13px;color:var(--text-mid);font-weight:600}
+.form-group.full{width:100%}
+.form-group input,.form-group select,.form-group textarea{padding:.55rem .85rem;border:1.5px solid var(--border-mid);border-radius:var(--radius-sm);font-family:'Nunito',sans-serif;font-size:14px;color:var(--text-dark);background:var(--white);outline:none;transition:border-color .15s;width:100%}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--pink-400)}
+.form-group textarea{resize:vertical}
+.dynamic-row{display:flex;gap:8px;align-items:flex-start;margin-bottom:8px;animation:fadeIn .2s ease}
+.dynamic-row input,.dynamic-row textarea{flex:1;padding:.5rem .75rem;border:1.5px solid var(--border-mid);border-radius:var(--radius-sm);font-family:'Nunito',sans-serif;font-size:13.5px;background:var(--white);outline:none;transition:border-color .15s}
+.dynamic-row input:focus,.dynamic-row textarea:focus{border-color:var(--pink-400)}
+.step-num{min-width:26px;height:26px;background:var(--pink-100);color:var(--pink-600);border-radius:50%;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:8px;flex-shrink:0}
+.remove-btn{background:none;border:none;color:var(--text-soft);font-size:16px;cursor:pointer;padding:4px 6px;border-radius:6px;transition:background .13s,color .13s;margin-top:5px;flex-shrink:0}
+.remove-btn:hover{background:var(--pink-50);color:var(--pink-600)}
+.form-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:1rem}
+
+/* Recipe Detail */
+.recipe-detail{padding:.5rem 1.5rem 2rem}
+.detail-hero{text-align:center;padding:1.5rem 0 1rem;border-bottom:1px solid var(--border);margin-bottom:1.5rem}
+.detail-cat-badge{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:4px 12px;border-radius:50px;background:var(--pink-50);color:var(--pink-600);margin-bottom:10px}
+.detail-title{font-family:'Playfair Display',serif;font-size:26px;font-weight:600;color:var(--text-dark);margin-bottom:6px}
+.detail-desc{font-size:14px;color:var(--text-soft);max-width:480px;margin:0 auto}
+.detail-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:1rem}
+.detail-chip{display:flex;align-items:center;gap:5px;font-size:13px;font-weight:600;padding:6px 14px;border-radius:50px;border:1.5px solid var(--border);background:var(--white);color:var(--text-mid)}
+.detail-cols{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.5rem}
+.detail-section{background:var(--cream);border:1px solid var(--border);border-radius:var(--radius-md);padding:1.1rem 1.25rem}
+.detail-section-title{font-family:'Playfair Display',serif;font-size:15px;font-weight:600;color:var(--text-dark);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.ing-list{list-style:none}
+.ing-list li{display:flex;align-items:flex-start;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);font-size:13.5px;color:var(--text-dark)}
+.ing-list li:last-child{border:none}
+.ing-dot{width:7px;height:7px;background:var(--pink-200);border-radius:50%;margin-top:6px;flex-shrink:0}
+.paso-list{list-style:none}
+.paso-list li{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13.5px;color:var(--text-dark);line-height:1.5}
+.paso-list li:last-child{border:none}
+.paso-num{min-width:24px;height:24px;background:var(--pink-100);color:var(--pink-600);border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.tip-list{list-style:none}
+.tip-list li{padding:7px 0 7px 20px;border-bottom:1px solid var(--border);font-size:13.5px;color:var(--text-dark);position:relative}
+.tip-list li:last-child{border:none}
+.tip-list li::before{content:"💡";position:absolute;left:0;font-size:13px}
+.notas-box{background:var(--butter-50);border:1px solid var(--butter-100);border-radius:var(--radius-md);padding:1rem 1.25rem;margin-bottom:1.25rem}
+.notas-box p{font-size:13.5px;color:var(--text-mid);white-space:pre-line}
+
+/* Toast */
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--text-dark);color:white;padding:.7rem 1.5rem;border-radius:50px;font-size:13.5px;font-weight:600;z-index:400;transition:transform .28s ease,opacity .28s;opacity:0;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+/* Responsive */
+@media(max-width:900px){
+  .main-layout{grid-template-columns:1fr;padding:1rem}
+  .sidebar{position:static;display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  .sidebar-search{grid-column:1/-1}
+  .stats-box{grid-column:1/-1}
+  .detail-cols{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  .header-inner{padding:0 1rem}
+  .logo-title{font-size:17px}
+  .btn-primary{padding:.5rem 1rem;font-size:13px}
+  .sidebar{grid-template-columns:1fr}
+  .form-row.cols-3{grid-template-columns:1fr}
+  .recipe-grid{grid-template-columns:1fr}
+  .modal-overlay{padding:0;align-items:flex-end}
+  .modal-box{border-radius:var(--radius-lg) var(--radius-lg) 0 0;max-height:92vh}
+  .modal-body{max-height:75vh}
+}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--pink-200);border-radius:10px}
+::-webkit-scrollbar-thumb:hover{background:var(--pink-400)}
+
+/* Nombre editable */
+.logo-name-wrap{display:flex;flex-direction:column;gap:1px}
+.logo-title-editable{font-family:'Playfair Display',serif;font-size:20px;font-weight:600;color:var(--text-dark);line-height:1.1;background:none;border:none;outline:none;padding:0;width:auto;min-width:80px;max-width:260px;cursor:text}
+.logo-title-editable:focus{border-bottom:1.5px dashed var(--pink-400)}
+.logo-title-editable::placeholder{color:var(--text-soft)}
+
+/* Header actions */
+.header-actions{display:flex;align-items:center;gap:8px}
+.btn-icon-action{background:var(--cream);border:1.5px solid var(--border-mid);border-radius:50px;padding:.42rem .9rem;font-family:'Nunito',sans-serif;font-size:13px;font-weight:600;color:var(--text-mid);cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .15s;white-space:nowrap}
+.btn-icon-action:hover{background:var(--pink-50);border-color:var(--pink-200);color:var(--pink-600)}
+
+/* Modal importar */
+.import-options{display:flex;flex-direction:column;gap:10px;margin:1rem 0}
+.import-radio{display:flex;align-items:flex-start;gap:10px;padding:12px;border:1.5px solid var(--border-mid);border-radius:var(--radius-md);cursor:pointer;transition:border-color .15s,background .15s}
+.import-radio:hover{background:var(--pink-50);border-color:var(--pink-200)}
+.import-radio input[type=radio]{margin-top:3px;accent-color:var(--pink-400)}
+.import-radio-label{font-size:13.5px;font-weight:600;color:var(--text-dark)}
+.import-radio-desc{font-size:12px;color:var(--text-soft);margin-top:2px}
+.import-file-zone{border:2px dashed var(--pink-200);border-radius:var(--radius-md);padding:2rem;text-align:center;background:var(--pink-50);cursor:pointer;transition:background .15s}
+.import-file-zone:hover{background:var(--pink-100)}
+.import-file-zone p{font-size:13.5px;color:var(--pink-600);font-weight:600;margin-top:8px}
+.import-file-zone span{font-size:12px;color:var(--text-soft)}
+#importFileInput{display:none}
+.import-preview{background:var(--cream);border:1px solid var(--border);border-radius:var(--radius-md);padding:.75rem 1rem;font-size:13px;color:var(--text-mid);margin-top:8px;display:none}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <div class="header-logo">
+      <span class="logo-icon">🎂</span>
+      <div class="logo-name-wrap">
+        <input class="logo-title-editable" id="cuadernoNombre" type="text"
+          placeholder="Mi Cuaderno" maxlength="40" title="Hacé clic para cambiar el nombre" />
+        <p class="logo-sub">de Repostería</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="btn-icon-action" id="btnExportar">📤 Exportar</button>
+      <button class="btn-icon-action" id="btnImportar">📥 Importar</button>
+      <button class="btn-primary" id="btnNuevaReceta"><span>+</span> Nueva Receta</button>
+    </div>
+  </div>
+</header>
+
+<main class="main-layout">
+  <aside class="sidebar">
+    <div class="sidebar-search">
+      <input type="text" id="searchInput" placeholder="Buscar receta…" class="input-search" />
+    </div>
+    <div class="sidebar-section">
+      <p class="sidebar-label">Categorías</p>
+      <ul class="category-list" id="categoryList">
+        <li class="cat-item active" data-cat="todas"><span class="cat-icon">✨</span> Todas</li>
+        <li class="cat-item" data-cat="tortas"><span class="cat-icon">🎂</span> Tortas</li>
+        <li class="cat-item" data-cat="galletas"><span class="cat-icon">🍪</span> Galletas</li>
+        <li class="cat-item" data-cat="tartas"><span class="cat-icon">🥧</span> Tartas</li>
+        <li class="cat-item" data-cat="cupcakes"><span class="cat-icon">🧁</span> Cupcakes</li>
+        <li class="cat-item" data-cat="panes"><span class="cat-icon">🍞</span> Panes Dulces</li>
+        <li class="cat-item" data-cat="cremas"><span class="cat-icon">🫧</span> Cremas y Rellenos</li>
+        <li class="cat-item" data-cat="otros"><span class="cat-icon">🍮</span> Otros</li>
+      </ul>
+    </div>
+    <div class="sidebar-section">
+      <p class="sidebar-label">Dificultad</p>
+      <ul class="category-list" id="difficultyList">
+        <li class="diff-item active" data-diff="todas">Todas</li>
+        <li class="diff-item" data-diff="fácil">🟢 Fácil</li>
+        <li class="diff-item" data-diff="media">🟡 Media</li>
+        <li class="diff-item" data-diff="avanzada">🔴 Avanzada</li>
+      </ul>
+    </div>
+    <div class="stats-box">
+      <p class="stats-title">Mi Colección</p>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <span class="stat-num" id="totalRecetas">0</span>
+          <span class="stat-label">Recetas</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num" id="totalFavoritas">0</span>
+          <span class="stat-label">Favoritas</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <section class="content-area">
+    <div class="content-header">
+      <h2 class="content-title" id="contentTitle">Todas las Recetas</h2>
+      <div class="view-toggle">
+        <button class="view-btn active" id="viewGrid" title="Vista grilla">⊞</button>
+        <button class="view-btn" id="viewList" title="Vista lista">☰</button>
+      </div>
+    </div>
+    <div class="recipe-grid" id="recipeGrid">
+      <div class="empty-state">
+        <div class="empty-icon">🥐</div>
+        <h3>¡Aún no hay recetas!</h3>
+        <p>Hacé clic en "Nueva Receta" para empezar tu cuaderno de repostería.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- MODAL FORM -->
+<div class="modal-overlay" id="modalForm" style="display:none">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2 id="modalTitle">Nueva Receta</h2>
+      <button class="modal-close" id="closeModal">✕</button>
+    </div>
+    <div class="modal-body">
+      <form id="recipeForm" novalidate>
+        <div class="form-section">
+          <h3 class="form-section-title">📋 Información General</h3>
+          <div class="form-row">
+            <div class="form-group full">
+              <label>Nombre de la receta *</label>
+              <input type="text" id="fNombre" placeholder="Ej: Torta de chocolate con ganache" required />
+            </div>
+          </div>
+          <div class="form-row cols-3">
+            <div class="form-group">
+              <label>Categoría</label>
+              <select id="fCategoria">
+                <option value="tortas">🎂 Tortas</option>
+                <option value="galletas">🍪 Galletas</option>
+                <option value="tartas">🥧 Tartas</option>
+                <option value="cupcakes">🧁 Cupcakes</option>
+                <option value="panes">🍞 Panes Dulces</option>
+                <option value="cremas">🫧 Cremas y Rellenos</option>
+                <option value="otros">🍮 Otros</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Dificultad</label>
+              <select id="fDificultad">
+                <option value="fácil">🟢 Fácil</option>
+                <option value="media">🟡 Media</option>
+                <option value="avanzada">🔴 Avanzada</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Porciones</label>
+              <input type="number" id="fPorciones" placeholder="12" min="1" />
+            </div>
+          </div>
+          <div class="form-row cols-3">
+            <div class="form-group">
+              <label>⏱ Prep. (min)</label>
+              <input type="number" id="fTiempoPrep" placeholder="30" min="0" />
+            </div>
+            <div class="form-group">
+              <label>🔥 Cocción (min)</label>
+              <input type="number" id="fTiempoCoccion" placeholder="45" min="0" />
+            </div>
+            <div class="form-group">
+              <label>🌡 Temp. (°C)</label>
+              <input type="number" id="fTemperatura" placeholder="180" min="0" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group full">
+              <label>Descripción breve</label>
+              <textarea id="fDescripcion" placeholder="Una pequeña descripción…" rows="2"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="form-section">
+          <h3 class="form-section-title">🧂 Ingredientes</h3>
+          <div id="ingredientesList"></div>
+          <button type="button" class="btn-add" id="addIngrediente">+ Agregar ingrediente</button>
+        </div>
+        <div class="form-section">
+          <h3 class="form-section-title">📝 Procedimiento</h3>
+          <div id="pasosList"></div>
+          <button type="button" class="btn-add" id="addPaso">+ Agregar paso</button>
+        </div>
+        <div class="form-section">
+          <h3 class="form-section-title">💡 Consejos y Tips</h3>
+          <div id="tipsList"></div>
+          <button type="button" class="btn-add" id="addTip">+ Agregar consejo</button>
+        </div>
+        <div class="form-section">
+          <h3 class="form-section-title">📌 Notas del Curso</h3>
+          <div class="form-group full">
+            <label>Apuntes, variaciones, observaciones…</label>
+            <textarea id="fNotas" placeholder="Anotá todo lo que aprendiste en clase…" rows="3"></textarea>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" id="cancelForm">Cancelar</button>
+          <button type="submit" class="btn-primary">Guardar Receta</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL VIEW -->
+<div class="modal-overlay" id="modalView" style="display:none">
+  <div class="modal-box modal-box--wide">
+    <div class="modal-header">
+      <div></div>
+      <div class="modal-actions-top">
+        <button class="icon-btn" id="btnFavView" title="Favorita">🤍</button>
+        <button class="icon-btn" id="btnEditView" title="Editar">✏️</button>
+        <button class="icon-btn" id="btnDeleteView" title="Eliminar">🗑️</button>
+        <button class="modal-close" id="closeView">✕</button>
+      </div>
+    </div>
+    <div class="recipe-detail" id="recipeDetail"></div>
+  </div>
+</div>
+
+<!-- MODAL IMPORTAR -->
+<div class="modal-overlay" id="modalImportar" style="display:none">
+  <div class="modal-box" style="max-width:500px">
+    <div class="modal-header">
+      <h2>📥 Importar Recetas</h2>
+      <button class="modal-close" id="closeImportar">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="import-file-zone" id="importFileZone">
+        <div style="font-size:36px">📂</div>
+        <p>Hacé clic para seleccionar un archivo</p>
+        <span>Formato .json exportado desde esta app</span>
+        <input type="file" id="importFileInput" accept=".json" />
+      </div>
+      <div class="import-preview" id="importPreview"></div>
+      <div class="import-options">
+        <label class="import-radio">
+          <input type="radio" name="importMode" value="combinar" checked />
+          <div>
+            <div class="import-radio-label">🔀 Combinar</div>
+            <div class="import-radio-desc">Agrega las recetas importadas sin borrar las que ya tenés</div>
+          </div>
+        </label>
+        <label class="import-radio">
+          <input type="radio" name="importMode" value="reemplazar" />
+          <div>
+            <div class="import-radio-label">🔄 Reemplazar todo</div>
+            <div class="import-radio-desc">Borra todas las recetas actuales y las reemplaza con las importadas</div>
+          </div>
+        </label>
+      </div>
+      <div class="form-actions">
+        <button class="btn-secondary" id="cancelImportar">Cancelar</button>
+        <button class="btn-primary" id="confirmImportar" disabled>Importar recetas</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let recipes = JSON.parse(localStorage.getItem('reposteria_recipes') || '[]');
+let editingId = null;
+let activeCategory = 'todas';
+let activeDifficulty = 'todas';
+let searchQuery = '';
+let isListView = false;
+let pendingImportData = null;
+
+const $ = id => document.getElementById(id);
+
+function save() { localStorage.setItem('reposteria_recipes', JSON.stringify(recipes)); }
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
+
+// ── Nombre del cuaderno ──
+function loadNombre() {
+  const nombre = localStorage.getItem('reposteria_nombre') || '';
+  $('cuadernoNombre').value = nombre;
+}
+function saveNombre() {
+  localStorage.setItem('reposteria_nombre', $('cuadernoNombre').value.trim());
+}
+
+// ── Exportar ──
+function exportarRecetas() {
+  if (recipes.length === 0) { showToast('⚠️ No hay recetas para exportar'); return; }
+  const nombre = $('cuadernoNombre').value.trim() || 'Mi Cuaderno';
+  const data = { cuaderno: nombre, exportado: new Date().toISOString(), recetas: recipes };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const fecha = new Date().toLocaleDateString('es-AR').replace(/\//g,'-');
+  a.href = url;
+  a.download = `recetas-${nombre.toLowerCase().replace(/\s+/g,'-')}-${fecha}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast(`📤 ${recipes.length} receta${recipes.length !== 1 ? 's' : ''} exportada${recipes.length !== 1 ? 's' : ''}`);
+}
+
+// ── Importar ──
+function openImportarModal() {
+  pendingImportData = null;
+  $('importFileInput').value = '';
+  $('importPreview').style.display = 'none';
+  $('importPreview').textContent = '';
+  $('confirmImportar').disabled = true;
+  document.querySelector('input[name="importMode"][value="combinar"]').checked = true;
+  $('modalImportar').style.display = 'flex';
+}
+function closeImportarModal() { $('modalImportar').style.display = 'none'; pendingImportData = null; }
+
+function handleImportFile(file) {
+  if (!file || !file.name.endsWith('.json')) {
+    showToast('⚠️ Seleccioná un archivo .json válido'); return;
+  }
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const parsed = JSON.parse(e.target.result);
+      // Acepta tanto array directo como objeto exportado por esta app
+      const lista = Array.isArray(parsed) ? parsed : (parsed.recetas || []);
+      if (!lista.length) { showToast('⚠️ El archivo no contiene recetas'); return; }
+      pendingImportData = lista;
+      const preview = $('importPreview');
+      const cuaderno = parsed.cuaderno ? ` · Cuaderno: "${parsed.cuaderno}"` : '';
+      const fecha = parsed.exportado ? ` · ${new Date(parsed.exportado).toLocaleDateString('es-AR')}` : '';
+      preview.textContent = `✅ ${lista.length} receta${lista.length !== 1 ? 's' : ''} encontrada${lista.length !== 1 ? 's' : ''}${cuaderno}${fecha}`;
+      preview.style.display = 'block';
+      $('confirmImportar').disabled = false;
+    } catch {
+      showToast('❌ Archivo inválido o dañado');
+    }
+  };
+  reader.readAsText(file);
+}
+
+function confirmarImportar() {
+  if (!pendingImportData) return;
+  const modo = document.querySelector('input[name="importMode"]:checked').value;
+  // Asegurar que cada receta importada tenga id único
+  const nuevas = pendingImportData.map(r => ({ ...r, id: uid(), favorita: r.favorita || false }));
+  if (modo === 'reemplazar') {
+    if (!confirm(`¿Reemplazar las ${recipes.length} receta${recipes.length !== 1 ? 's' : ''} actuales con las ${nuevas.length} importadas?`)) return;
+    recipes = nuevas;
+  } else {
+    recipes = [...nuevas, ...recipes];
+  }
+  save();
+  closeImportarModal();
+  renderRecipes();
+  showToast(`📥 ${nuevas.length} receta${nuevas.length !== 1 ? 's' : ''} importada${nuevas.length !== 1 ? 's' : ''} (${modo})`);
+}
+
+function showToast(msg) {
+  const t = $('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+function totalTime(r) {
+  return (parseInt(r.tiempoPrep) || 0) + (parseInt(r.tiempoCoccion) || 0);
+}
+
+function formatTime(min) {
+  if (!min) return null;
+  if (min < 60) return `${min} min`;
+  const h = Math.floor(min / 60), m = min % 60;
+  return m ? `${h}h ${m}m` : `${h}h`;
+}
+
+function escHtml(str) {
+  return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function catLabel(cat) {
+  const map = { tortas:'🎂 Tortas', galletas:'🍪 Galletas', tartas:'🥧 Tartas',
+    cupcakes:'🧁 Cupcakes', panes:'🍞 Panes', cremas:'🫧 Cremas', otros:'🍮 Otros' };
+  return map[cat] || cat;
+}
+
+function getFiltered() {
+  return recipes.filter(r => {
+    const matchCat = activeCategory === 'todas' || r.categoria === activeCategory;
+    const matchDiff = activeDifficulty === 'todas' || r.dificultad === activeDifficulty;
+    const matchSearch = !searchQuery || r.nombre.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchCat && matchDiff && matchSearch;
+  });
+}
+
+function renderRecipes() {
+  const grid = $('recipeGrid');
+  const filtered = getFiltered();
+  $('totalRecetas').textContent = recipes.length;
+  $('totalFavoritas').textContent = recipes.filter(r => r.favorita).length;
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `<div class="empty-state">
+      <div class="empty-icon">${recipes.length === 0 ? '🥐' : '🔍'}</div>
+      <h3>${recipes.length === 0 ? '¡Aún no hay recetas!' : 'Sin resultados'}</h3>
+      <p>${recipes.length === 0 ? 'Hacé clic en "Nueva Receta" para empezar.' : 'Probá con otra búsqueda o categoría.'}</p>
+    </div>`;
+    grid.className = `recipe-grid ${isListView ? 'list-view' : ''}`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(r => {
+    const tt = totalTime(r);
+    return `<div class="recipe-card" data-id="${r.id}">
+      <div class="card-banner ${r.categoria}"></div>
+      <div class="card-body">
+        <div class="card-top">
+          <h3 class="card-title">${escHtml(r.nombre)}</h3>
+          <button class="fav-btn" data-id="${r.id}">${r.favorita ? '❤️' : '🤍'}</button>
+        </div>
+        ${r.descripcion ? `<p class="card-desc">${escHtml(r.descripcion)}</p>` : ''}
+        <div class="card-meta">
+          ${tt ? `<span class="meta-chip tiempo">⏱ ${formatTime(tt)}</span>` : ''}
+          <span class="meta-chip dif-${r.dificultad}">${r.dificultad}</span>
+          ${r.temperatura ? `<span class="meta-chip">🌡 ${r.temperatura}°C</span>` : ''}
+        </div>
+        <div class="card-footer">
+          <span class="card-cat-tag">${catLabel(r.categoria)}</span>
+          ${r.porciones ? `<span class="card-porciones">🍽 ${r.porciones} porciones</span>` : ''}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  grid.className = `recipe-grid ${isListView ? 'list-view' : ''}`;
+
+  grid.querySelectorAll('.recipe-card').forEach(card => {
+    card.addEventListener('click', e => { if (!e.target.closest('.fav-btn')) openViewModal(card.dataset.id); });
+  });
+  grid.querySelectorAll('.fav-btn').forEach(btn => {
+    btn.addEventListener('click', () => toggleFav(btn.dataset.id));
+  });
+}
+
+function toggleFav(id) {
+  const r = recipes.find(x => x.id === id);
+  if (!r) return;
+  r.favorita = !r.favorita;
+  save(); renderRecipes();
+  showToast(r.favorita ? '❤️ Agregada a favoritas' : '🤍 Quitada de favoritas');
+}
+
+function openFormModal(id = null) {
+  editingId = id;
+  const r = id ? recipes.find(x => x.id === id) : null;
+  $('modalTitle').textContent = r ? 'Editar Receta' : 'Nueva Receta';
+  $('fNombre').value = r?.nombre || '';
+  $('fCategoria').value = r?.categoria || 'tortas';
+  $('fDificultad').value = r?.dificultad || 'fácil';
+  $('fPorciones').value = r?.porciones || '';
+  $('fTiempoPrep').value = r?.tiempoPrep || '';
+  $('fTiempoCoccion').value = r?.tiempoCoccion || '';
+  $('fTemperatura').value = r?.temperatura || '';
+  $('fDescripcion').value = r?.descripcion || '';
+  $('fNotas').value = r?.notas || '';
+  renderIngredientes(r?.ingredientes || []);
+  renderPasos(r?.pasos || []);
+  renderTips(r?.tips || []);
+  $('modalForm').style.display = 'flex';
+  setTimeout(() => $('fNombre').focus(), 100);
+}
+
+function closeFormModal() { $('modalForm').style.display = 'none'; editingId = null; }
+
+function renderIngredientes(list) {
+  const c = $('ingredientesList'); c.innerHTML = '';
+  if (!list.length) list = [{}];
+  list.forEach(ing => addIngRow(c, ing));
+}
+
+function addIngRow(container, ing = {}) {
+  const row = document.createElement('div');
+  row.className = 'dynamic-row';
+  row.innerHTML = `
+    <input type="text" placeholder="Cantidad" value="${escHtml(ing.cantidad||'')}" data-field="cantidad" style="max-width:80px"/>
+    <input type="text" placeholder="Unidad" value="${escHtml(ing.unidad||'')}" data-field="unidad" style="max-width:90px"/>
+    <input type="text" placeholder="Ingrediente" value="${escHtml(ing.nombre||'')}" data-field="nombre"/>
+    <button class="remove-btn">✕</button>`;
+  row.querySelector('.remove-btn').addEventListener('click', () => row.remove());
+  container.appendChild(row);
+}
+
+function renderPasos(list) {
+  const c = $('pasosList'); c.innerHTML = '';
+  if (!list.length) list = [''];
+  list.forEach((p, i) => addPasoRow(c, p, i + 1));
+}
+
+function addPasoRow(container, texto = '', num) {
+  const n = num || container.querySelectorAll('.dynamic-row').length + 1;
+  const row = document.createElement('div');
+  row.className = 'dynamic-row';
+  row.innerHTML = `<span class="step-num">${n}</span>
+    <textarea placeholder="Describí este paso..." rows="2">${escHtml(texto)}</textarea>
+    <button class="remove-btn">✕</button>`;
+  row.querySelector('.remove-btn').addEventListener('click', () => {
+    row.remove();
+    container.querySelectorAll('.step-num').forEach((s, i) => s.textContent = i + 1);
+  });
+  container.appendChild(row);
+}
+
+function renderTips(list) {
+  const c = $('tipsList'); c.innerHTML = '';
+  if (!list.length) list = [''];
+  list.forEach(t => addTipRow(c, t));
+}
+
+function addTipRow(container, texto = '') {
+  const row = document.createElement('div');
+  row.className = 'dynamic-row';
+  row.innerHTML = `<input type="text" placeholder="Ej: No abrir el horno los primeros 20 min..." value="${escHtml(texto)}"/>
+    <button class="remove-btn">✕</button>`;
+  row.querySelector('.remove-btn').addEventListener('click', () => row.remove());
+  container.appendChild(row);
+}
+
+function collectForm() {
+  const nombre = $('fNombre').value.trim();
+  if (!nombre) { showToast('⚠️ El nombre es obligatorio'); return null; }
+  const ingredientes = [...$('ingredientesList').querySelectorAll('.dynamic-row')].map(r => ({
+    cantidad: r.querySelector('[data-field="cantidad"]').value.trim(),
+    unidad: r.querySelector('[data-field="unidad"]').value.trim(),
+    nombre: r.querySelector('[data-field="nombre"]').value.trim()
+  })).filter(i => i.nombre);
+  const pasos = [...$('pasosList').querySelectorAll('textarea')].map(t => t.value.trim()).filter(Boolean);
+  const tips = [...$('tipsList').querySelectorAll('input[type="text"]')].map(t => t.value.trim()).filter(Boolean);
+  return { nombre, categoria: $('fCategoria').value, dificultad: $('fDificultad').value,
+    porciones: $('fPorciones').value, tiempoPrep: $('fTiempoPrep').value,
+    tiempoCoccion: $('fTiempoCoccion').value, temperatura: $('fTemperatura').value,
+    descripcion: $('fDescripcion').value.trim(), notas: $('fNotas').value.trim(),
+    ingredientes, pasos, tips };
+}
+
+function saveRecipe(e) {
+  e.preventDefault();
+  const data = collectForm();
+  if (!data) return;
+  if (editingId) {
+    const idx = recipes.findIndex(r => r.id === editingId);
+    recipes[idx] = { ...recipes[idx], ...data, updatedAt: Date.now() };
+    showToast('✅ Receta actualizada');
+  } else {
+    recipes.unshift({ id: uid(), favorita: false, createdAt: Date.now(), ...data });
+    showToast('🎉 Receta guardada');
+  }
+  save(); closeFormModal(); renderRecipes();
+}
+
+function openViewModal(id) {
+  const r = recipes.find(x => x.id === id);
+  if (!r) return;
+  $('btnFavView').textContent = r.favorita ? '❤️' : '🤍';
+  $('btnFavView').dataset.id = id;
+  $('btnEditView').dataset.id = id;
+  $('btnDeleteView').dataset.id = id;
+  const tt = totalTime(r);
+  $('recipeDetail').innerHTML = `
+    <div class="detail-hero">
+      <span class="detail-cat-badge">${catLabel(r.categoria)}</span>
+      <h2 class="detail-title">${escHtml(r.nombre)}</h2>
+      ${r.descripcion ? `<p class="detail-desc">${escHtml(r.descripcion)}</p>` : ''}
+      <div class="detail-chips">
+        ${r.tiempoPrep ? `<div class="detail-chip">⏳ Prep: ${formatTime(+r.tiempoPrep)}</div>` : ''}
+        ${r.tiempoCoccion ? `<div class="detail-chip">🔥 Cocción: ${formatTime(+r.tiempoCoccion)}</div>` : ''}
+        ${tt ? `<div class="detail-chip">⏱ Total: ${formatTime(tt)}</div>` : ''}
+        ${r.temperatura ? `<div class="detail-chip">🌡 ${r.temperatura}°C</div>` : ''}
+        ${r.porciones ? `<div class="detail-chip">🍽 ${r.porciones} porciones</div>` : ''}
+        <div class="detail-chip">📊 ${r.dificultad}</div>
+      </div>
+    </div>
+    <div class="detail-cols">
+      <div class="detail-section">
+        <h3 class="detail-section-title">🧂 Ingredientes</h3>
+        ${r.ingredientes?.length ? `<ul class="ing-list">${r.ingredientes.map(i =>
+          `<li><span class="ing-dot"></span><span>${i.cantidad ? `<strong>${escHtml(i.cantidad)} ${escHtml(i.unidad)}</strong> ` : ''}${escHtml(i.nombre)}</span></li>`
+        ).join('')}</ul>` : '<p style="font-size:13px;color:var(--text-soft)">Sin ingredientes cargados.</p>'}
+      </div>
+      <div class="detail-section">
+        <h3 class="detail-section-title">📝 Procedimiento</h3>
+        ${r.pasos?.length ? `<ol class="paso-list">${r.pasos.map((p, i) =>
+          `<li><span class="paso-num">${i+1}</span><span>${escHtml(p)}</span></li>`
+        ).join('')}</ol>` : '<p style="font-size:13px;color:var(--text-soft)">Sin pasos cargados.</p>'}
+      </div>
+    </div>
+    ${r.tips?.length ? `<div class="detail-section" style="margin-bottom:1.25rem">
+      <h3 class="detail-section-title">💡 Consejos y Tips</h3>
+      <ul class="tip-list">${r.tips.map(t => `<li>${escHtml(t)}</li>`).join('')}</ul>
+    </div>` : ''}
+    ${r.notas ? `<div class="notas-box">
+      <h3 class="detail-section-title" style="margin-bottom:8px">📌 Notas del Curso</h3>
+      <p>${escHtml(r.notas)}</p>
+    </div>` : ''}`;
+  $('modalView').style.display = 'flex';
+}
+
+function closeViewModal() { $('modalView').style.display = 'none'; }
+
+function deleteRecipe(id) {
+  if (!confirm('¿Eliminar esta receta? No se puede deshacer.')) return;
+  recipes = recipes.filter(r => r.id !== id);
+  save(); closeViewModal(); renderRecipes();
+  showToast('🗑️ Receta eliminada');
+}
+
+function updateTitle() {
+  const titles = { todas:'Todas las Recetas', tortas:'🎂 Tortas', galletas:'🍪 Galletas',
+    tartas:'🥧 Tartas', cupcakes:'🧁 Cupcakes', panes:'🍞 Panes Dulces',
+    cremas:'🫧 Cremas y Rellenos', otros:'🍮 Otros' };
+  let title = titles[activeCategory] || 'Recetas';
+  if (activeDifficulty !== 'todas') title += ` · ${activeDifficulty}`;
+  if (searchQuery) title = `Búsqueda: "${searchQuery}"`;
+  $('contentTitle').textContent = title;
+}
+
+function loadSampleData() {
+  if (recipes.length > 0) return;
+  recipes = [
+    { id: uid(), favorita: true, createdAt: Date.now(),
+      nombre: 'Torta de Chocolate Húmeda', categoria: 'tortas', dificultad: 'media',
+      porciones: '12', tiempoPrep: '25', tiempoCoccion: '40', temperatura: '180',
+      descripcion: 'La torta de chocolate perfecta: esponjosa, húmeda y con un ganache irresistible.',
+      ingredientes: [
+        {cantidad:'200',unidad:'g',nombre:'harina 0000'},{cantidad:'180',unidad:'g',nombre:'azúcar'},
+        {cantidad:'60',unidad:'g',nombre:'cacao amargo en polvo'},{cantidad:'2',unidad:'',nombre:'huevos'},
+        {cantidad:'200',unidad:'ml',nombre:'leche'},{cantidad:'100',unidad:'ml',nombre:'aceite neutro'},
+        {cantidad:'1',unidad:'cdita',nombre:'bicarbonato'},{cantidad:'1',unidad:'cdita',nombre:'polvo de hornear'},
+        {cantidad:'200',unidad:'ml',nombre:'café caliente'}
+      ],
+      pasos: [
+        'Precalentar el horno a 180°C. Enmantecar y enharinar un molde de 22cm.',
+        'Tamizar los secos: harina, cacao, bicarbonato y polvo de hornear. Reservar.',
+        'Batir los huevos con el azúcar hasta blanquear (5 min). Agregar el aceite en hilo fino.',
+        'Incorporar los secos en tres veces, alternando con la leche.',
+        'Añadir el café caliente (da humedad y potencia el chocolate).',
+        'Verter en el molde y hornear 40 min. Verificar con palillo.'
+      ],
+      tips: ['El café potencia el sabor a chocolate sin que se sienta a café.',
+        'No abrir el horno los primeros 30 minutos.',
+        'Si sale mucha cúpula, envolver el molde con papel húmedo.'],
+      notas: 'Clase 3 del curso. La profe recomienda usar cacao alcalino holandés para mejor color.' },
+    { id: uid(), favorita: false, createdAt: Date.now()-1000,
+      nombre: 'Alfajores de Maizena', categoria: 'galletas', dificultad: 'fácil',
+      porciones: '20', tiempoPrep: '40', tiempoCoccion: '12', temperatura: '160',
+      descripcion: 'Alfajores súper tiernos que se deshacen en la boca, rellenos con dulce de leche.',
+      ingredientes: [
+        {cantidad:'200',unidad:'g',nombre:'maizena'},{cantidad:'100',unidad:'g',nombre:'harina 0000'},
+        {cantidad:'130',unidad:'g',nombre:'manteca a temperatura ambiente'},
+        {cantidad:'60',unidad:'g',nombre:'azúcar impalpable'},{cantidad:'3',unidad:'',nombre:'yemas'},
+        {cantidad:'1',unidad:'cdita',nombre:'esencia de vainilla'},
+        {cantidad:'1',unidad:'cdita',nombre:'polvo de hornear'},
+        {cantidad:'500',unidad:'g',nombre:'dulce de leche repostero'},
+        {cantidad:'c/n',unidad:'',nombre:'coco rallado'}
+      ],
+      pasos: [
+        'Cremar la manteca con el azúcar impalpable hasta obtener una crema pálida.',
+        'Agregar las yemas de a una y la vainilla. Integrar bien.',
+        'Tamizar la maizena, harina y polvo. Incorporar a la crema hasta unir (no amasar).',
+        'Estirar entre films a 5mm. Refrigerar 30 min.',
+        'Cortar círculos de 5cm y hornear 10-12 min (deben quedar blancos).',
+        'Enfriar completamente antes de rellenar con dulce de leche.',
+        'Pasar los bordes por coco rallado.'
+      ],
+      tips: ['La masa no debe trabajarse demasiado para que queden tiernos.',
+        'Sacar del horno cuando apenas empiezan a dorarse los bordes.',
+        'Cuanto más fría esté la masa, mejor resultado.'],
+      notas: '' },
+    { id: uid(), favorita: false, createdAt: Date.now()-2000,
+      nombre: 'Crema Pastelera Clásica', categoria: 'cremas', dificultad: 'fácil',
+      porciones: '8', tiempoPrep: '10', tiempoCoccion: '15', temperatura: null,
+      descripcion: 'Base de toda buena repostería. Sedosa, cremosa y perfecta para tartas y profiteroles.',
+      ingredientes: [
+        {cantidad:'500',unidad:'ml',nombre:'leche entera'},{cantidad:'4',unidad:'',nombre:'yemas'},
+        {cantidad:'100',unidad:'g',nombre:'azúcar'},{cantidad:'40',unidad:'g',nombre:'almidón de maíz'},
+        {cantidad:'1',unidad:'cdita',nombre:'esencia de vainilla'},{cantidad:'30',unidad:'g',nombre:'manteca'}
+      ],
+      pasos: [
+        'Calentar la leche con la vainilla hasta punto de hervor.',
+        'Batir las yemas con el azúcar hasta blanquear. Agregar el almidón y mezclar.',
+        'Volcar la leche caliente en hilo sobre las yemas, revolviendo constantemente.',
+        'Llevar todo a la olla a fuego medio, revolviendo sin parar hasta espesar.',
+        'Retirar del fuego, incorporar la manteca y mezclar hasta fundir.',
+        'Cubrir con film al contacto y dejar enfriar en heladera.'
+      ],
+      tips: ['No dejar de revolver para evitar que se pegue.',
+        'El film al contacto evita que se forme piel.',
+        'Se puede saborizar con chocolate, limón o naranja.'],
+      notas: 'Clase 1 del curso. La profe indica que la consistencia ideal es cuando napa la cuchara.' }
+  ];
+  save();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  loadSampleData();
+  loadNombre();
+  renderRecipes();
+
+  // Nombre editable
+  $('cuadernoNombre').addEventListener('change', saveNombre);
+  $('cuadernoNombre').addEventListener('blur', saveNombre);
+
+  // Exportar / Importar
+  $('btnExportar').addEventListener('click', exportarRecetas);
+  $('btnImportar').addEventListener('click', openImportarModal);
+  $('closeImportar').addEventListener('click', closeImportarModal);
+  $('cancelImportar').addEventListener('click', closeImportarModal);
+  $('confirmImportar').addEventListener('click', confirmarImportar);
+  $('modalImportar').addEventListener('click', e => { if (e.target === $('modalImportar')) closeImportarModal(); });
+
+  // File zone click
+  $('importFileZone').addEventListener('click', () => $('importFileInput').click());
+  $('importFileInput').addEventListener('change', e => handleImportFile(e.target.files[0]));
+
+  // Drag & drop
+  $('importFileZone').addEventListener('dragover', e => { e.preventDefault(); $('importFileZone').style.background = 'var(--pink-100)'; });
+  $('importFileZone').addEventListener('dragleave', () => { $('importFileZone').style.background = ''; });
+  $('importFileZone').addEventListener('drop', e => {
+    e.preventDefault(); $('importFileZone').style.background = '';
+    handleImportFile(e.dataTransfer.files[0]);
+  });
+
+  $('btnNuevaReceta').addEventListener('click', () => openFormModal());
+  $('closeModal').addEventListener('click', closeFormModal);
+  $('cancelForm').addEventListener('click', closeFormModal);
+  $('closeView').addEventListener('click', closeViewModal);
+  $('modalForm').addEventListener('click', e => { if (e.target === $('modalForm')) closeFormModal(); });
+  $('modalView').addEventListener('click', e => { if (e.target === $('modalView')) closeViewModal(); });
+  $('recipeForm').addEventListener('submit', saveRecipe);
+
+  $('btnFavView').addEventListener('click', () => {
+    toggleFav($('btnFavView').dataset.id);
+    const r = recipes.find(x => x.id === $('btnFavView').dataset.id);
+    $('btnFavView').textContent = r?.favorita ? '❤️' : '🤍';
+  });
+  $('btnEditView').addEventListener('click', () => { closeViewModal(); openFormModal($('btnEditView').dataset.id); });
+  $('btnDeleteView').addEventListener('click', () => deleteRecipe($('btnDeleteView').dataset.id));
+
+  $('addIngrediente').addEventListener('click', () => addIngRow($('ingredientesList')));
+  $('addPaso').addEventListener('click', () => addPasoRow($('pasosList')));
+  $('addTip').addEventListener('click', () => addTipRow($('tipsList')));
+
+  $('categoryList').addEventListener('click', e => {
+    const item = e.target.closest('.cat-item');
+    if (!item) return;
+    $('categoryList').querySelectorAll('.cat-item').forEach(i => i.classList.remove('active'));
+    item.classList.add('active');
+    activeCategory = item.dataset.cat;
+    updateTitle(); renderRecipes();
+  });
+
+  $('difficultyList').addEventListener('click', e => {
+    const item = e.target.closest('.diff-item');
+    if (!item) return;
+    $('difficultyList').querySelectorAll('.diff-item').forEach(i => i.classList.remove('active'));
+    item.classList.add('active');
+    activeDifficulty = item.dataset.diff;
+    updateTitle(); renderRecipes();
+  });
+
+  $('searchInput').addEventListener('input', e => {
+    searchQuery = e.target.value.trim();
+    updateTitle(); renderRecipes();
+  });
+
+  $('viewGrid').addEventListener('click', () => {
+    isListView = false;
+    $('viewGrid').classList.add('active'); $('viewList').classList.remove('active');
+    renderRecipes();
+  });
+  $('viewList').addEventListener('click', () => {
+    isListView = true;
+    $('viewList').classList.add('active'); $('viewGrid').classList.remove('active');
+    renderRecipes();
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closeFormModal(); closeViewModal(); }
+  });
+});
+</script>
+</body>
+</html>
