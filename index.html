@@ -8,6 +8,27 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
 <meta name="theme-color" content="#FFFBF5"/>
 <title>Mi Cuaderno de Repostería</title>
+<script>
+// PWA Manifest inline
+const manifestData = {
+  name: "Mi Cuaderno de Repostería",
+  short_name: "Cuaderno",
+  description: "Tu cuaderno personal de recetas de repostería",
+  start_url: ".",
+  display: "standalone",
+  background_color: "#FFFBF5",
+  theme_color: "#F472A8",
+  orientation: "portrait-primary",
+  icons: [
+    { src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23F472A8'/%3E%3Ctext y='.9em' font-size='80' text-anchor='middle' x='50'%3E🎂%3C/text%3E%3C/svg%3E", sizes: "192x192", type: "image/svg+xml", purpose: "any maskable" }
+  ]
+};
+const blob = new Blob([JSON.stringify(manifestData)], {type: 'application/json'});
+const manifestURL = URL.createObjectURL(blob);
+const link = document.createElement('link');
+link.rel = 'manifest'; link.href = manifestURL;
+document.head.appendChild(link);
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet"/>
@@ -31,24 +52,32 @@ body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--td);min
 
 /* ═══ HEADER ═══ */
 .hdr{background:var(--white);border-bottom:1px solid var(--br);position:sticky;top:0;z-index:100;box-shadow:var(--sh)}
-.hdr-in{max-width:1400px;margin:0 auto;padding:0 1rem;height:60px;display:flex;align-items:center;justify-content:space-between;gap:8px;overflow:hidden}
-.hdr-logo{display:flex;align-items:center;gap:8px;min-width:0;flex:1;overflow:hidden}
+.hdr-in{max-width:1400px;margin:0 auto;padding:0 1rem;height:60px;display:flex;align-items:center;gap:8px}
+.hdr-logo{display:flex;align-items:center;gap:8px;min-width:0;flex:1}
 .logo-icon{font-size:24px;line-height:1;flex-shrink:0}
-.logo-wrap{display:flex;flex-direction:column;min-width:0;overflow:hidden}
-.logo-input{font-family:'Playfair Display',serif;font-size:16px;font-weight:600;color:var(--td);background:none;border:none;border-bottom:1.5px solid transparent;outline:none;padding:0;width:100%;min-width:40px;cursor:text;transition:border-color .2s;overflow:hidden;text-overflow:ellipsis}
+.logo-wrap{display:flex;flex-direction:column;min-width:0}
+.logo-input{font-family:'Playfair Display',serif;font-size:16px;font-weight:600;color:var(--td);background:none;border:none;border-bottom:1.5px solid transparent;outline:none;padding:0;min-width:0;width:100%;cursor:text;transition:border-color .2s}
 .logo-input:focus{border-bottom-color:var(--p400)}
 .logo-input::placeholder{color:var(--ts)}
 .logo-sub{font-size:9px;color:var(--p600);letter-spacing:.07em;text-transform:uppercase;font-weight:700}
+/* hdr-btns: flex-shrink:0 para que nunca se comprima */
 .hdr-btns{display:flex;align-items:center;gap:6px;flex-shrink:0}
-/* ── Menú desplegable móvil ── */
+/* Menú desplegable — siempre oculto por defecto, visible en móvil via media query */
 .menu-wrap{position:relative}
-.menu-trigger{background:var(--cream);border:1.5px solid var(--brm);border-radius:50%;width:38px;height:38px;font-size:20px;cursor:pointer;display:none;align-items:center;justify-content:center;color:var(--tm);flex-shrink:0}
+.menu-trigger{background:var(--cream);border:1.5px solid var(--brm);border-radius:50%;width:38px;height:38px;font-size:22px;line-height:1;cursor:pointer;display:none;align-items:center;justify-content:center;color:var(--tm);flex-shrink:0;letter-spacing:-2px;padding-bottom:4px}
 .menu-trigger:active{background:var(--p50)}
-.dropdown{position:absolute;top:calc(100% + 8px);right:0;background:var(--white);border:1px solid var(--br);border-radius:var(--rmd);box-shadow:var(--shm);min-width:170px;overflow:hidden;display:none;z-index:300}
+.dropdown{position:absolute;top:calc(100% + 8px);right:0;background:var(--white);border:1px solid var(--br);border-radius:var(--rmd);box-shadow:var(--shm);min-width:180px;overflow:hidden;display:none;z-index:300}
 .dropdown.open{display:block;animation:fi .15s ease}
-.dd-item{display:flex;align-items:center;gap:10px;padding:.72rem 1rem;font-family:'Nunito',sans-serif;font-size:14px;font-weight:600;color:var(--tm);cursor:pointer;border:none;background:none;width:100%;text-align:left}
+.dd-item{display:flex;align-items:center;gap:10px;padding:.75rem 1rem;font-family:'Nunito',sans-serif;font-size:14px;font-weight:600;color:var(--tm);cursor:pointer;border:none;background:none;width:100%;text-align:left}
 .dd-item:active{background:var(--p50);color:var(--p600)}
 .dd-sep{height:1px;background:var(--br)}
+/* Banner PWA install */
+.pwa-banner{display:none;align-items:center;gap:10px;padding:.65rem 1rem;background:linear-gradient(135deg,var(--v50),var(--p50));border-bottom:1px solid var(--v100)}
+.pwa-banner.show{display:flex}
+.pwa-banner p{flex:1;font-size:13px;font-weight:600;color:var(--tm)}
+.pwa-banner p strong{color:var(--v600)}
+.pwa-btn{background:linear-gradient(135deg,var(--v400),var(--p400));color:#fff;border:none;border-radius:50px;padding:.38rem .9rem;font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap}
+.pwa-close{background:none;border:none;font-size:18px;cursor:pointer;color:var(--ts);padding:2px 4px;line-height:1}
 
 /* ═══ BUTTONS ═══ */
 .btn-pri{background:linear-gradient(135deg,var(--p400),var(--v400));color:#fff;border:none;border-radius:50px;padding:.5rem 1.1rem;font-family:'Nunito',sans-serif;font-size:13.5px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px;white-space:nowrap;box-shadow:0 3px 14px rgba(167,139,250,.35)}
@@ -250,12 +279,47 @@ body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--td);min
    RESPONSIVE — móvil 600px
 ═══════════════════════════════ */
 @media(max-width:600px){
-  /* Header: proteger notch/cámara + mostrar menú */
+  /* Header: SOLO logo + [⋯] + [+] — garantiza que no se desborde */
   .hdr{padding-top:env(safe-area-inset-top,0px)}
-  .btn-sm{display:none}
-  .menu-trigger{display:flex}
-  .btn-pri{padding:.42rem .85rem;font-size:13px}
-  .hdr-btns{gap:6px}
+  .hdr-in{height:56px;padding:0 .85rem}
+  .logo-input{font-size:15px}
+  /* Ocultar botones de escritorio */
+  .btn-sm{display:none !important}
+  /* Mostrar el ⋯ */
+  .menu-trigger{display:flex !important}
+  /* Botón + compacto */
+  .btn-pri{padding:.4rem .85rem;font-size:13px}
+  /* Layout */
+  .layout{padding:.75rem;gap:.75rem}
+  /* Sidebar */
+  .sidebar{padding:.85rem;gap:.75rem}
+  .cat-list{flex-direction:row !important;overflow-x:auto;gap:5px;padding-bottom:8px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .cat-list::-webkit-scrollbar{display:none}
+  .cat,.dif{white-space:nowrap;flex-shrink:0;font-size:12px;padding:.35rem .6rem;min-height:34px}
+  /* Grid */
+  .rgrid{grid-template-columns:1fr;gap:.7rem}
+  .c-ttl{font-size:17px}
+  .cbody{padding:.8rem .9rem}
+  .cttl{font-size:14px}
+  /* Modales bottom sheet */
+  .mov{padding:0;align-items:flex-end;justify-content:stretch}
+  .mbox{border-radius:20px 20px 0 0;max-width:100%;width:100%;max-height:91vh}
+  .mbox.wide{max-width:100%}
+  .handle{display:block}
+  .m-hdr{padding:.85rem 1rem .4rem}
+  .m-hdr h2{font-size:17px}
+  .m-scroll{padding:0 1rem calc(1.5rem + var(--sb))}
+  /* Formulario: 1 campo por fila */
+  .frow.c3{grid-template-columns:1fr !important;gap:8px}
+  .fsec{padding:.85rem .9rem}
+  /* Detalle */
+  .d-ttl{font-size:19px}
+  .d-chip{font-size:11.5px;padding:4px 10px}
+  .d-cols{grid-template-columns:1fr;gap:.85rem}
+  /* Import */
+  .imp-zone{padding:1.25rem}
+  .toast{bottom:calc(.85rem + var(--sb))}
+}
 
   /* Layout */
   .layout{padding:.75rem;gap:.75rem}
@@ -361,6 +425,12 @@ body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--td);min
 </head>
 <body>
 
+<!-- Banner PWA install (se muestra solo si el browser lo soporta) -->
+<div class="pwa-banner" id="pwaBanner">
+  <p>📲 Instalá <strong>el Cuaderno</strong> en tu celular</p>
+  <button class="pwa-btn" id="pwaInstall">Instalar</button>
+  <button class="pwa-close" id="pwaClose">✕</button>
+</div>
 <header class="hdr">
   <div class="hdr-in">
     <div class="hdr-logo">
@@ -385,7 +455,7 @@ body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--td);min
           <button class="dd-item" id="btnImp2">📥 Importar recetas</button>
         </div>
       </div>
-      <button class="btn-pri" id="btnNew"><span>+</span> Nueva</button>
+      <button class="btn-pri" id="btnNew">＋</button>
     </div>
   </div>
 </header>
@@ -773,6 +843,21 @@ function sample(){
 }
 
 /* ═══ INIT ═══ */
+/* ── PWA Install ── */
+let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  if (!sessionStorage.getItem('pwa_dismissed')) {
+    document.getElementById('pwaBanner').classList.add('show');
+  }
+});
+window.addEventListener('appinstalled', () => {
+  document.getElementById('pwaBanner').classList.remove('show');
+  deferredPrompt = null;
+  toast('✅ App instalada correctamente');
+});
+
 document.addEventListener('DOMContentLoaded',()=>{
   sample();loadN();renderR();
 
@@ -830,6 +915,20 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeFormM();closeViewM();closeImpM();closeMenu();}});
 
   /* Menú desplegable móvil */
+  /* PWA install banner */
+  document.getElementById('pwaInstall')?.addEventListener('click', async () => {
+    if (!deferredPrompt) { toast('Abrí esta página en Chrome o Edge para instalarla'); return; }
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') toast('✅ Instalando...');
+    deferredPrompt = null;
+    document.getElementById('pwaBanner').classList.remove('show');
+  });
+  document.getElementById('pwaClose')?.addEventListener('click', () => {
+    document.getElementById('pwaBanner').classList.remove('show');
+    sessionStorage.setItem('pwa_dismissed', '1');
+  });
+
   function closeMenu(){$('dropdown').classList.remove('open');}
   $('menuTrigger').addEventListener('click',e=>{e.stopPropagation();$('dropdown').classList.toggle('open');});
   document.addEventListener('click',()=>closeMenu());
