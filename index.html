@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
 <meta name="mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
-<meta name="apple-mobile-web-app-status-bar-style" content="default"/>
 <meta name="theme-color" content="#F472A8"/>
 <title>Mi Cuaderno de Repostería</title>
 <script>
@@ -15,169 +14,107 @@ const _l=document.createElement('link');_l.rel='manifest';_l.href=URL.createObje
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
-/* ══ Variables ══ */
 :root{
   --p50:#FFF0F5;--p100:#FFD6E7;--p200:#FFB3CC;--p400:#F472A8;--p600:#C85B8A;
   --v50:#F3F0FF;--v100:#E0D9FF;--v400:#A78BFA;--v600:#7C5CBF;
-  --pe100:#FFE2CC;--pe400:#FFAC75;
   --m50:#EDFFF8;--m100:#C6FADF;--m400:#52D99A;--m600:#2C8E5C;
   --b50:#FFFAED;--b100:#FFF1C2;--b400:#FFDB6B;--b600:#C9960B;
+  --r50:#FFF0F0;--r100:#FEE2E2;--r400:#F87171;--r600:#DC2626;
   --cream:#FFFBF5;--white:#fff;
   --td:#3D2B1F;--tm:#7A5C50;--ts:#B09490;
   --br:rgba(200,160,145,.2);--brm:rgba(200,160,145,.38);
-  --sh:0 2px 10px rgba(180,100,80,.07);--shm:0 8px 32px rgba(180,100,80,.13);
+  --sh:0 2px 10px rgba(180,100,80,.07);--shm:0 8px 32px rgba(180,100,80,.15);
   --rsm:10px;--rmd:16px;--rlg:20px;
   --sit:env(safe-area-inset-top,0px);
   --sib:env(safe-area-inset-bottom,0px);
-  --hh:60px; /* header height */
+  --hh:56px;--nh:62px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%;overflow-x:hidden}
-body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--td);min-height:100vh;line-height:1.6;-webkit-tap-highlight-color:transparent;overflow-x:hidden;width:100%}
+body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--td);
+  min-height:100vh;line-height:1.6;-webkit-tap-highlight-color:transparent;
+  overflow-x:hidden;width:100%;padding-bottom:calc(var(--nh) + var(--sib));}
 
 /* ══ HEADER ══ */
-.hdr{
-  background:var(--white);border-bottom:1px solid var(--br);
-  position:sticky;top:0;z-index:100;box-shadow:var(--sh);
-  padding-top:var(--sit);  /* notch */
-}
-.hdr-in{
-  padding:0 1rem;height:var(--hh);
-  display:flex;align-items:center;gap:10px;
-  /* NO max-width — ocupa todo el ancho siempre */
-}
-.hdr-logo{display:flex;align-items:center;gap:8px;flex:1;min-width:0}
-.logo-ico{font-size:26px;flex-shrink:0;line-height:1}
+.hdr{background:var(--white);border-bottom:1px solid var(--br);
+  position:sticky;top:0;z-index:100;box-shadow:var(--sh);padding-top:var(--sit);}
+.hdr-in{padding:0 .9rem;height:var(--hh);display:flex;align-items:center;gap:8px;}
+.hdr-logo{display:flex;align-items:center;gap:7px;flex:1;min-width:0}
+.logo-ico{font-size:22px;flex-shrink:0;line-height:1}
 .logo-wrap{min-width:0;flex:1}
-.logo-input{
-  font-family:'Playfair Display',serif;font-size:16px;font-weight:600;color:var(--td);
+.logo-input{font-family:'Playfair Display',serif;font-size:15px;font-weight:600;color:var(--td);
   background:none;border:none;border-bottom:1.5px solid transparent;
-  outline:none;padding:0;width:100%;cursor:text;
-  transition:border-color .2s;display:block;
-}
+  outline:none;padding:0;width:100%;cursor:text;transition:border-color .2s;}
 .logo-input:focus{border-bottom-color:var(--p400)}
 .logo-input::placeholder{color:var(--ts)}
-.logo-sub{font-size:9px;color:var(--p600);letter-spacing:.07em;text-transform:uppercase;font-weight:700}
-.hdr-right{display:flex;align-items:center;gap:6px;flex-shrink:0}
-
-/* Botones header */
-.btn-menu{
-  background:var(--cream);border:1.5px solid var(--brm);border-radius:50%;
-  width:40px;height:40px;font-size:18px;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;color:var(--tm);flex-shrink:0;
-}
-.btn-menu:active{background:var(--p50)}
-.btn-new{
-  background:linear-gradient(135deg,var(--p400),var(--v400));color:#fff;
-  border:none;border-radius:50px;padding:.45rem 1rem;
-  font-family:'Nunito',sans-serif;font-size:14px;font-weight:700;
-  cursor:pointer;display:flex;align-items:center;gap:4px;white-space:nowrap;
-  box-shadow:0 3px 12px rgba(167,139,250,.35);flex-shrink:0;
-}
-.btn-new:active{opacity:.85}
-
-/* Desktop-only buttons */
-.hdr-deskt{display:flex;align-items:center;gap:6px}
-.btn-sm{
-  background:var(--cream);border:1.5px solid var(--brm);border-radius:50px;
-  padding:.38rem .8rem;font-family:'Nunito',sans-serif;font-size:12.5px;font-weight:600;
-  color:var(--tm);cursor:pointer;display:flex;align-items:center;gap:4px;white-space:nowrap;
-}
+.logo-sub{font-size:9px;color:var(--p600);letter-spacing:.06em;text-transform:uppercase;font-weight:700}
+.hdr-right{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.hdr-deskt{display:flex;align-items:center;gap:5px}
+.btn-sm{background:var(--cream);border:1.5px solid var(--brm);border-radius:50px;
+  padding:.34rem .7rem;font-family:'Nunito',sans-serif;font-size:12px;font-weight:600;
+  color:var(--tm);cursor:pointer;display:flex;align-items:center;gap:3px;white-space:nowrap;}
 .btn-sm:active{background:var(--p50)}
-
-/* Dropdown menu */
+.btn-new{background:linear-gradient(135deg,var(--p400),var(--v400));color:#fff;
+  border:none;border-radius:50px;padding:.4rem .85rem;
+  font-family:'Nunito',sans-serif;font-size:13.5px;font-weight:700;
+  cursor:pointer;display:flex;align-items:center;gap:3px;
+  box-shadow:0 3px 12px rgba(167,139,250,.35);flex-shrink:0;}
+.btn-new:active{opacity:.85}
 .menu-wrap{position:relative}
-.dropdown{
-  position:absolute;top:calc(100% + 8px);right:0;
-  background:var(--white);border:1px solid var(--br);border-radius:var(--rmd);
-  box-shadow:var(--shm);min-width:185px;overflow:hidden;
-  display:none;z-index:300;
-}
+.btn-menu{background:var(--cream);border:1.5px solid var(--brm);border-radius:50%;
+  width:36px;height:36px;font-size:18px;cursor:pointer;display:none;
+  align-items:center;justify-content:center;color:var(--tm);flex-shrink:0;}
+.btn-menu:active{background:var(--p50)}
+.dropdown{position:absolute;top:calc(100% + 6px);right:0;background:var(--white);
+  border:1px solid var(--br);border-radius:var(--rmd);box-shadow:var(--shm);
+  min-width:180px;overflow:hidden;display:none;z-index:300;}
 .dropdown.open{display:block;animation:fadeUp .15s ease}
-@keyframes fadeUp{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
-.dd-item{
-  display:flex;align-items:center;gap:10px;padding:.78rem 1rem;
+@keyframes fadeUp{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+.dd-item{display:flex;align-items:center;gap:9px;padding:.7rem .95rem;
   font-family:'Nunito',sans-serif;font-size:13.5px;font-weight:600;color:var(--tm);
-  cursor:pointer;border:none;background:none;width:100%;text-align:left;
-}
+  cursor:pointer;border:none;background:none;width:100%;text-align:left;}
 .dd-item:active{background:var(--p50);color:var(--p600)}
 .dd-sep{height:1px;background:var(--br)}
 
-/* ══ LAYOUT ══ */
-.layout{
-  width:100%;max-width:1100px;margin:0 auto;
-  padding:1rem;
-  display:grid;grid-template-columns:220px 1fr;gap:1rem;align-items:start;
-}
+/* ══ BOTTOM NAV ══ */
+.nav{position:fixed;bottom:0;left:0;right:0;z-index:100;
+  background:var(--white);border-top:1px solid var(--br);box-shadow:0 -2px 12px rgba(180,100,80,.08);
+  padding-bottom:var(--sib);
+  display:flex;}
+.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:2px;padding:.6rem .3rem;cursor:pointer;border:none;background:none;
+  font-family:'Nunito',sans-serif;font-size:10.5px;font-weight:600;color:var(--ts);
+  transition:color .15s;min-height:var(--nh);}
+.nav-btn .nav-ico{font-size:22px;line-height:1;margin-bottom:1px}
+.nav-btn.on{color:var(--p600)}
+.nav-btn.on .nav-ico{filter:drop-shadow(0 0 3px rgba(244,114,168,.4))}
 
-/* ══ SIDEBAR ══ */
-.sidebar{
-  background:var(--white);border-radius:var(--rlg);border:1px solid var(--br);
-  padding:1rem;position:sticky;top:calc(var(--hh) + var(--sit) + 12px);
-  display:flex;flex-direction:column;gap:.9rem;
-}
-.srch{
-  width:100%;padding:.55rem .9rem;border:1.5px solid var(--brm);border-radius:50px;
-  font-family:'Nunito',sans-serif;font-size:13px;outline:none;background:var(--cream);
-  -webkit-appearance:none;
-}
-.srch:focus{border-color:var(--p400)}
-.sb-lbl{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ts);margin-bottom:4px}
+/* ══ PAGES ══ */
+.page{display:none;padding:1rem .9rem;max-width:700px;margin:0 auto;width:100%}
+.page.on{display:block}
 
-/* Categoría: select desplegable */
-.cat-select{
-  width:100%;padding:.52rem .9rem;border:1.5px solid var(--brm);border-radius:var(--rsm);
-  font-family:'Nunito',sans-serif;font-size:13.5px;color:var(--td);background:var(--white);
-  outline:none;cursor:pointer;-webkit-appearance:none;appearance:none;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23B09490' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:right .75rem center;padding-right:2.2rem;
-}
-.cat-select:focus{border-color:var(--p400)}
+/* ══ INICIO ══ */
+.section-ttl{font-family:'Playfair Display',serif;font-size:17px;font-weight:600;color:var(--td);margin-bottom:.75rem;display:flex;align-items:center;justify-content:space-between}
+.section-ttl a{font-family:'Nunito',sans-serif;font-size:12px;color:var(--p600);font-weight:700;cursor:pointer;text-decoration:none}
+.welcome-box{background:linear-gradient(135deg,var(--p50),var(--v50));border:1px solid var(--p100);
+  border-radius:var(--rlg);padding:1.1rem 1.2rem;margin-bottom:1.1rem;display:flex;align-items:center;gap:12px;}
+.welcome-box .w-ico{font-size:40px;flex-shrink:0}
+.welcome-box h2{font-family:'Playfair Display',serif;font-size:16px;font-weight:600;color:var(--td);margin-bottom:2px}
+.welcome-box p{font-size:12.5px;color:var(--tm)}
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin-bottom:1.1rem}
+.stat-card{background:var(--white);border:1px solid var(--br);border-radius:var(--rmd);padding:.8rem .6rem;text-align:center}
+.stat-card .sn{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;color:var(--v600)}
+.stat-card .sl{font-size:10.5px;color:var(--ts);font-weight:600;margin-top:1px}
 
-/* Dificultad: pills */
-.dif-pills{display:flex;flex-wrap:wrap;gap:5px}
-.dif-pill{
-  padding:.3rem .7rem;border-radius:50px;font-size:12px;font-weight:600;
-  color:var(--tm);cursor:pointer;border:1.5px solid var(--brm);background:var(--white);
-  transition:all .14s;
-}
-.dif-pill.on{background:var(--p50);border-color:var(--p400);color:var(--p600)}
-.dif-pill:active{background:var(--p50)}
-
-/* Stats */
-.stats-box{background:linear-gradient(135deg,var(--v50),var(--p50));border:1px solid var(--v100);border-radius:var(--rmd);padding:.85rem}
-.stats-ttl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--v600);margin-bottom:7px}
-.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px}
-.stat{display:flex;flex-direction:column;align-items:center;background:#fff;border-radius:var(--rsm);padding:7px 4px}
-.stat-n{font-size:20px;font-weight:700;color:var(--v600);font-family:'Playfair Display',serif}
-.stat-l{font-size:10px;color:var(--ts);font-weight:600}
-
-/* ══ CONTENT ══ */
-.content{min-width:0}
-.c-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:.85rem}
-.c-ttl{font-family:'Playfair Display',serif;font-size:19px;font-weight:600;color:var(--td)}
-.c-count{font-size:12px;color:var(--ts);font-weight:600}
-
-/* ══ RECIPE LIST — tarjetas expandibles ══ */
-.rlist{display:flex;flex-direction:column;gap:.65rem}
-
-/* Tarjeta */
-.rcard{
-  background:var(--white);border:1px solid var(--br);border-radius:var(--rlg);
-  overflow:hidden;cursor:pointer;
-  transition:box-shadow .2s;
-}
-.rcard:active{opacity:.97}
+/* ══ RECETA CARD (compartida inicio + recetas) ══ */
+.rlist{display:flex;flex-direction:column;gap:.6rem}
+.rcard{background:var(--white);border:1px solid var(--br);border-radius:var(--rlg);overflow:hidden;cursor:pointer}
+.rcard:active{opacity:.96}
 .rcard.expanded{box-shadow:var(--shm)}
-
-/* Cabecera de la tarjeta — siempre visible */
-.rcard-head{
-  display:flex;align-items:center;gap:0;
-  position:relative;
-}
-.rcard-bar{width:6px;flex-shrink:0;align-self:stretch;min-height:64px}
+.rcard-head{display:flex;align-items:stretch}
+.rcard-bar{width:5px;flex-shrink:0}
 .rcard-bar.tortas{background:linear-gradient(180deg,#FFB3CC,#F472A8)}
 .rcard-bar.galletas{background:linear-gradient(180deg,#FFF1C2,#FFDB6B)}
 .rcard-bar.tartas{background:linear-gradient(180deg,#FFE2CC,#FFAC75)}
@@ -185,186 +122,266 @@ body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--td);min
 .rcard-bar.panes{background:linear-gradient(180deg,#FFE2CC,#FFDB6B)}
 .rcard-bar.cremas{background:linear-gradient(180deg,#C6FADF,#52D99A)}
 .rcard-bar.otros{background:linear-gradient(180deg,#E0D9FF,#A78BFA)}
-
-.rcard-summary{flex:1;padding:.75rem .9rem;min-width:0}
-.rcard-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:4px}
-.rcard-title{font-family:'Playfair Display',serif;font-size:15px;font-weight:600;color:var(--td);line-height:1.3;flex:1}
-.rcard-actions{display:flex;align-items:center;gap:2px;flex-shrink:0}
-.fav-btn{background:none;border:none;font-size:18px;cursor:pointer;padding:4px;min-width:34px;min-height:34px;display:flex;align-items:center;justify-content:center}
-.expand-btn{background:none;border:none;font-size:13px;cursor:pointer;padding:4px;min-width:28px;min-height:28px;display:flex;align-items:center;justify-content:center;color:var(--ts);transition:transform .25s}
-.rcard.expanded .expand-btn{transform:rotate(180deg)}
-
-.rcard-chips{display:flex;flex-wrap:wrap;gap:4px}
-.chip{font-size:11px;font-weight:600;padding:2px 8px;border-radius:50px;background:var(--cream);color:var(--tm);border:1px solid var(--br)}
+.rcard-sum{flex:1;padding:.7rem .85rem;min-width:0}
+.rcard-top{display:flex;align-items:flex-start;justify-content:space-between;gap:6px;margin-bottom:4px}
+.rcard-title{font-family:'Playfair Display',serif;font-size:14.5px;font-weight:600;color:var(--td);line-height:1.3;flex:1}
+.rcard-acts{display:flex;align-items:center;gap:1px;flex-shrink:0}
+.fav-btn{background:none;border:none;font-size:17px;cursor:pointer;padding:4px;min-width:32px;min-height:32px;display:flex;align-items:center;justify-content:center}
+.exp-btn{background:none;border:none;font-size:12px;cursor:pointer;padding:4px;min-width:28px;min-height:28px;display:flex;align-items:center;justify-content:center;color:var(--ts);transition:transform .22s}
+.rcard.expanded .exp-btn{transform:rotate(180deg)}
+.chips{display:flex;flex-wrap:wrap;gap:3px}
+.chip{font-size:10.5px;font-weight:600;padding:2px 7px;border-radius:50px;background:var(--cream);color:var(--tm);border:1px solid var(--br)}
 .chip.t{background:var(--b50);color:var(--b600)}
 .chip.df{background:var(--m50);color:var(--m600)}
 .chip.dm{background:var(--b50);color:var(--b600)}
-.chip.da{background:var(--p50);color:var(--p600)}
+.chip.da{background:var(--r50);color:var(--r600)}
+/* Chip stock en receta */
+.chip.ok{background:var(--m50);color:var(--m600);border-color:var(--m100)}
+.chip.miss{background:var(--r50);color:var(--r600);border-color:var(--r100)}
 
 /* Cuerpo expandible */
-.rcard-body{
-  display:none;padding:0 1rem 1rem;border-top:1px solid var(--br);
-  animation:slideDown .22s ease;
-}
+.rcard-body{display:none;padding:.1rem .9rem .9rem;border-top:1px solid var(--br);animation:sld .2s ease}
 .rcard.expanded .rcard-body{display:block}
-@keyframes slideDown{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes sld{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+.rcard-desc{font-size:12.5px;color:var(--ts);padding:.65rem 0 .55rem;border-bottom:1px solid var(--br);margin-bottom:.65rem}
+.rcard-cols{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-bottom:.65rem}
+.rsec{background:var(--cream);border-radius:var(--rmd);padding:.65rem .8rem}
+.rsec-ttl{font-size:11.5px;font-weight:700;color:var(--tm);margin-bottom:.45rem;display:flex;align-items:center;justify-content:space-between;gap:4px}
+.rsec-ttl span{font-family:'Nunito',sans-serif}
+/* Botón limpiar ingredientes */
+.btn-clear-ing{background:none;border:none;font-size:11px;color:var(--r600);cursor:pointer;font-weight:700;font-family:'Nunito',sans-serif;padding:2px 5px;border-radius:5px}
+.btn-clear-ing:active{background:var(--r50)}
 
-.rcard-desc{font-size:13px;color:var(--ts);padding:.75rem 0 .6rem;border-bottom:1px solid var(--br);margin-bottom:.75rem}
-
-.rcard-cols{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:.75rem}
-.rsec{background:var(--cream);border-radius:var(--rmd);padding:.75rem .9rem}
-.rsec-ttl{font-size:12px;font-weight:700;color:var(--tm);margin-bottom:.5rem;display:flex;align-items:center;gap:4px}
-
+/* Lista ingredientes con estado stock */
 .ing-list{list-style:none}
-.ing-list li{display:flex;align-items:baseline;gap:6px;padding:4px 0;border-bottom:1px solid var(--br);font-size:12.5px;color:var(--td)}
+.ing-list li{display:flex;align-items:center;gap:6px;padding:4px 0;border-bottom:1px solid var(--br);font-size:12.5px}
 .ing-list li:last-child{border:none}
-.ing-dot{width:5px;height:5px;background:var(--p200);border-radius:50%;flex-shrink:0;margin-top:5px}
-.paso-list{list-style:none;counter-reset:s}
-.paso-list li{display:flex;gap:7px;padding:5px 0;border-bottom:1px solid var(--br);font-size:12.5px;line-height:1.5}
+.ing-ico{font-size:14px;flex-shrink:0;width:18px;text-align:center}
+.ing-txt{flex:1}
+.ing-badge{font-size:10px;font-weight:700;padding:1px 6px;border-radius:50px;flex-shrink:0}
+.ing-badge.ok{background:var(--m50);color:var(--m600)}
+.ing-badge.miss{background:var(--r50);color:var(--r600)}
+.ing-badge.na{background:var(--cream);color:var(--ts)}
+
+.paso-list{list-style:none}
+.paso-list li{display:flex;gap:7px;padding:4px 0;border-bottom:1px solid var(--br);font-size:12.5px;line-height:1.45}
 .paso-list li:last-child{border:none}
 .paso-n{min-width:20px;height:20px;background:var(--p100);color:var(--p600);border-radius:50%;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
-
 .tip-list{list-style:none}
-.tip-list li{padding:4px 0 4px 18px;border-bottom:1px solid var(--br);font-size:12.5px;position:relative}
+.tip-list li{padding:4px 0 4px 17px;border-bottom:1px solid var(--br);font-size:12.5px;position:relative}
 .tip-list li:last-child{border:none}
 .tip-list li::before{content:"💡";position:absolute;left:0;font-size:11px}
-
-.notas-box{background:var(--b50);border:1px solid var(--b100);border-radius:var(--rmd);padding:.7rem .9rem}
-.notas-ttl{font-size:12px;font-weight:700;color:var(--b600);margin-bottom:4px}
+.notas-box{background:var(--b50);border:1px solid var(--b100);border-radius:var(--rmd);padding:.65rem .8rem}
+.notas-ttl{font-size:11px;font-weight:700;color:var(--b600);margin-bottom:3px}
 .notas-box p{font-size:12.5px;color:var(--tm);white-space:pre-line}
-
-/* Botones dentro de la tarjeta */
-.rcard-btns{display:flex;gap:6px;margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--br)}
-.btn-edit{background:var(--v50);color:var(--v600);border:1.5px solid var(--v100);border-radius:50px;padding:.38rem .9rem;font-family:'Nunito',sans-serif;font-size:12.5px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:4px}
-.btn-del{background:var(--p50);color:var(--p600);border:1.5px solid var(--p100);border-radius:50px;padding:.38rem .9rem;font-family:'Nunito',sans-serif;font-size:12.5px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:4px}
+.rcard-btns{display:flex;gap:6px;margin-top:.65rem;padding-top:.65rem;border-top:1px solid var(--br)}
+.btn-edit{background:var(--v50);color:var(--v600);border:1.5px solid var(--v100);border-radius:50px;padding:.34rem .85rem;font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:3px}
+.btn-del{background:var(--r50);color:var(--r600);border:1.5px solid var(--r100);border-radius:50px;padding:.34rem .85rem;font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:3px}
 .btn-edit:active{background:var(--v100)}
-.btn-del:active{background:var(--p100)}
+.btn-del:active{background:var(--r100)}
 
-/* Empty */
-.empty{text-align:center;padding:3rem 1rem}
-.empty-ico{font-size:48px;margin-bottom:.75rem}
-.empty h3{font-family:'Playfair Display',serif;font-size:17px;color:var(--td);margin-bottom:4px}
+/* Stock summary en card */
+.stock-summary{display:flex;align-items:center;gap:6px;padding:.5rem .75rem;background:var(--cream);border-radius:var(--rsm);margin-bottom:.55rem;font-size:12px;font-weight:600}
+.stock-summary .ok-dot{width:8px;height:8px;background:var(--m400);border-radius:50%;flex-shrink:0}
+.stock-summary .miss-dot{width:8px;height:8px;background:var(--r400);border-radius:50%;flex-shrink:0}
+
+/* ══ FILTROS RECETAS ══ */
+.filters{display:flex;flex-direction:column;gap:.6rem;margin-bottom:.85rem}
+.srch{width:100%;padding:.5rem .9rem;border:1.5px solid var(--brm);border-radius:50px;
+  font-family:'Nunito',sans-serif;font-size:13px;outline:none;background:var(--white);-webkit-appearance:none;}
+.srch:focus{border-color:var(--p400)}
+.filter-row{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
+.filter-lbl{font-size:11px;font-weight:700;color:var(--ts);text-transform:uppercase;letter-spacing:.06em;flex-shrink:0}
+.cat-select,.dif-select{flex:1;min-width:120px;padding:.42rem .8rem;border:1.5px solid var(--brm);
+  border-radius:var(--rsm);font-family:'Nunito',sans-serif;font-size:13px;color:var(--td);
+  background:var(--white);outline:none;cursor:pointer;-webkit-appearance:none;appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23B09490' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right .65rem center;padding-right:1.8rem;}
+.cat-select:focus,.dif-select:focus{border-color:var(--p400)}
+
+/* ══ PÁGINA INGREDIENTES ══ */
+.ing-page-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:.85rem}
+.ing-search{flex:1;margin-right:.6rem;padding:.5rem .9rem;border:1.5px solid var(--brm);border-radius:50px;
+  font-family:'Nunito',sans-serif;font-size:13px;outline:none;background:var(--white);-webkit-appearance:none;}
+.ing-search:focus{border-color:var(--p400)}
+
+/* Categorías de ingredientes */
+.ing-cats{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.85rem}
+.ing-cat-pill{padding:.3rem .7rem;border-radius:50px;font-size:12px;font-weight:600;
+  color:var(--tm);cursor:pointer;border:1.5px solid var(--brm);background:var(--white);}
+.ing-cat-pill.on{background:var(--p50);border-color:var(--p400);color:var(--p600)}
+.ing-cat-pill:active{background:var(--p50)}
+
+/* Grid de ingredientes en stock */
+.stock-list{display:flex;flex-direction:column;gap:.5rem}
+.stock-item{background:var(--white);border:1px solid var(--br);border-radius:var(--rmd);
+  padding:.7rem .9rem;display:flex;align-items:center;gap:.75rem;}
+.stock-item:active{background:var(--p50)}
+.stock-ico{font-size:28px;flex-shrink:0;width:36px;text-align:center}
+.stock-info{flex:1;min-width:0}
+.stock-name{font-size:13.5px;font-weight:700;color:var(--td)}
+.stock-detail{font-size:11px;color:var(--ts);margin-top:2px;display:flex;flex-wrap:wrap;gap:4px}
+.stock-tag{font-size:10.5px;background:var(--cream);border:1px solid var(--br);border-radius:50px;padding:1px 7px;color:var(--tm);white-space:nowrap}
+.stock-tag.precio{background:var(--m50);color:var(--m600);border-color:var(--m100)}
+.stock-tag.lugar{background:var(--v50);color:var(--v600);border-color:var(--v100)}
+.stock-tag.vence{background:var(--b50);color:var(--b600);border-color:var(--b100)}
+.stock-tag.alerta{background:var(--r50);color:var(--r600);border-color:var(--r100)}
+.stock-qty{font-size:13px;font-weight:700;color:var(--v600);flex-shrink:0;text-align:right}
+.stock-qty span{display:block;font-size:10px;color:var(--ts);font-weight:600}
+.stock-actions{display:flex;gap:4px}
+.sq-btn{background:var(--cream);border:1.5px solid var(--brm);border-radius:50%;
+  width:30px;height:30px;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--tm);}
+.sq-btn:active{background:var(--p50)}
+.sq-del{background:none;border:none;font-size:16px;cursor:pointer;color:var(--ts);padding:4px;line-height:1}
+.sq-del:active{color:var(--r600)}
+
+/* Empty state */
+.empty{text-align:center;padding:2.5rem 1rem}
+.empty-ico{font-size:44px;margin-bottom:.65rem}
+.empty h3{font-family:'Playfair Display',serif;font-size:16px;color:var(--td);margin-bottom:3px}
 .empty p{font-size:13px;color:var(--ts)}
 
-/* ══ MODAL (solo para formulario) ══ */
-.mov{
-  position:fixed;inset:0;background:rgba(61,43,31,.4);
+/* ══ MODALES ══ */
+.mov{position:fixed;inset:0;background:rgba(61,43,31,.42);
   backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
-  z-index:200;display:flex;align-items:flex-end;justify-content:center;
-}
-.mbox{
-  background:var(--white);border-radius:20px 20px 0 0;
+  z-index:200;display:flex;align-items:flex-end;justify-content:center;}
+.mbox{background:var(--white);border-radius:20px 20px 0 0;
   width:100%;max-width:680px;max-height:93vh;
   display:flex;flex-direction:column;
-  box-shadow:0 -8px 40px rgba(60,40,30,.18);
-  animation:sheetUp .24s ease;
-}
-@keyframes sheetUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
-.handle{width:36px;height:4px;background:var(--brm);border-radius:4px;margin:10px auto 0;flex-shrink:0}
-.m-hdr{display:flex;align-items:center;justify-content:space-between;padding:.85rem 1rem .4rem;flex-shrink:0}
-.m-hdr h2{font-family:'Playfair Display',serif;font-size:18px;font-weight:600;color:var(--td)}
-.m-close{background:var(--cream);border:1px solid var(--br);border-radius:50%;width:34px;height:34px;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+  box-shadow:0 -6px 30px rgba(60,40,30,.15);
+  animation:sheetUp .22s ease;}
+@keyframes sheetUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+.handle{width:34px;height:4px;background:var(--brm);border-radius:4px;margin:9px auto 0;flex-shrink:0}
+.m-hdr{display:flex;align-items:center;justify-content:space-between;padding:.8rem 1rem .35rem;flex-shrink:0}
+.m-hdr h2{font-family:'Playfair Display',serif;font-size:17px;font-weight:600;color:var(--td)}
+.m-close{background:var(--cream);border:1px solid var(--br);border-radius:50%;
+  width:32px;height:32px;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
 .m-close:active{background:var(--p50)}
-.m-scroll{overflow-y:auto;-webkit-overflow-scrolling:touch;flex:1;padding:0 1rem calc(1.25rem + var(--sib))}
+.m-scroll{overflow-y:auto;-webkit-overflow-scrolling:touch;flex:1;padding:.1rem 1rem calc(1.25rem + var(--sib))}
 
 /* Form */
-.fsec{margin-bottom:1rem;background:var(--cream);border:1px solid var(--br);border-radius:var(--rmd);padding:.9rem 1rem}
-.fsec-ttl{font-family:'Playfair Display',serif;font-size:14px;font-weight:600;color:var(--td);margin-bottom:9px}
-.frow{display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap}
-.frow.c2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.frow.c3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
-.fg{display:flex;flex-direction:column;gap:3px;flex:1;font-size:12px;color:var(--tm);font-weight:600}
+.fsec{margin-bottom:.9rem;background:var(--cream);border:1px solid var(--br);border-radius:var(--rmd);padding:.85rem .95rem}
+.fsec-ttl{font-family:'Playfair Display',serif;font-size:13.5px;font-weight:600;color:var(--td);margin-bottom:8px}
+.frow{display:flex;gap:7px;margin-bottom:7px;flex-wrap:wrap}
+.frow.c2{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.frow.c3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}
+.fg{display:flex;flex-direction:column;gap:3px;flex:1;font-size:11.5px;color:var(--tm);font-weight:600}
 .fg.full{width:100%}
-.fg input,.fg select,.fg textarea{
-  padding:.48rem .8rem;border:1.5px solid var(--brm);border-radius:var(--rsm);
-  font-family:'Nunito',sans-serif;font-size:14px;color:var(--td);background:var(--white);
-  outline:none;width:100%;-webkit-appearance:none;appearance:none;
-}
-.fg select{
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23B09490' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:right .7rem center;padding-right:2rem;
-}
+.fg input,.fg select,.fg textarea{padding:.46rem .78rem;border:1.5px solid var(--brm);border-radius:var(--rsm);
+  font-family:'Nunito',sans-serif;font-size:13.5px;color:var(--td);background:var(--white);
+  outline:none;width:100%;-webkit-appearance:none;appearance:none;}
+.fg select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23B09490' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .65rem center;padding-right:1.8rem;}
 .fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--p400)}
 .fg textarea{resize:vertical}
-.drow{display:flex;gap:6px;align-items:flex-start;margin-bottom:6px}
-.drow input,.drow textarea{flex:1;padding:.45rem .7rem;border:1.5px solid var(--brm);border-radius:var(--rsm);font-family:'Nunito',sans-serif;font-size:13px;background:var(--white);outline:none}
+.drow{display:flex;gap:5px;align-items:flex-start;margin-bottom:5px}
+.drow input,.drow textarea{flex:1;padding:.43rem .68rem;border:1.5px solid var(--brm);border-radius:var(--rsm);font-family:'Nunito',sans-serif;font-size:13px;background:var(--white);outline:none}
 .drow input:focus,.drow textarea:focus{border-color:var(--p400)}
-.step-n{min-width:24px;height:24px;background:var(--p100);color:var(--p600);border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:6px;flex-shrink:0}
-.rm-btn{background:none;border:none;color:var(--ts);font-size:18px;cursor:pointer;min-width:32px;min-height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:4px;border-radius:6px}
-.rm-btn:active{background:var(--p50);color:var(--p600)}
-.btn-add{background:var(--p50);color:var(--p600);border:1.5px dashed var(--p200);border-radius:var(--rsm);padding:.45rem .9rem;font-family:'Nunito',sans-serif;font-size:13px;font-weight:600;cursor:pointer;width:100%;margin-top:6px}
+.step-n{min-width:22px;height:22px;background:var(--p100);color:var(--p600);border-radius:50%;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:6px;flex-shrink:0}
+.rm-btn{background:none;border:none;color:var(--ts);font-size:17px;cursor:pointer;min-width:30px;min-height:30px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;border-radius:6px}
+.rm-btn:active{background:var(--r50);color:var(--r600)}
+.btn-add{background:var(--p50);color:var(--p600);border:1.5px dashed var(--p200);border-radius:var(--rsm);padding:.42rem .85rem;font-family:'Nunito',sans-serif;font-size:12.5px;font-weight:600;cursor:pointer;width:100%;margin-top:5px}
 .btn-add:active{background:var(--p100)}
-.f-act{display:flex;gap:8px;justify-content:flex-end;margin-top:.85rem}
-.btn-pri{background:linear-gradient(135deg,var(--p400),var(--v400));color:#fff;border:none;border-radius:50px;padding:.48rem 1.1rem;font-family:'Nunito',sans-serif;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px;box-shadow:0 3px 12px rgba(167,139,250,.35)}
+.f-act{display:flex;gap:7px;justify-content:flex-end;margin-top:.8rem}
+.btn-pri{background:linear-gradient(135deg,var(--p400),var(--v400));color:#fff;border:none;border-radius:50px;padding:.45rem 1.1rem;font-family:'Nunito',sans-serif;font-size:13.5px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:4px;box-shadow:0 3px 12px rgba(167,139,250,.3)}
 .btn-pri:active{opacity:.85}
-.btn-sec{background:transparent;color:var(--tm);border:1.5px solid var(--brm);border-radius:50px;padding:.48rem 1.1rem;font-family:'Nunito',sans-serif;font-size:14px;font-weight:600;cursor:pointer}
+.btn-sec{background:transparent;color:var(--tm);border:1.5px solid var(--brm);border-radius:50px;padding:.45rem 1.1rem;font-family:'Nunito',sans-serif;font-size:13.5px;font-weight:600;cursor:pointer}
 .btn-sec:active{background:var(--p50)}
 
-/* Modal importar */
-.imp-zone{border:2px dashed var(--p200);border-radius:var(--rmd);padding:1.5rem;text-align:center;background:var(--p50);cursor:pointer}
+/* ── Selector visual de ingredientes ── */
+.ing-picker-intro{font-size:12.5px;color:var(--tm);margin-bottom:.65rem}
+.ing-picker-cats{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.65rem}
+.ipc-pill{padding:.28rem .65rem;border-radius:50px;font-size:11.5px;font-weight:600;
+  color:var(--tm);cursor:pointer;border:1.5px solid var(--brm);background:var(--white);}
+.ipc-pill.on{background:var(--p50);border-color:var(--p400);color:var(--p600)}
+.ing-picker-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.45rem;margin-bottom:.65rem;max-height:220px;overflow-y:auto}
+.ipg-item{display:flex;flex-direction:column;align-items:center;gap:3px;
+  padding:.55rem .3rem;border-radius:var(--rsm);background:var(--white);
+  border:1.5px solid var(--br);cursor:pointer;transition:all .13s;text-align:center;}
+.ipg-item:active,.ipg-item.sel{background:var(--p50);border-color:var(--p400)}
+.ipg-item .ii{font-size:26px;line-height:1}
+.ipg-item .il{font-size:10px;font-weight:600;color:var(--tm);line-height:1.2}
+/* Selected badge */
+.ipg-item.sel::after{content:"✓";position:absolute;top:3px;right:3px;font-size:10px;font-weight:700;color:var(--p600)}
+.ipg-item{position:relative}
+/* Qty row bajo el grid */
+.ing-picked-list{display:flex;flex-direction:column;gap:5px;margin-bottom:.5rem}
+.ipl-row{display:flex;align-items:center;gap:5px;background:var(--cream);border-radius:var(--rsm);padding:.38rem .6rem}
+.ipl-ico{font-size:18px;flex-shrink:0}
+.ipl-name{flex:1;font-size:12.5px;font-weight:600;color:var(--td)}
+.ipl-qty{width:62px;padding:.3rem .45rem;border:1.5px solid var(--brm);border-radius:var(--rsm);
+  font-family:'Nunito',sans-serif;font-size:12px;background:var(--white);outline:none;text-align:center;}
+.ipl-qty:focus{border-color:var(--p400)}
+.ipl-unit{width:58px;padding:.3rem .4rem;border:1.5px solid var(--brm);border-radius:var(--rsm);
+  font-family:'Nunito',sans-serif;font-size:12px;background:var(--white);outline:none;
+  -webkit-appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='6'%3E%3Cpath d='M1 1l3 3 3-3' stroke='%23B09490' stroke-width='1.3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right .35rem center;padding-right:1.4rem;}
+.ipl-unit:focus{border-color:var(--p400)}
+.ipl-rm{background:none;border:none;font-size:15px;cursor:pointer;color:var(--ts);padding:3px;min-width:26px;min-height:26px;display:flex;align-items:center;justify-content:center}
+.ipl-rm:active{color:var(--r600)}
+
+/* También input manual */
+.ing-manual-toggle{font-size:12px;color:var(--v600);font-weight:700;cursor:pointer;margin-top:.4rem;display:inline-flex;align-items:center;gap:4px}
+
+/* ── Modal stock (agregar/editar ingrediente al stock) ── */
+.stock-form .fg input{font-size:15px}
+
+/* Importar */
+.imp-zone{border:2px dashed var(--p200);border-radius:var(--rmd);padding:1.4rem;text-align:center;background:var(--p50);cursor:pointer}
 .imp-zone:active{background:var(--p100)}
-.imp-zone p{font-size:13.5px;color:var(--p600);font-weight:600;margin-top:6px}
-.imp-zone span{font-size:11.5px;color:var(--ts)}
+.imp-zone p{font-size:13px;color:var(--p600);font-weight:600;margin-top:5px}
+.imp-zone span{font-size:11px;color:var(--ts)}
 #impFile{display:none}
-.imp-prev{background:var(--cream);border:1px solid var(--br);border-radius:var(--rmd);padding:.65rem .9rem;font-size:13px;color:var(--tm);margin-top:7px;display:none}
-.imp-opts{display:flex;flex-direction:column;gap:7px;margin:.85rem 0}
-.imp-radio{display:flex;align-items:flex-start;gap:9px;padding:10px;border:1.5px solid var(--brm);border-radius:var(--rmd);cursor:pointer}
+.imp-prev{background:var(--cream);border:1px solid var(--br);border-radius:var(--rmd);padding:.6rem .85rem;font-size:12.5px;color:var(--tm);margin-top:6px;display:none}
+.imp-opts{display:flex;flex-direction:column;gap:6px;margin:.75rem 0}
+.imp-radio{display:flex;align-items:flex-start;gap:8px;padding:9px;border:1.5px solid var(--brm);border-radius:var(--rmd);cursor:pointer}
 .imp-radio:active{background:var(--p50)}
 .imp-radio input{margin-top:3px;accent-color:var(--p400);flex-shrink:0}
-.imp-rl{font-size:13px;font-weight:600;color:var(--td)}
-.imp-rd{font-size:11.5px;color:var(--ts);margin-top:1px}
+.imp-rl{font-size:12.5px;font-weight:600;color:var(--td)}
+.imp-rd{font-size:11px;color:var(--ts);margin-top:1px}
 
 /* Toast */
-.toast{position:fixed;bottom:calc(1.25rem + var(--sib));left:50%;transform:translateX(-50%) translateY(80px);background:var(--td);color:#fff;padding:.6rem 1.3rem;border-radius:50px;font-size:13px;font-weight:600;z-index:500;transition:transform .28s,opacity .28s;opacity:0;pointer-events:none;max-width:90vw;text-align:center;white-space:nowrap}
+.toast{position:fixed;bottom:calc(var(--nh) + var(--sib) + .75rem);left:50%;
+  transform:translateX(-50%) translateY(60px);background:var(--td);color:#fff;
+  padding:.55rem 1.2rem;border-radius:50px;font-size:12.5px;font-weight:600;
+  z-index:500;transition:transform .25s,opacity .25s;opacity:0;pointer-events:none;
+  max-width:88vw;text-align:center;}
 .toast.on{transform:translateX(-50%) translateY(0);opacity:1}
 
-/* Banner PWA */
-.pwa-banner{display:none;align-items:center;gap:10px;padding:.6rem 1rem;background:linear-gradient(135deg,var(--v50),var(--p50));border-bottom:1px solid var(--v100)}
+/* PWA banner */
+.pwa-banner{display:none;align-items:center;gap:9px;padding:.55rem .9rem;
+  background:linear-gradient(135deg,var(--v50),var(--p50));border-bottom:1px solid var(--v100)}
 .pwa-banner.show{display:flex}
-.pwa-banner p{flex:1;font-size:13px;font-weight:600;color:var(--tm)}
+.pwa-banner p{flex:1;font-size:12.5px;font-weight:600;color:var(--tm)}
 .pwa-banner p strong{color:var(--v600)}
-.pwa-btn{background:linear-gradient(135deg,var(--v400),var(--p400));color:#fff;border:none;border-radius:50px;padding:.36rem .85rem;font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap}
-.pwa-close{background:none;border:none;font-size:18px;cursor:pointer;color:var(--ts);padding:2px 5px;line-height:1}
+.pwa-btn{background:linear-gradient(135deg,var(--v400),var(--p400));color:#fff;border:none;border-radius:50px;padding:.33rem .8rem;font-family:'Nunito',sans-serif;font-size:11.5px;font-weight:700;cursor:pointer;white-space:nowrap}
+.pwa-close{background:none;border:none;font-size:17px;cursor:pointer;color:var(--ts);padding:2px 4px;line-height:1}
 
 ::-webkit-scrollbar{width:4px;height:4px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--p200);border-radius:10px}
 
 /* ══ RESPONSIVE ══ */
-@media(min-width:700px){
-  /* Desktop: mostrar botones, ocultar menú ⋯ */
-  .hdr-deskt{display:flex}
-  .btn-menu{display:none}
-}
+@media(min-width:700px){.hdr-deskt{display:flex}.btn-menu{display:none}}
 @media(max-width:699px){
-  /* Móvil: ocultar botones desktop, mostrar ⋯ */
-  .hdr-deskt{display:none}
-  .btn-menu{display:flex}
-  /* Layout: 1 columna */
-  .layout{grid-template-columns:1fr;padding:.75rem;gap:.75rem}
-  /* Sidebar: sin sticky, compacto */
-  .sidebar{position:static;padding:.85rem;gap:.75rem}
-  /* Columnas de ingredientes/pasos dentro de tarjeta: 1 sola */
+  .hdr-deskt{display:none}.btn-menu{display:flex}
   .rcard-cols{grid-template-columns:1fr}
-  /* Form cols */
   .frow.c3{grid-template-columns:1fr 1fr}
-  .frow.c2{grid-template-columns:1fr}
+  .ing-picker-grid{grid-template-columns:repeat(4,1fr)}
 }
-@media(max-width:400px){
-  .frow.c3{grid-template-columns:1fr}
-  .logo-input{font-size:14px}
-}
+@media(max-width:380px){.frow.c3{grid-template-columns:1fr}.ing-picker-grid{grid-template-columns:repeat(3,1fr)}}
 </style>
 </head>
 <body>
 
-<!-- Banner PWA -->
+<!-- PWA Banner -->
 <div class="pwa-banner" id="pwaBanner">
-  <p>📲 Instalá <strong>el Cuaderno</strong> en tu celular</p>
+  <p>📲 Instalá <strong>el Cuaderno</strong> en tu cel</p>
   <button class="pwa-btn" id="pwaInstall">Instalar</button>
   <button class="pwa-close" id="pwaClose">✕</button>
 </div>
 
+<!-- Header -->
 <header class="hdr">
   <div class="hdr-in">
     <div class="hdr-logo">
@@ -375,13 +392,11 @@ body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--td);min
       </div>
     </div>
     <div class="hdr-right">
-      <!-- Solo en desktop -->
       <div class="hdr-deskt">
         <button class="btn-sm" id="btnDL">💾 Guardar app</button>
         <button class="btn-sm" id="btnExp">📤 Exportar</button>
         <button class="btn-sm" id="btnImp">📥 Importar</button>
       </div>
-      <!-- Menú ⋯ solo en móvil -->
       <div class="menu-wrap">
         <button class="btn-menu" id="menuTrigger">···</button>
         <div class="dropdown" id="dropdown">
@@ -396,56 +411,99 @@ body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--td);min
   </div>
 </header>
 
-<main class="layout">
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
+<!-- Pages -->
+<div class="page on" id="pageInicio">
+  <div class="welcome-box">
+    <div class="w-ico">🎂</div>
     <div>
-      <input type="search" id="srch" placeholder="🔍 Buscar receta…" class="srch" autocomplete="off"/>
+      <h2 id="welcomeNombre">¡Hola!</h2>
+      <p>Tu cuaderno personal de repostería</p>
     </div>
-    <div>
-      <p class="sb-lbl">Categoría</p>
+  </div>
+  <div class="stats-row">
+    <div class="stat-card"><div class="sn" id="stR">0</div><div class="sl">Recetas</div></div>
+    <div class="stat-card"><div class="sn" id="stF">0</div><div class="sl">Favoritas</div></div>
+    <div class="stat-card"><div class="sn" id="stI">0</div><div class="sl">Ingredientes</div></div>
+  </div>
+  <div class="section-ttl">
+    <span>❤️ Mis Favoritas</span>
+    <a id="verTodas">Ver todas →</a>
+  </div>
+  <div class="rlist" id="listFavs">
+    <div class="empty"><div class="empty-ico">🤍</div><h3>Sin favoritas aún</h3><p>Marcá una receta con ❤️</p></div>
+  </div>
+</div>
+
+<div class="page" id="pageRecetas">
+  <div class="filters">
+    <input type="search" id="srch" placeholder="🔍 Buscar receta…" class="srch" autocomplete="off"/>
+    <div class="filter-row">
+      <span class="filter-lbl">Cat.</span>
       <select class="cat-select" id="catSel">
-        <option value="todas">✨ Todas las categorías</option>
+        <option value="todas">✨ Todas</option>
         <option value="tortas">🎂 Tortas</option>
         <option value="galletas">🍪 Galletas</option>
         <option value="tartas">🥧 Tartas</option>
         <option value="cupcakes">🧁 Cupcakes</option>
-        <option value="panes">🍞 Panes Dulces</option>
-        <option value="cremas">🫧 Cremas y Rellenos</option>
+        <option value="panes">🍞 Panes</option>
+        <option value="cremas">🫧 Cremas</option>
         <option value="otros">🍮 Otros</option>
       </select>
+      <span class="filter-lbl">Dif.</span>
+      <select class="dif-select" id="difSel">
+        <option value="todas">Todas</option>
+        <option value="fácil">🟢 Fácil</option>
+        <option value="media">🟡 Media</option>
+        <option value="avanzada">🔴 Avanzada</option>
+      </select>
     </div>
-    <div>
-      <p class="sb-lbl">Dificultad</p>
-      <div class="dif-pills" id="difPills">
-        <button class="dif-pill on" data-dif="todas">Todas</button>
-        <button class="dif-pill" data-dif="fácil">🟢 Fácil</button>
-        <button class="dif-pill" data-dif="media">🟡 Media</button>
-        <button class="dif-pill" data-dif="avanzada">🔴 Avanzada</button>
-      </div>
-    </div>
-    <div class="stats-box">
-      <p class="stats-ttl">Mi Colección</p>
-      <div class="stats-grid">
-        <div class="stat"><span class="stat-n" id="totR">0</span><span class="stat-l">Recetas</span></div>
-        <div class="stat"><span class="stat-n" id="totF">0</span><span class="stat-l">Favoritas</span></div>
-      </div>
-    </div>
-  </aside>
+  </div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem">
+    <span class="section-ttl" style="margin:0">📖 Recetas</span>
+    <span id="cCount" style="font-size:11.5px;color:var(--ts);font-weight:600"></span>
+  </div>
+  <div class="rlist" id="listRecetas">
+    <div class="empty"><div class="empty-ico">🥐</div><h3>¡Aún no hay recetas!</h3><p>Tocá "＋ Nueva" para empezar.</p></div>
+  </div>
+</div>
 
-  <!-- CONTENT -->
-  <section class="content">
-    <div class="c-hdr">
-      <h2 class="c-ttl" id="cTtl">Todas las Recetas</h2>
-      <span class="c-count" id="cCount"></span>
-    </div>
-    <div class="rlist" id="rlist">
-      <div class="empty"><div class="empty-ico">🥐</div><h3>¡Aún no hay recetas!</h3><p>Tocá "＋ Nueva" para empezar tu cuaderno.</p></div>
-    </div>
-  </section>
-</main>
+<div class="page" id="pageIngredientes">
+  <div class="ing-page-hdr">
+    <input type="search" id="ingSearch" placeholder="🔍 Buscar ingrediente…" class="ing-search" autocomplete="off"/>
+    <button class="btn-new" id="btnNewIng" style="white-space:nowrap">＋ Agregar</button>
+  </div>
+  <div class="ing-cats" id="ingCats">
+    <button class="ing-cat-pill on" data-cat="todos">Todos</button>
+    <button class="ing-cat-pill" data-cat="harinas">🌾 Harinas</button>
+    <button class="ing-cat-pill" data-cat="lacteos">🥛 Lácteos</button>
+    <button class="ing-cat-pill" data-cat="huevos">🥚 Huevos</button>
+    <button class="ing-cat-pill" data-cat="azucares">🍬 Azúcares</button>
+    <button class="ing-cat-pill" data-cat="grasas">🧈 Grasas</button>
+    <button class="ing-cat-pill" data-cat="chocolate">🍫 Chocolate</button>
+    <button class="ing-cat-pill" data-cat="frutas">🍓 Frutas</button>
+    <button class="ing-cat-pill" data-cat="levaduras">🫧 Leudantes</button>
+    <button class="ing-cat-pill" data-cat="especias">🌿 Especias</button>
+    <button class="ing-cat-pill" data-cat="otros">📦 Otros</button>
+  </div>
+  <div class="stock-list" id="stockList">
+    <div class="empty"><div class="empty-ico">🧂</div><h3>Tu despensa está vacía</h3><p>Agregá los ingredientes que tenés en casa.</p></div>
+  </div>
+</div>
 
-<!-- MODAL FORM -->
+<!-- Nav -->
+<nav class="nav">
+  <button class="nav-btn on" data-page="pageInicio" id="navInicio">
+    <span class="nav-ico">🏠</span>Inicio
+  </button>
+  <button class="nav-btn" data-page="pageRecetas" id="navRecetas">
+    <span class="nav-ico">📖</span>Recetas
+  </button>
+  <button class="nav-btn" data-page="pageIngredientes" id="navIngredientes">
+    <span class="nav-ico">🧂</span>Despensa
+  </button>
+</nav>
+
+<!-- Modal: Formulario receta -->
 <div class="mov" id="mForm" style="display:none">
   <div class="mbox">
     <div class="handle"></div>
@@ -472,12 +530,38 @@ body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--td);min
           </div>
           <div class="frow c3">
             <div class="fg"><label>⏱ Prep (min)</label><input type="number" id="fPrep" placeholder="30" min="0" inputmode="numeric"/></div>
-            <div class="fg"><label>🔥 Cocción (min)</label><input type="number" id="fCoc" placeholder="45" min="0" inputmode="numeric"/></div>
+            <div class="fg"><label>🔥 Cocción</label><input type="number" id="fCoc" placeholder="45" min="0" inputmode="numeric"/></div>
             <div class="fg"><label>🌡 Temp °C</label><input type="number" id="fTemp" placeholder="180" min="0" inputmode="numeric"/></div>
           </div>
           <div class="frow"><div class="fg full"><label>Descripción</label><textarea id="fDesc" placeholder="Descripción breve…" rows="2"></textarea></div></div>
         </div>
-        <div class="fsec"><h3 class="fsec-ttl">🧂 Ingredientes</h3><div id="ingList"></div><button type="button" class="btn-add" id="addIng">+ Agregar ingrediente</button></div>
+
+        <!-- Ingredientes con selector visual -->
+        <div class="fsec">
+          <h3 class="fsec-ttl">🧂 Ingredientes</h3>
+          <p class="ing-picker-intro">Tocá los ingredientes que usa la receta:</p>
+          <div class="ing-picker-cats" id="ipcCats">
+            <button type="button" class="ipc-pill on" data-cat="todos">Todos</button>
+            <button type="button" class="ipc-pill" data-cat="harinas">🌾 Harinas</button>
+            <button type="button" class="ipc-pill" data-cat="lacteos">🥛 Lácteos</button>
+            <button type="button" class="ipc-pill" data-cat="huevos">🥚 Huevos</button>
+            <button type="button" class="ipc-pill" data-cat="azucares">🍬 Azúcares</button>
+            <button type="button" class="ipc-pill" data-cat="grasas">🧈 Grasas</button>
+            <button type="button" class="ipc-pill" data-cat="chocolate">🍫 Choc.</button>
+            <button type="button" class="ipc-pill" data-cat="frutas">🍓 Frutas</button>
+            <button type="button" class="ipc-pill" data-cat="levaduras">🫧 Leud.</button>
+            <button type="button" class="ipc-pill" data-cat="especias">🌿 Espec.</button>
+            <button type="button" class="ipc-pill" data-cat="otros">📦 Otros</button>
+          </div>
+          <div class="ing-picker-grid" id="ingPickerGrid"></div>
+          <div class="ing-picked-list" id="ingPickedList"></div>
+          <span class="ing-manual-toggle" id="ingManualToggle">✏️ Agregar manualmente</span>
+          <div id="ingManual" style="display:none;margin-top:.5rem">
+            <div id="ingList"></div>
+            <button type="button" class="btn-add" id="addIng">+ Agregar ingrediente manual</button>
+          </div>
+        </div>
+
         <div class="fsec"><h3 class="fsec-ttl">📝 Procedimiento</h3><div id="pasoList"></div><button type="button" class="btn-add" id="addPaso">+ Agregar paso</button></div>
         <div class="fsec"><h3 class="fsec-ttl">💡 Consejos</h3><div id="tipList"></div><button type="button" class="btn-add" id="addTip">+ Agregar consejo</button></div>
         <div class="fsec"><h3 class="fsec-ttl">📌 Notas del Curso</h3><div class="fg full"><label>Apuntes…</label><textarea id="fNotas" placeholder="Anotá lo que aprendiste en clase…" rows="3"></textarea></div></div>
@@ -487,22 +571,84 @@ body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--td);min
   </div>
 </div>
 
-<!-- MODAL IMPORTAR -->
-<div class="mov" id="mImp" style="display:none">
-  <div class="mbox" style="max-width:500px">
+<!-- Modal: Agregar/editar ingrediente al stock -->
+<div class="mov" id="mStockForm" style="display:none">
+  <div class="mbox" style="max-width:480px">
     <div class="handle"></div>
-    <div class="m-hdr"><h2>📥 Importar Recetas</h2><button class="m-close" id="closeImp">✕</button></div>
-    <div class="m-scroll">
-      <div class="imp-zone" id="impZone">
-        <div style="font-size:32px">📂</div>
-        <p>Tocá para seleccionar archivo</p>
-        <span>Formato .json exportado desde esta app</span>
-        <input type="file" id="impFile" accept=".json"/>
+    <div class="m-hdr"><h2 id="mStockTtl">Agregar ingrediente</h2><button class="m-close" id="closeStockForm">✕</button></div>
+    <div class="m-scroll stock-form">
+      <div class="fsec">
+        <h3 class="fsec-ttl">¿Qué ingrediente tenés?</h3>
+        <!-- Picker visual también en stock -->
+        <div class="ing-picker-cats" id="spcCats">
+          <button type="button" class="ipc-pill on" data-cat="todos">Todos</button>
+          <button type="button" class="ipc-pill" data-cat="harinas">🌾</button>
+          <button type="button" class="ipc-pill" data-cat="lacteos">🥛</button>
+          <button type="button" class="ipc-pill" data-cat="huevos">🥚</button>
+          <button type="button" class="ipc-pill" data-cat="azucares">🍬</button>
+          <button type="button" class="ipc-pill" data-cat="grasas">🧈</button>
+          <button type="button" class="ipc-pill" data-cat="chocolate">🍫</button>
+          <button type="button" class="ipc-pill" data-cat="frutas">🍓</button>
+          <button type="button" class="ipc-pill" data-cat="levaduras">🫧</button>
+          <button type="button" class="ipc-pill" data-cat="especias">🌿</button>
+          <button type="button" class="ipc-pill" data-cat="otros">📦</button>
+        </div>
+        <div class="ing-picker-grid" id="sPickerGrid"></div>
+        <div style="display:flex;align-items:center;gap:8px;margin-top:.6rem;padding:.6rem .75rem;background:var(--cream);border-radius:var(--rsm)" id="sSelectedPreview" style="display:none">
+          <span id="sSelIco" style="font-size:24px"></span>
+          <span id="sSelName" style="font-size:14px;font-weight:700;color:var(--td);flex:1"></span>
+        </div>
+        <!-- O nombre manual -->
+        <div class="fg full" style="margin-top:.6rem">
+          <label>O escribí el nombre</label>
+          <input type="text" id="sIngName" placeholder="Ej: Harina de almendras"/>
+        </div>
       </div>
+      <div class="fsec">
+        <h3 class="fsec-ttl">¿Cuánto tenés?</h3>
+        <div class="frow c2">
+          <div class="fg"><label>Cantidad</label><input type="number" id="sQty" placeholder="500" inputmode="decimal" min="0"/></div>
+          <div class="fg"><label>Unidad</label>
+            <select id="sUnit">
+              <option value="g">g (gramos)</option>
+              <option value="kg">kg (kilos)</option>
+              <option value="ml">ml</option>
+              <option value="l">litros</option>
+              <option value="unidad">unidad/es</option>
+              <option value="cdita">cdita</option>
+              <option value="cda">cda</option>
+              <option value="taza">taza/s</option>
+              <option value="c/n">c/n</option>
+            </select></div>
+        </div>
+        <div class="fg full" style="margin-top:.5rem"><label>🏷 Marca preferida</label><input type="text" id="sMarca" placeholder="Ej: Pureza, La Anónima…"/></div>
+        <div class="fg full" style="margin-top:.5rem"><label>📍 Dónde comprarlo</label><input type="text" id="sLugar" placeholder="Ej: Supermercado Día, Mercado Central…"/></div>
+        <div class="frow c2" style="margin-top:.5rem">
+          <div class="fg"><label>💰 Precio</label><input type="text" id="sPrecio" placeholder="Ej: $2500" inputmode="decimal"/></div>
+          <div class="fg"><label>Por</label><input type="text" id="sPrecioPor" placeholder="Ej: kg, unidad…"/></div>
+        </div>
+        <div class="frow c2" style="margin-top:.5rem">
+          <div class="fg"><label>📅 Vencimiento</label><input type="date" id="sVence"/></div>
+          <div class="fg"><label>⚠️ Stock mínimo</label><input type="number" id="sMinimo" placeholder="Ej: 200" inputmode="decimal" min="0"/></div>
+        </div>
+        <div class="fg full" style="margin-top:.5rem"><label>📝 Notas</label><input type="text" id="sNota" placeholder="Ej: sin TACC, orgánico…"/></div>
+      </div>
+      <div class="f-act"><button type="button" class="btn-sec" id="cancelStockForm">Cancelar</button><button type="button" class="btn-pri" id="saveStockItem">Guardar</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal importar -->
+<div class="mov" id="mImp" style="display:none">
+  <div class="mbox" style="max-width:480px">
+    <div class="handle"></div>
+    <div class="m-hdr"><h2>📥 Importar</h2><button class="m-close" id="closeImp">✕</button></div>
+    <div class="m-scroll">
+      <div class="imp-zone" id="impZone"><div style="font-size:30px">📂</div><p>Seleccionar archivo .json</p><span>Exportado desde esta app</span><input type="file" id="impFile" accept=".json"/></div>
       <div class="imp-prev" id="impPrev"></div>
       <div class="imp-opts">
-        <label class="imp-radio"><input type="radio" name="impMode" value="combinar" checked/><div><div class="imp-rl">🔀 Combinar</div><div class="imp-rd">Agrega sin borrar las recetas actuales</div></div></label>
-        <label class="imp-radio"><input type="radio" name="impMode" value="reemplazar"/><div><div class="imp-rl">🔄 Reemplazar todo</div><div class="imp-rd">Borra las actuales y carga las importadas</div></div></label>
+        <label class="imp-radio"><input type="radio" name="impMode" value="combinar" checked/><div><div class="imp-rl">🔀 Combinar</div><div class="imp-rd">Agrega sin borrar lo actual</div></div></label>
+        <label class="imp-radio"><input type="radio" name="impMode" value="reemplazar"/><div><div class="imp-rl">🔄 Reemplazar todo</div><div class="imp-rd">Borra todo y carga el archivo</div></div></label>
       </div>
       <div class="f-act"><button class="btn-sec" id="cancelImp">Cancelar</button><button class="btn-pri" id="doImp" disabled>Importar</button></div>
     </div>
@@ -512,135 +658,270 @@ body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--td);min
 <div class="toast" id="toast"></div>
 
 <script>
-/* ══ Estado ══ */
-let R=JSON.parse(localStorage.getItem('rcp')||'[]');
-let editId=null,cat='todas',dif='todas',q='',impData=null;
+/* ══════════════════════════════════════════
+   CATÁLOGO DE INGREDIENTES con ícono + categoría
+══════════════════════════════════════════ */
+const ING_CATALOG = [
+  // Harinas
+  {id:'harina_0000',n:'Harina 0000',ico:'🌾',cat:'harinas'},
+  {id:'harina_000',n:'Harina 000',ico:'🌾',cat:'harinas'},
+  {id:'maizena',n:'Maizena',ico:'🌽',cat:'harinas'},
+  {id:'harina_integral',n:'H. Integral',ico:'🌾',cat:'harinas'},
+  {id:'harina_almendras',n:'H. Almendras',ico:'🫘',cat:'harinas'},
+  {id:'cacao',n:'Cacao',ico:'🍫',cat:'chocolate'},
+  // Lácteos
+  {id:'leche',n:'Leche',ico:'🥛',cat:'lacteos'},
+  {id:'crema',n:'Crema',ico:'🥛',cat:'lacteos'},
+  {id:'manteca',n:'Manteca',ico:'🧈',cat:'lacteos'},
+  {id:'queso_crema',n:'Queso crema',ico:'🧀',cat:'lacteos'},
+  {id:'yogur',n:'Yogur',ico:'🥛',cat:'lacteos'},
+  {id:'leche_cond',n:'L. Condensada',ico:'🥛',cat:'lacteos'},
+  // Huevos
+  {id:'huevos',n:'Huevos',ico:'🥚',cat:'huevos'},
+  {id:'yemas',n:'Yemas',ico:'🥚',cat:'huevos'},
+  {id:'claras',n:'Claras',ico:'🥚',cat:'huevos'},
+  // Azúcares
+  {id:'azucar',n:'Azúcar',ico:'🍬',cat:'azucares'},
+  {id:'azucar_imp',n:'Az. Impalpable',ico:'🍬',cat:'azucares'},
+  {id:'azucar_negra',n:'Az. Negra',ico:'🍯',cat:'azucares'},
+  {id:'miel',n:'Miel',ico:'🍯',cat:'azucares'},
+  {id:'ddl',n:'Dulce de leche',ico:'🍮',cat:'azucares'},
+  {id:'glucosa',n:'Glucosa',ico:'🍬',cat:'azucares'},
+  // Grasas
+  {id:'aceite',n:'Aceite',ico:'🫙',cat:'grasas'},
+  {id:'aceite_coco',n:'Aceite coco',ico:'🥥',cat:'grasas'},
+  // Chocolate
+  {id:'choc_amargo',n:'Choc. amargo',ico:'🍫',cat:'chocolate'},
+  {id:'choc_blanco',n:'Choc. blanco',ico:'🍫',cat:'chocolate'},
+  {id:'choc_leche',n:'Choc. con leche',ico:'🍫',cat:'chocolate'},
+  {id:'chips_choc',n:'Chips choc.',ico:'🍫',cat:'chocolate'},
+  // Frutas
+  {id:'limon',n:'Limón',ico:'🍋',cat:'frutas'},
+  {id:'naranja',n:'Naranja',ico:'🍊',cat:'frutas'},
+  {id:'frutillas',n:'Frutillas',ico:'🍓',cat:'frutas'},
+  {id:'frambuesas',n:'Frambuesas',ico:'🫐',cat:'frutas'},
+  {id:'manzana',n:'Manzana',ico:'🍎',cat:'frutas'},
+  {id:'banana',n:'Banana',ico:'🍌',cat:'frutas'},
+  {id:'coco',n:'Coco rallado',ico:'🥥',cat:'frutas'},
+  {id:'pasas',n:'Pasas',ico:'🍇',cat:'frutas'},
+  // Leudantes
+  {id:'polvo_hornear',n:'Polvo hornear',ico:'🫧',cat:'levaduras'},
+  {id:'bicarbonato',n:'Bicarbonato',ico:'🫧',cat:'levaduras'},
+  {id:'levadura',n:'Levadura',ico:'🫧',cat:'levaduras'},
+  // Especias / aromas
+  {id:'vainilla',n:'Vainilla',ico:'🌿',cat:'especias'},
+  {id:'canela',n:'Canela',ico:'🌿',cat:'especias'},
+  {id:'cafe',n:'Café',ico:'☕',cat:'especias'},
+  {id:'sal',n:'Sal',ico:'🧂',cat:'especias'},
+  {id:'nuez_moscada',n:'Nuez moscada',ico:'🌿',cat:'especias'},
+  // Otros
+  {id:'gelatina',n:'Gelatina',ico:'📦',cat:'otros'},
+  {id:'almidones',n:'Almidón',ico:'📦',cat:'otros'},
+  {id:'nueces',n:'Nueces',ico:'🥜',cat:'otros'},
+  {id:'almendras',n:'Almendras',ico:'🥜',cat:'otros'},
+  {id:'avellanas',n:'Avellanas',ico:'🥜',cat:'otros'},
+  {id:'sprinkles',n:'Sprinkles',ico:'🎉',cat:'otros'},
+];
+
+/* ══ Estado global ══ */
+let R   = JSON.parse(localStorage.getItem('rcp')  || '[]');
+let STK = JSON.parse(localStorage.getItem('stk')  || '[]'); // stock
+let editId=null, stockEditId=null;
+let cat='todas', dif='todas', q='', ingQ='', ingCat='todos';
+let pickerCat='todos', sPickerCat='todos';
+let pickedIng=[]; // ingredientes seleccionados en el picker del form
+let impData=null;
+
 const $=id=>document.getElementById(id);
+function sv(){ localStorage.setItem('rcp',JSON.stringify(R)); }
+function svStk(){ localStorage.setItem('stk',JSON.stringify(STK)); }
+function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2); }
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function catLbl(c){ return{tortas:'🎂 Tortas',galletas:'🍪 Galletas',tartas:'🥧 Tartas',cupcakes:'🧁 Cupcakes',panes:'🍞 Panes',cremas:'🫧 Cremas',otros:'🍮 Otros'}[c]||c; }
+function tt(r){ return(parseInt(r.tiempoPrep)||0)+(parseInt(r.tiempoCoccion)||0); }
+function fmt(m){ if(!m)return null;if(m<60)return`${m}m`;const h=Math.floor(m/60),mn=m%60;return mn?`${h}h${mn}m`:`${h}h`; }
+function toast(msg){ const t=$('toast');t.textContent=msg;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2600); }
 
-function sv(){localStorage.setItem('rcp',JSON.stringify(R));}
-function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2);}
-function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function catLbl(c){return{tortas:'🎂 Tortas',galletas:'🍪 Galletas',tartas:'🥧 Tartas',cupcakes:'🧁 Cupcakes',panes:'🍞 Panes',cremas:'🫧 Cremas',otros:'🍮 Otros'}[c]||c;}
-function tt(r){return(parseInt(r.tiempoPrep)||0)+(parseInt(r.tiempoCoccion)||0);}
-function fmt(m){if(!m)return null;if(m<60)return`${m}m`;const h=Math.floor(m/60),mn=m%60;return mn?`${h}h${mn}m`:`${h}h`;}
-function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2800);}
+/* ── Nombre cuaderno ── */
+function loadN(){ $('cNombre').value=localStorage.getItem('rcp_n')||''; updateWelcome(); }
+function saveN(){ const n=$('cNombre').value.trim(); localStorage.setItem('rcp_n',n); updateWelcome(); }
+function updateWelcome(){ const n=localStorage.getItem('rcp_n')||''; $('welcomeNombre').textContent=n?`¡Hola, ${n.split(' ')[0]}!`:'¡Hola!'; }
 
-/* ── Nombre ── */
-function loadN(){$('cNombre').value=localStorage.getItem('rcp_n')||'';}
-function saveN(){localStorage.setItem('rcp_n',$('cNombre').value.trim());}
+/* ── Stock helpers ── */
+function findStock(nombre){ return STK.find(s=>s.nombre.toLowerCase()===nombre.toLowerCase()); }
+function hasStock(nombre){ const s=findStock(nombre); return s&&(parseFloat(s.qty)||0)>0; }
 
-/* ── Descargar HTML ── */
-function dlApp(){
-  const blob=new Blob([document.documentElement.outerHTML],{type:'text/html;charset=utf-8'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  const n=($('cNombre').value.trim()||'cuaderno-reposteria').toLowerCase().replace(/\s+/g,'-');
-  a.href=url;a.download=`${n}.html`;a.click();URL.revokeObjectURL(url);
-  toast('💾 App guardada');
-}
-
-/* ── Exportar JSON ── */
-function expJSON(){
-  if(!R.length){toast('⚠️ No hay recetas para exportar');return;}
-  const n=$('cNombre').value.trim()||'Mi Cuaderno';
-  const blob=new Blob([JSON.stringify({cuaderno:n,exportado:new Date().toISOString(),recetas:R},null,2)],{type:'application/json'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  const f=new Date().toLocaleDateString('es-AR').replace(/\//g,'-');
-  a.href=url;a.download=`recetas-${n.toLowerCase().replace(/\s+/g,'-')}-${f}.json`;a.click();URL.revokeObjectURL(url);
-  toast(`📤 ${R.length} receta${R.length!==1?'s':''} exportada${R.length!==1?'s':''}`);
-}
-
-/* ── Importar ── */
-function openImp(){
-  impData=null;$('impFile').value='';$('impPrev').style.display='none';
-  $('impPrev').textContent='';$('doImp').disabled=true;
-  document.querySelector('[name="impMode"][value="combinar"]').checked=true;
-  $('mImp').style.display='flex';
-}
-function closeImpM(){$('mImp').style.display='none';impData=null;}
-function handleFile(file){
-  if(!file||!file.name.endsWith('.json')){toast('⚠️ Seleccioná un .json válido');return;}
-  const rd=new FileReader();
-  rd.onload=e=>{
-    try{
-      const p=JSON.parse(e.target.result);
-      const l=Array.isArray(p)?p:(p.recetas||[]);
-      if(!l.length){toast('⚠️ Sin recetas en el archivo');return;}
-      impData=l;
-      const pr=$('impPrev');
-      pr.textContent=`✅ ${l.length} receta${l.length!==1?'s':''} encontrada${l.length!==1?'s':''}${p.cuaderno?` · "${p.cuaderno}"`:''}`;
-      pr.style.display='block';$('doImp').disabled=false;
-    }catch{toast('❌ Archivo inválido');}
-  };
-  rd.readAsText(file);
-}
-function doImport(){
-  if(!impData)return;
-  const modo=document.querySelector('[name="impMode"]:checked').value;
-  const nuevas=impData.map(r=>({...r,id:uid(),favorita:r.favorita||false}));
-  if(modo==='reemplazar'){
-    if(!confirm(`¿Reemplazar las ${R.length} receta${R.length!==1?'s':''} actuales?`))return;
-    R=nuevas;
-  }else{R=[...nuevas,...R];}
-  sv();closeImpM();renderR();toast(`📥 ${nuevas.length} receta${nuevas.length!==1?'s':''} importada${nuevas.length!==1?'s':''}`);
-}
-
-/* ── Render tarjetas expandibles ── */
-function filtered(){
-  return R.filter(r=>{
-    const mc=cat==='todas'||r.categoria===cat;
-    const md=dif==='todas'||r.dificultad===dif;
-    const ms=!q||r.nombre.toLowerCase().includes(q.toLowerCase())||
-      (r.descripcion||'').toLowerCase().includes(q.toLowerCase());
-    return mc&&md&&ms;
+/* ══ INGREDIENTE PICKER ══ */
+function ingPickerHTML(containerId, catPillsId, selectedIds=[], mode='form'){
+  const cont=$(containerId);
+  if(!cont)return;
+  const filt = pickerCat==='todos' ? ING_CATALOG : ING_CATALOG.filter(i=>i.cat===pickerCat);
+  cont.innerHTML = filt.map(i=>{
+    const isSel = selectedIds.includes(i.id);
+    return `<div class="ipg-item${isSel?' sel':''}" data-id="${i.id}" data-name="${esc(i.n)}" data-ico="${i.ico}" title="${esc(i.n)}">
+      <span class="ii">${i.ico}</span>
+      <span class="il">${esc(i.n)}</span>
+    </div>`;
+  }).join('');
+  cont.querySelectorAll('.ipg-item').forEach(el=>{
+    el.addEventListener('click',()=>{
+      const id=el.dataset.id, ico=el.dataset.ico, name=el.dataset.name;
+      const idx=pickedIng.findIndex(p=>p.id===id);
+      if(idx>=0){ pickedIng.splice(idx,1); el.classList.remove('sel'); }
+      else { pickedIng.push({id,n:name,ico,cantidad:'',unidad:'g'}); el.classList.add('sel'); }
+      renderPickedList();
+    });
   });
 }
 
-function difClass(d){return d==='fácil'?'df':d==='media'?'dm':'da';}
+function renderPickedList(){
+  const cont=$('ingPickedList');
+  if(!cont)return;
+  if(!pickedIng.length){ cont.innerHTML=''; return; }
+  cont.innerHTML = pickedIng.map((p,i)=>`
+    <div class="ipl-row" data-idx="${i}">
+      <span class="ipl-ico">${p.ico}</span>
+      <span class="ipl-name">${esc(p.n)}</span>
+      <input class="ipl-qty" type="number" placeholder="Cant." value="${esc(p.cantidad)}" data-idx="${i}" data-f="cantidad" inputmode="decimal" min="0"/>
+      <select class="ipl-unit" data-idx="${i}" data-f="unidad">
+        ${['g','kg','ml','l','unidad','cdita','cda','taza','c/n'].map(u=>`<option${p.unidad===u?' selected':''}>${u}</option>`).join('')}
+      </select>
+      <button class="ipl-rm" data-idx="${i}">✕</button>
+    </div>`).join('');
+  cont.querySelectorAll('.ipl-qty,.ipl-unit').forEach(el=>{
+    el.addEventListener('change',()=>{ pickedIng[+el.dataset.idx][el.dataset.f]=el.value; });
+    el.addEventListener('input',()=>{ pickedIng[+el.dataset.idx][el.dataset.f]=el.value; });
+  });
+  cont.querySelectorAll('.ipl-rm').forEach(el=>{
+    el.addEventListener('click',()=>{
+      const idx=+el.dataset.idx;
+      const removedId=pickedIng[idx].id;
+      pickedIng.splice(idx,1);
+      // deselect en grid
+      const gridItem=document.querySelector(`#ingPickerGrid [data-id="${removedId}"]`);
+      if(gridItem)gridItem.classList.remove('sel');
+      renderPickedList();
+    });
+  });
+}
 
-function buildCard(r){
+/* Stock picker (en modal stock) */
+let sPickedItem=null;
+function renderSPicker(){
+  const cont=$('sPickerGrid');
+  if(!cont)return;
+  const filt=sPickerCat==='todos'?ING_CATALOG:ING_CATALOG.filter(i=>i.cat===sPickerCat);
+  cont.innerHTML=filt.map(i=>`
+    <div class="ipg-item${sPickedItem?.id===i.id?' sel':''}" data-id="${i.id}" data-name="${esc(i.n)}" data-ico="${i.ico}" title="${esc(i.n)}">
+      <span class="ii">${i.ico}</span>
+      <span class="il">${esc(i.n)}</span>
+    </div>`).join('');
+  cont.querySelectorAll('.ipg-item').forEach(el=>{
+    el.addEventListener('click',()=>{
+      cont.querySelectorAll('.ipg-item').forEach(x=>x.classList.remove('sel'));
+      el.classList.add('sel');
+      sPickedItem={id:el.dataset.id,n:el.dataset.name,ico:el.dataset.ico};
+      $('sSelIco').textContent=el.dataset.ico;
+      $('sSelName').textContent=el.dataset.name;
+      $('sSelectedPreview').style.display='flex';
+      $('sIngName').value=el.dataset.name;
+    });
+  });
+}
+
+/* Pill filter handlers */
+function setupPillFilter(containerId, onChange){
+  $(containerId)?.addEventListener('click',e=>{
+    const pill=e.target.closest('[data-cat]');
+    if(!pill)return;
+    $(containerId).querySelectorAll('[data-cat]').forEach(p=>p.classList.remove('on'));
+    pill.classList.add('on');
+    onChange(pill.dataset.cat);
+  });
+}
+
+/* ══ RENDER RECETAS ══ */
+function difClass(d){ return d==='fácil'?'df':d==='media'?'dm':'da'; }
+
+function ingStockStatus(ing){
+  // ing: {nombre, cantidad, unidad} o {n, cantidad, unidad}
+  const nombre=(ing.nombre||ing.n||'').toLowerCase().trim();
+  if(!nombre)return 'na';
+  // Buscar coincidencia exacta o parcial en stock
+  const match=STK.find(s=>s.nombre.toLowerCase().includes(nombre)||nombre.includes(s.nombre.toLowerCase()));
+  if(!match)return 'na';
+  const qty=parseFloat(match.qty)||0;
+  return qty>0?'ok':'miss';
+}
+
+function buildCard(r, showStockBadge=true){
   const t=tt(r);
-  const ingHTML=r.ingredientes?.length
-    ?`<ul class="ing-list">${r.ingredientes.map(i=>
-        `<li><span class="ing-dot"></span><span>${i.cantidad?`<strong>${esc(i.cantidad)}${i.unidad?' '+esc(i.unidad):''}</strong> `:''}${esc(i.nombre)}</span></li>`
-      ).join('')}</ul>`
-    :'<p style="font-size:12px;color:var(--ts)">Sin ingredientes cargados.</p>';
+  const ings=r.ingredientes||[];
+
+  // Stock summary
+  let okCount=0, missCount=0, naCount=0;
+  ings.forEach(i=>{ const s=ingStockStatus(i);if(s==='ok')okCount++;else if(s==='miss')missCount++;else naCount++; });
+  const hasStockInfo = STK.length>0 && ings.length>0;
+
+  const ingHTML = ings.length
+    ? `<ul class="ing-list">${ings.map(i=>{
+        const st=ingStockStatus(i);
+        const badge=st==='ok'?'<span class="ing-badge ok">✅ tengo</span>':st==='miss'?'<span class="ing-badge miss">❌ falta</span>':'';
+        return `<li>
+          <span class="ing-ico">${ING_CATALOG.find(c=>c.n.toLowerCase()===(i.nombre||i.n||'').toLowerCase())?.ico||'🧂'}</span>
+          <span class="ing-txt">${i.cantidad?`<strong>${esc(i.cantidad)}${i.unidad?' '+esc(i.unidad):''}</strong> `:''}${esc(i.nombre||i.n||'')}</span>
+          ${badge}
+        </li>`;
+      }).join('')}</ul>`
+    : '<p style="font-size:12px;color:var(--ts)">Sin ingredientes.</p>';
 
   const pasosHTML=r.pasos?.length
-    ?`<ol class="paso-list">${r.pasos.map((p,i)=>
-        `<li><span class="paso-n">${i+1}</span><span>${esc(p)}</span></li>`
-      ).join('')}</ol>`
-    :'<p style="font-size:12px;color:var(--ts)">Sin pasos cargados.</p>';
+    ?`<ol class="paso-list">${r.pasos.map((p,i)=>`<li><span class="paso-n">${i+1}</span><span>${esc(p)}</span></li>`).join('')}</ol>`
+    :'<p style="font-size:12px;color:var(--ts)">Sin pasos.</p>';
+
+  const stockBar = showStockBadge && hasStockInfo ? `
+    <div class="stock-summary">
+      <span class="ok-dot"></span><span style="color:var(--m600)">${okCount} tengo</span>
+      <span style="color:var(--ts)">·</span>
+      <span class="miss-dot"></span><span style="color:var(--r600)">${missCount} faltan</span>
+      ${naCount?`<span style="color:var(--ts)">· ${naCount} sin info</span>`:''}
+    </div>` : '';
 
   return `<div class="rcard" data-id="${r.id}">
     <div class="rcard-head">
       <div class="rcard-bar ${r.categoria}"></div>
-      <div class="rcard-summary">
+      <div class="rcard-sum">
         <div class="rcard-top">
           <h3 class="rcard-title">${esc(r.nombre)}</h3>
-          <div class="rcard-actions">
-            <button class="fav-btn" data-id="${r.id}" title="Favorita">${r.favorita?'❤️':'🤍'}</button>
-            <button class="expand-btn" title="Expandir">▼</button>
+          <div class="rcard-acts">
+            <button class="fav-btn" data-id="${r.id}">${r.favorita?'❤️':'🤍'}</button>
+            <button class="exp-btn">▼</button>
           </div>
         </div>
-        <div class="rcard-chips">
+        <div class="chips">
           ${t?`<span class="chip t">⏱ ${fmt(t)}</span>`:''}
           <span class="chip ${difClass(r.dificultad)}">${r.dificultad}</span>
           ${r.temperatura?`<span class="chip">🌡 ${r.temperatura}°C</span>`:''}
-          ${r.porciones?`<span class="chip">🍽 ${r.porciones} porc.</span>`:''}
+          ${r.porciones?`<span class="chip">🍽 ${r.porciones}p</span>`:''}
           <span class="chip">${catLbl(r.categoria)}</span>
         </div>
       </div>
     </div>
     <div class="rcard-body">
       ${r.descripcion?`<p class="rcard-desc">${esc(r.descripcion)}</p>`:''}
+      ${stockBar}
       <div class="rcard-cols">
-        <div class="rsec"><div class="rsec-ttl">🧂 Ingredientes</div>${ingHTML}</div>
+        <div class="rsec">
+          <div class="rsec-ttl">
+            <span>🧂 Ingredientes</span>
+            <button class="btn-clear-ing" data-id="${r.id}">🗑 Borrar todos</button>
+          </div>
+          ${ingHTML}
+        </div>
         <div class="rsec"><div class="rsec-ttl">📝 Procedimiento</div>${pasosHTML}</div>
       </div>
-      ${r.tips?.length?`<div class="rsec" style="margin-bottom:.75rem"><div class="rsec-ttl">💡 Consejos</div><ul class="tip-list">${r.tips.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></div>`:''}
-      ${r.notas?`<div class="notas-box"><div class="notas-ttl">📌 Notas del Curso</div><p>${esc(r.notas)}</p></div>`:''}
+      ${r.tips?.length?`<div class="rsec" style="margin-bottom:.6rem"><div class="rsec-ttl">💡 Consejos</div><ul class="tip-list">${r.tips.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></div>`:''}
+      ${r.notas?`<div class="notas-box"><div class="notas-ttl">📌 Notas</div><p>${esc(r.notas)}</p></div>`:''}
       <div class="rcard-btns">
         <button class="btn-edit" data-id="${r.id}">✏️ Editar</button>
         <button class="btn-del" data-id="${r.id}">🗑️ Eliminar</button>
@@ -649,142 +930,569 @@ function buildCard(r){
   </div>`;
 }
 
-function renderR(){
-  const list=$('rlist'), f=filtered();
-  $('totR').textContent=R.length;
-  $('totF').textContent=R.filter(r=>r.favorita).length;
-  $('cCount').textContent=f.length!==R.length?`${f.length} de ${R.length}`:`${R.length} receta${R.length!==1?'s':''}`;
-
-  if(!f.length){
-    list.innerHTML=`<div class="empty"><div class="empty-ico">${R.length?'🔍':'🥐'}</div><h3>${R.length?'Sin resultados':'¡Aún no hay recetas!'}</h3><p>${R.length?'Probá con otra búsqueda o categoría.':'Tocá "＋ Nueva" para empezar.'}</p></div>`;
-    return;
-  }
-  list.innerHTML=f.map(r=>buildCard(r)).join('');
-
-  // Expandir/colapsar al tocar la cabecera
-  list.querySelectorAll('.rcard-head').forEach(head=>{
-    head.addEventListener('click', e=>{
-      if(e.target.closest('.fav-btn')||e.target.closest('.btn-edit')||e.target.closest('.btn-del'))return;
-      const card=head.closest('.rcard');
-      card.classList.toggle('expanded');
+function attachCardEvents(container){
+  container.querySelectorAll('.rcard-head').forEach(head=>{
+    head.addEventListener('click',e=>{
+      if(e.target.closest('.fav-btn'))return;
+      head.closest('.rcard').classList.toggle('expanded');
     });
   });
-
-  // Favorita
-  list.querySelectorAll('.fav-btn').forEach(b=>b.addEventListener('click',e=>{
-    e.stopPropagation();togFav(b.dataset.id);
+  container.querySelectorAll('.fav-btn').forEach(b=>b.addEventListener('click',e=>{
+    e.stopPropagation(); togFav(b.dataset.id);
   }));
-
-  // Editar
-  list.querySelectorAll('.btn-edit').forEach(b=>b.addEventListener('click',e=>{
-    e.stopPropagation();openForm(b.dataset.id);
+  container.querySelectorAll('.btn-edit').forEach(b=>b.addEventListener('click',e=>{
+    e.stopPropagation(); openForm(b.dataset.id);
   }));
-
-  // Eliminar
-  list.querySelectorAll('.btn-del').forEach(b=>b.addEventListener('click',e=>{
-    e.stopPropagation();delR(b.dataset.id);
+  container.querySelectorAll('.btn-del').forEach(b=>b.addEventListener('click',e=>{
+    e.stopPropagation(); delR(b.dataset.id);
+  }));
+  container.querySelectorAll('.btn-clear-ing').forEach(b=>b.addEventListener('click',e=>{
+    e.stopPropagation();
+    if(!confirm('¿Borrar todos los ingredientes de esta receta?'))return;
+    const r=R.find(x=>x.id===b.dataset.id);
+    if(r){ r.ingredientes=[]; sv(); renderAll(); toast('🗑 Ingredientes borrados'); }
   }));
 }
 
-function togFav(id){
-  const r=R.find(x=>x.id===id);if(!r)return;
-  r.favorita=!r.favorita;sv();renderR();
-  toast(r.favorita?'❤️ Favorita guardada':'🤍 Quitada de favoritas');
+function filtered(){
+  return R.filter(r=>{
+    const mc=cat==='todas'||r.categoria===cat;
+    const md=dif==='todas'||r.dificultad===dif;
+    const ms=!q||r.nombre.toLowerCase().includes(q.toLowerCase())||(r.descripcion||'').toLowerCase().includes(q.toLowerCase());
+    return mc&&md&&ms;
+  });
 }
 
-/* ── Form ── */
+function renderAll(){
+  // Stats
+  $('stR').textContent=R.length;
+  $('stF').textContent=R.filter(r=>r.favorita).length;
+  $('stI').textContent=STK.length;
+
+  // Favoritas (inicio)
+  const favs=R.filter(r=>r.favorita);
+  const lf=$('listFavs');
+  if(favs.length){ lf.innerHTML=favs.slice(0,10).map(r=>buildCard(r,true)).join(''); attachCardEvents(lf); }
+  else{ lf.innerHTML='<div class="empty"><div class="empty-ico">🤍</div><h3>Sin favoritas aún</h3><p>Marcá una receta con ❤️</p></div>'; }
+
+  // Recetas (pestaña)
+  const f=filtered();
+  $('cCount').textContent=`${f.length} receta${f.length!==1?'s':''}`;
+  const lr=$('listRecetas');
+  if(f.length){ lr.innerHTML=f.map(r=>buildCard(r,true)).join(''); attachCardEvents(lr); }
+  else{ lr.innerHTML=`<div class="empty"><div class="empty-ico">${R.length?'🔍':'🥐'}</div><h3>${R.length?'Sin resultados':'¡Aún no hay recetas!'}</h3><p>${R.length?'Probá con otra búsqueda.':'Tocá "＋ Nueva" para empezar.'}</p></div>`; }
+
+  // Stock
+  renderStock();
+}
+
+/* ══ STOCK ══ */
+function filteredStock(){
+  return STK.filter(s=>{
+    const mq=!ingQ||s.nombre.toLowerCase().includes(ingQ.toLowerCase());
+    const mc=ingCat==='todos'||s.cat===ingCat;
+    return mq&&mc;
+  });
+}
+
+function renderStock(){
+  const cont=$('stockList');
+  const fs=filteredStock();
+  if(!fs.length){
+    cont.innerHTML='<div class="empty"><div class="empty-ico">🧂</div><h3>'+(STK.length?'Sin resultados':'Tu despensa está vacía')+'</h3><p>'+(STK.length?'Probá otra búsqueda.':'Tocá "＋ Agregar" para cargar ingredientes.')+'</p></div>';
+    return;
+  }
+  cont.innerHTML=fs.map(s=>{
+    const tags=[];
+    if(s.precio) tags.push(`<span class="stock-tag precio">💰 ${esc(s.precio)}${s.precioPor?' / '+esc(s.precioPor):''}</span>`);
+    if(s.lugar)  tags.push(`<span class="stock-tag lugar">📍 ${esc(s.lugar)}</span>`);
+    if(s.marca)  tags.push(`<span class="stock-tag">🏷 ${esc(s.marca)}</span>`);
+    if(s.vence)  tags.push(`<span class="stock-tag vence">📅 Vence: ${new Date(s.vence).toLocaleDateString('es-AR')}</span>`);
+    if(s.nota)   tags.push(`<span class="stock-tag">${esc(s.nota)}</span>`);
+    const qty=parseFloat(s.qty)||0, min=parseFloat(s.minimo)||0;
+    const bajoStock = min>0 && qty<=min;
+    return `<div class="stock-item${bajoStock?' style="border-color:var(--r200,#fca5a5)"':''}" data-id="${s.id}">
+      <div class="stock-ico">${s.ico||'🧂'}</div>
+      <div class="stock-info">
+        <div class="stock-name">${esc(s.nombre)}${bajoStock?' <span class="stock-tag alerta">⚠️ poco stock</span>':''}</div>
+        ${tags.length?`<div class="stock-detail">${tags.join('')}</div>`:''}
+      </div>
+      <div class="stock-qty">${s.qty||'—'}<span>${s.unit||''}</span></div>
+      <div class="stock-actions">
+        <button class="sq-btn" data-id="${s.id}" title="Editar">✏️</button>
+        <button class="sq-del" data-id="${s.id}" title="Eliminar">✕</button>
+      </div>
+    </div>`;
+  }).join('');
+  cont.querySelectorAll('.sq-btn').forEach(b=>b.addEventListener('click',()=>openStockForm(b.dataset.id)));
+  cont.querySelectorAll('.sq-del').forEach(b=>b.addEventListener('click',()=>{
+    STK=STK.filter(s=>s.id!==b.dataset.id); svStk(); renderAll(); toast('🗑 Ingrediente eliminado');
+  }));
+}
+
+/* ── Stock form ── */
+function openStockForm(id=null){
+  stockEditId=id;
+  const s=id?STK.find(x=>x.id===id):null;
+  $('mStockTtl').textContent=s?'Editar ingrediente':'Agregar ingrediente';
+  $('sIngName').value=s?.nombre||'';
+  $('sQty').value=s?.qty||'';
+  $('sUnit').value=s?.unit||'g';
+  $('sMarca').value=s?.marca||'';
+  $('sLugar').value=s?.lugar||'';
+  $('sPrecio').value=s?.precio||'';
+  $('sPrecioPor').value=s?.precioPor||'';
+  $('sVence').value=s?.vence||'';
+  $('sMinimo').value=s?.minimo||'';
+  $('sNota').value=s?.nota||'';
+  sPickedItem=s?{id:s.catId||'',n:s.nombre,ico:s.ico||'🧂'}:null;
+  $('sSelectedPreview').style.display=sPickedItem?.id?'flex':'none';
+  if(sPickedItem){$('sSelIco').textContent=sPickedItem.ico;$('sSelName').textContent=sPickedItem.n;}
+  sPickerCat='todos';
+  $('spcCats').querySelectorAll('[data-cat]').forEach(p=>p.classList.toggle('on',p.dataset.cat==='todos'));
+  renderSPicker();
+  $('mStockForm').style.display='flex';
+  setTimeout(()=>$('sIngName').focus(),150);
+}
+function closeStockFormM(){ $('mStockForm').style.display='none'; stockEditId=null; sPickedItem=null; }
+
+function saveStockItem(){
+  const nombre=($('sIngName').value||'').trim();
+  if(!nombre){ toast('⚠️ Escribí el nombre del ingrediente'); return; }
+  const qty=parseFloat($('sQty').value)||0;
+  const minimo=parseFloat($('sMinimo').value)||0;
+  const data={
+    nombre,
+    qty:$('sQty').value,
+    unit:$('sUnit').value,
+    marca:$('sMarca').value.trim(),
+    lugar:$('sLugar').value.trim(),
+    precio:$('sPrecio').value.trim(),
+    precioPor:$('sPrecioPor').value.trim(),
+    vence:$('sVence').value,
+    minimo:$('sMinimo').value,
+    nota:$('sNota').value.trim(),
+    ico:sPickedItem?.ico||ING_CATALOG.find(i=>i.n.toLowerCase()===nombre.toLowerCase())?.ico||'🧂',
+    cat:sPickedItem?ING_CATALOG.find(i=>i.id===sPickedItem.id)?.cat||'otros':'otros',
+    catId:sPickedItem?.id||null,
+    alerta: minimo>0 && qty<=minimo,
+  };
+  if(stockEditId){ const idx=STK.findIndex(s=>s.id===stockEditId);STK[idx]={...STK[idx],...data}; toast('✅ Ingrediente actualizado'); }
+  else{ STK.unshift({id:uid(),...data}); toast('✅ Ingrediente agregado'); }
+  svStk(); closeStockFormM(); renderAll();
+}
+
+/* ══ FORM RECETA ══ */
 function openForm(id=null){
-  editId=id;const r=id?R.find(x=>x.id===id):null;
+  editId=id; pickedIng=[];
+  const r=id?R.find(x=>x.id===id):null;
   $('mFormTtl').textContent=r?'Editar Receta':'Nueva Receta';
   $('fN').value=r?.nombre||'';$('fCat').value=r?.categoria||'tortas';
   $('fDif').value=r?.dificultad||'fácil';$('fPorc').value=r?.porciones||'';
   $('fPrep').value=r?.tiempoPrep||'';$('fCoc').value=r?.tiempoCoccion||'';
   $('fTemp').value=r?.temperatura||'';$('fDesc').value=r?.descripcion||'';
   $('fNotas').value=r?.notas||'';
-  rIng(r?.ingredientes||[]);rPasos(r?.pasos||[]);rTips(r?.tips||[]);
-  $('mForm').style.display='flex';setTimeout(()=>$('fN').focus(),150);
+  // Pre-cargar ingredientes existentes en pickedIng
+  if(r?.ingredientes?.length){
+    r.ingredientes.forEach(ing=>{
+      const nombre=(ing.nombre||ing.n||'').trim();
+      const catalogMatch=ING_CATALOG.find(c=>c.n.toLowerCase()===nombre.toLowerCase());
+      pickedIng.push({
+        id:catalogMatch?.id||uid(),
+        n:nombre,
+        ico:catalogMatch?.ico||ing.ico||'🧂',
+        cantidad:ing.cantidad||'',
+        unidad:ing.unidad||'g',
+        manual:!catalogMatch
+      });
+    });
+  }
+  pickerCat='todos';
+  $('ipcCats').querySelectorAll('[data-cat]').forEach(p=>p.classList.toggle('on',p.dataset.cat==='todos'));
+  ingPickerHTML('ingPickerGrid','ipcCats',pickedIng.map(p=>p.id));
+  renderPickedList();
+  rPasos(r?.pasos||[]);rTips(r?.tips||[]);
+  $('ingManual').style.display='none';
+  rIng([]);
+  $('mForm').style.display='flex';
+  setTimeout(()=>$('fN').focus(),150);
 }
-function closeFormM(){$('mForm').style.display='none';editId=null;}
+function closeFormM(){ $('mForm').style.display='none'; editId=null; pickedIng=[]; }
 
-function rIng(l){const c=$('ingList');c.innerHTML='';if(!l.length)l=[{}];l.forEach(i=>addIng(c,i));}
+function rIng(l){ const c=$('ingList');c.innerHTML='';l.forEach(i=>addIng(c,i)); }
 function addIng(c,i={}){
   const row=document.createElement('div');row.className='drow';
-  row.innerHTML=`<input type="text" placeholder="Cant." value="${esc(i.cantidad||'')}" data-f="cantidad" style="max-width:62px" inputmode="decimal"/>
-    <input type="text" placeholder="Unidad" value="${esc(i.unidad||'')}" data-f="unidad" style="max-width:76px"/>
+  row.innerHTML=`<input type="text" placeholder="Cant." value="${esc(i.cantidad||'')}" data-f="cantidad" style="max-width:60px" inputmode="decimal"/>
+    <input type="text" placeholder="Unidad" value="${esc(i.unidad||'')}" data-f="unidad" style="max-width:72px"/>
     <input type="text" placeholder="Ingrediente" value="${esc(i.nombre||'')}" data-f="nombre"/>
     <button class="rm-btn" type="button">✕</button>`;
   row.querySelector('.rm-btn').addEventListener('click',()=>row.remove());c.appendChild(row);
 }
-function rPasos(l){const c=$('pasoList');c.innerHTML='';if(!l.length)l=[''];l.forEach((p,i)=>addPaso(c,p,i+1));}
+function rPasos(l){ const c=$('pasoList');c.innerHTML='';if(!l.length)l=[''];l.forEach((p,i)=>addPaso(c,p,i+1)); }
 function addPaso(c,txt='',n){
   const num=n||c.querySelectorAll('.drow').length+1;
   const row=document.createElement('div');row.className='drow';
   row.innerHTML=`<span class="step-n">${num}</span><textarea placeholder="Describí este paso…" rows="2">${esc(txt)}</textarea><button class="rm-btn" type="button">✕</button>`;
-  row.querySelector('.rm-btn').addEventListener('click',()=>{row.remove();c.querySelectorAll('.step-n').forEach((s,i)=>s.textContent=i+1);});
+  row.querySelector('.rm-btn').addEventListener('click',()=>{ row.remove(); c.querySelectorAll('.step-n').forEach((s,i)=>s.textContent=i+1); });
   c.appendChild(row);
 }
-function rTips(l){const c=$('tipList');c.innerHTML='';if(!l.length)l=[''];l.forEach(t=>addTip(c,t));}
-function addTip(c,txt=''){
-  const row=document.createElement('div');row.className='drow';
-  row.innerHTML=`<input type="text" placeholder="Ej: No abrir el horno los primeros 20 min…" value="${esc(txt)}"/><button class="rm-btn" type="button">✕</button>`;
-  row.querySelector('.rm-btn').addEventListener('click',()=>row.remove());c.appendChild(row);
-}
+function rTips(l){ const c=$('tipList');c.innerHTML='';if(!l.length)l=[''];l.forEach(t=>addTip(c,t)); }
+function addTip(c,txt=''){ const row=document.createElement('div');row.className='drow';row.innerHTML=`<input type="text" placeholder="Ej: No abrir el horno los primeros 20 min…" value="${esc(txt)}"/><button class="rm-btn" type="button">✕</button>`;row.querySelector('.rm-btn').addEventListener('click',()=>row.remove());c.appendChild(row); }
+
 function collectF(){
   const nombre=$('fN').value.trim();
-  if(!nombre){toast('⚠️ El nombre es obligatorio');return null;}
-  const ingredientes=[...$('ingList').querySelectorAll('.drow')].map(r=>({
+  if(!nombre){ toast('⚠️ El nombre es obligatorio'); return null; }
+  // Combinar picked + manual
+  const ingFromPicker=pickedIng.map(p=>({nombre:p.n,cantidad:p.cantidad,unidad:p.unidad,ico:p.ico}));
+  const ingManualList=[...$('ingList').querySelectorAll('.drow')].map(r=>({
     cantidad:r.querySelector('[data-f="cantidad"]').value.trim(),
     unidad:r.querySelector('[data-f="unidad"]').value.trim(),
     nombre:r.querySelector('[data-f="nombre"]').value.trim()
   })).filter(i=>i.nombre);
+  const ingredientes=[...ingFromPicker,...ingManualList];
   const pasos=[...$('pasoList').querySelectorAll('textarea')].map(t=>t.value.trim()).filter(Boolean);
   const tips=[...$('tipList').querySelectorAll('input[type="text"]')].map(t=>t.value.trim()).filter(Boolean);
   return{nombre,categoria:$('fCat').value,dificultad:$('fDif').value,porciones:$('fPorc').value,
     tiempoPrep:$('fPrep').value,tiempoCoccion:$('fCoc').value,temperatura:$('fTemp').value,
     descripcion:$('fDesc').value.trim(),notas:$('fNotas').value.trim(),ingredientes,pasos,tips};
 }
+
 function saveR(e){
-  e.preventDefault();const d=collectF();if(!d)return;
-  if(editId){const i=R.findIndex(r=>r.id===editId);R[i]={...R[i],...d,updatedAt:Date.now()};toast('✅ Receta actualizada');}
-  else{R.unshift({id:uid(),favorita:false,createdAt:Date.now(),...d});toast('🎉 Receta guardada');}
-  sv();closeFormM();renderR();
-}
-function delR(id){
-  if(!confirm('¿Eliminar esta receta?'))return;
-  R=R.filter(r=>r.id!==id);sv();renderR();toast('🗑️ Receta eliminada');
+  e.preventDefault(); const d=collectF(); if(!d)return;
+  if(editId){ const i=R.findIndex(r=>r.id===editId);R[i]={...R[i],...d,updatedAt:Date.now()};toast('✅ Receta actualizada'); }
+  else{ R.unshift({id:uid(),favorita:false,createdAt:Date.now(),...d});toast('🎉 Receta guardada'); }
+  sv(); closeFormM(); renderAll();
 }
 
-/* ── Filtros ── */
-function updTtl(){
-  const cats={todas:'Todas las Recetas',tortas:'🎂 Tortas',galletas:'🍪 Galletas',tartas:'🥧 Tartas',cupcakes:'🧁 Cupcakes',panes:'🍞 Panes',cremas:'🫧 Cremas',otros:'🍮 Otros'};
-  let t=cats[cat]||'Recetas';
-  if(dif!=='todas')t+=` · ${dif}`;
-  if(q)t=`"${q}"`;
-  $('cTtl').textContent=t;
+function delR(id){ if(!confirm('¿Eliminar esta receta?'))return; R=R.filter(r=>r.id!==id);sv();renderAll();toast('🗑️ Receta eliminada'); }
+function togFav(id){ const r=R.find(x=>x.id===id);if(!r)return;r.favorita=!r.favorita;sv();renderAll();toast(r.favorita?'❤️ Favorita':'🤍 Quitada de favoritas'); }
+
+/* ══ DESCARGA / EXPORTAR / IMPORTAR ══ */
+function dlApp(){
+  const blob=new Blob([document.documentElement.outerHTML],{type:'text/html;charset=utf-8'});
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');
+  const n=($('cNombre').value.trim()||'cuaderno-reposteria').toLowerCase().replace(/\s+/g,'-');
+  a.href=url;a.download=`${n}.html`;a.click();URL.revokeObjectURL(url);toast('💾 App guardada');
+}
+function expJSON(){
+  if(!R.length){toast('⚠️ No hay recetas');return;}
+  const n=$('cNombre').value.trim()||'Mi Cuaderno';
+  const data={cuaderno:n,exportado:new Date().toISOString(),recetas:R,stock:STK};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');
+  const f=new Date().toLocaleDateString('es-AR').replace(/\//g,'-');
+  a.href=url;a.download=`recetas-${n.toLowerCase().replace(/\s+/g,'-')}-${f}.json`;a.click();URL.revokeObjectURL(url);
+  toast(`📤 ${R.length} recetas exportadas`);
+}
+function openImp(){ impData=null;$('impFile').value='';$('impPrev').style.display='none';$('doImp').disabled=true;document.querySelector('[name="impMode"][value="combinar"]').checked=true;$('mImp').style.display='flex'; }
+function closeImpM(){ $('mImp').style.display='none';impData=null; }
+function handleFile(file){
+  if(!file||!file.name.endsWith('.json')){toast('⚠️ Seleccioná un .json');return;}
+  const rd=new FileReader();
+  rd.onload=e=>{
+    try{
+      const p=JSON.parse(e.target.result);
+      const l=Array.isArray(p)?p:(p.recetas||[]);
+      if(!l.length){toast('⚠️ Sin recetas');return;}
+      impData={recetas:l,stock:p.stock||[]};
+      const pr=$('impPrev');
+      pr.textContent=`✅ ${l.length} receta${l.length!==1?'s':''} + ${p.stock?.length||0} ingredientes${p.cuaderno?` · "${p.cuaderno}"`:''}`;
+      pr.style.display='block';$('doImp').disabled=false;
+    }catch{toast('❌ Archivo inválido');}
+  };
+  rd.readAsText(file);
+}
+function doImport(){
+  if(!impData)return;
+  const modo=document.querySelector('[name="impMode"]:checked').value;
+  const nuevas=impData.recetas.map(r=>({...r,id:uid(),favorita:r.favorita||false}));
+  if(modo==='reemplazar'){if(!confirm('¿Reemplazar todo?'))return;R=nuevas;STK=impData.stock.map(s=>({...s,id:uid()}));}
+  else{R=[...nuevas,...R];STK=[...impData.stock.map(s=>({...s,id:uid()})),...STK];}
+  sv();svStk();closeImpM();renderAll();
+  toast(`📥 ${nuevas.length} recetas importadas`);
 }
 
-/* ── Datos de ejemplo ── */
+/* ══ NAVEGACIÓN ══ */
+function goPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  $(id).classList.add('on');
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('on',b.dataset.page===id));
+  window.scrollTo(0,0);
+}
+
+/* ══ SAMPLE DATA ══ */
 function sample(){
   if(R.length)return;
   R=[
     {id:uid(),favorita:true,createdAt:Date.now(),nombre:'Torta de Chocolate Húmeda',categoria:'tortas',dificultad:'media',porciones:'12',tiempoPrep:'25',tiempoCoccion:'40',temperatura:'180',
      descripcion:'La torta de chocolate perfecta: esponjosa, húmeda y con ganache irresistible.',
-     ingredientes:[{cantidad:'200',unidad:'g',nombre:'harina 0000'},{cantidad:'180',unidad:'g',nombre:'azúcar'},{cantidad:'60',unidad:'g',nombre:'cacao amargo'},{cantidad:'2',unidad:'',nombre:'huevos'},{cantidad:'200',unidad:'ml',nombre:'leche'},{cantidad:'100',unidad:'ml',nombre:'aceite neutro'},{cantidad:'1',unidad:'cdita',nombre:'bicarbonato'},{cantidad:'1',unidad:'cdita',nombre:'polvo de hornear'},{cantidad:'200',unidad:'ml',nombre:'café caliente'}],
-     pasos:['Precalentar el horno a 180°C. Enmantecar y enharinar un molde de 22cm.','Tamizar los secos: harina, cacao, bicarbonato y polvo de hornear.','Batir los huevos con el azúcar hasta blanquear (5 min). Agregar aceite en hilo.','Incorporar los secos en tres veces, alternando con la leche.','Añadir el café caliente y mezclar.','Hornear 40 min. Verificar con palillo.'],
-     tips:['El café potencia el chocolate sin que se sienta.','No abrir el horno los primeros 30 min.'],
-     notas:'Clase 3. La profe recomienda cacao alcalino holandés.'},
-    {id:uid(),favorita:false,createdAt:Date.now()-1000,nombre:'Alfajores de Maizena',categoria:'galletas',dificultad:'fácil',porciones:'20',tiempoPrep:'40',tiempoCoccion:'12',temperatura:'160',
-     descripcion:'Alfajores tiernos que se deshacen en la boca, rellenos con dulce de leche.',
-     ingredientes:[{cantidad:'200',unidad:'g',nombre:'maizena'},{cantidad:'100',unidad:'g',nombre:'harina'},{cantidad:'130',unidad:'g',nombre:'manteca'},{cantidad:'60',unidad:'g',nombre:'azúcar impalpable'},{cantidad:'3',unidad:'',nombre:'yemas'},{cantidad:'500',unidad:'g',nombre:'dulce de leche'}],
-     pasos:['Cremar manteca con azúcar impalpable.','Agregar yemas y vainilla.','Incorporar secos hasta unir (sin amasar).','Estirar a 5mm, refrigerar 30 min.','Cortar y hornear 10-12 min (blancos).','Rellenar con dulce de leche y rebozar en coco.'],
-     tips:['No trabajar demasiado la masa.','Sacar antes de que doren.'],notas:''},
+     ingredientes:[{nombre:'harina 0000',cantidad:'200',unidad:'g',ico:'🌾'},{nombre:'azúcar',cantidad:'180',unidad:'g',ico:'🍬'},{nombre:'cacao amargo',cantidad:'60',unidad:'g',ico:'🍫'},{nombre:'huevos',cantidad:'2',unidad:'',ico:'🥚'},{nombre:'leche',cantidad:'200',unidad:'ml',ico:'🥛'},{nombre:'aceite',cantidad:'100',unidad:'ml',ico:'🫙'},{nombre:'bicarbonato',cantidad:'1',unidad:'cdita',ico:'🫧'},{nombre:'polvo de hornear',cantidad:'1',unidad:'cdita',ico:'🫧'},{nombre:'café',cantidad:'200',unidad:'ml',ico:'☕'}],
+     pasos:['Precalentar a 180°C. Enmantecar un molde de 22cm.','Tamizar los secos: harina, cacao, bicarbonato y polvo.','Batir huevos con azúcar 5 min. Agregar aceite en hilo.','Incorporar secos alternando con leche.','Añadir café caliente. Mezclar.','Hornear 40 min. Verificar con palillo.'],
+     tips:['El café potencia el chocolate.','No abrir el horno los primeros 30 min.'],
+     notas:'Clase 3. Usar cacao alcalino holandés.'},
+    {id:uid(),favorita:true,createdAt:Date.now()-1000,nombre:'Alfajores de Maizena',categoria:'galletas',dificultad:'fácil',porciones:'20',tiempoPrep:'40',tiempoCoccion:'12',temperatura:'160',
+     descripcion:'Alfajores tiernos que se deshacen en la boca.',
+     ingredientes:[{nombre:'maizena',cantidad:'200',unidad:'g',ico:'🌽'},{nombre:'harina 0000',cantidad:'100',unidad:'g',ico:'🌾'},{nombre:'manteca',cantidad:'130',unidad:'g',ico:'🧈'},{nombre:'azúcar impalpable',cantidad:'60',unidad:'g',ico:'🍬'},{nombre:'yemas',cantidad:'3',unidad:'',ico:'🥚'},{nombre:'dulce de leche',cantidad:'500',unidad:'g',ico:'🍮'},{nombre:'coco rallado',cantidad:'100',unidad:'g',ico:'🥥'}],
+     pasos:['Cremar manteca con azúcar impalpable.','Agregar yemas y vainilla.','Incorporar secos sin amasar.','Estirar a 5mm, refrigerar 30 min.','Cortar y hornear 10-12 min (blancos).','Rellenar con dulce de leche. Rebozar en coco.'],
+     tips:['No trabajar demasiado la masa.'],notas:''},
     {id:uid(),favorita:false,createdAt:Date.now()-2000,nombre:'Crema Pastelera Clásica',categoria:'cremas',dificultad:'fácil',porciones:'8',tiempoPrep:'10',tiempoCoccion:'15',temperatura:null,
-     descripcion:'Base de toda buena repostería. Sedosa y perfecta para tartas y profiteroles.',
-     ingredientes:[{cantidad:'500',unidad:'ml',nombre:'leche entera'},{cantidad:'4',unidad:'',nombre:'yemas'},{cantidad:'100',unidad:'g',nombre:'azúcar'},{cantidad:'40',unidad:'g',nombre:'almidón de maíz'},{cantidad:'1',unidad:'cdita',nombre:'vainilla'},{cantidad:'30',unidad:'g',nombre:'manteca'}],
-     pasos:['Calentar la leche hasta hervor.','Batir yemas con azúcar y almidón.','Volcar leche caliente en hilo, revolviendo.','Cocinar a fuego medio hasta espesar.','Retirar, agregar manteca. Cubrir con film al contacto.'],
+     descripcion:'Base de toda buena repostería. Sedosa y perfecta para tartas.',
+     ingredientes:[{nombre:'leche',cantidad:'500',unidad:'ml',ico:'🥛'},{nombre:'yemas',cantidad:'4',unidad:'',ico:'🥚'},{nombre:'azúcar',cantidad:'100',unidad:'g',ico:'🍬'},{nombre:'maizena',cantidad:'40',unidad:'g',ico:'🌽'},{nombre:'vainilla',cantidad:'1',unidad:'cdita',ico:'🌿'},{nombre:'manteca',cantidad:'30',unidad:'g',ico:'🧈'}],
+     pasos:['Calentar leche hasta hervor.','Batir yemas con azúcar y almidón.','Volcar leche en hilo, revolviendo.','Cocinar a fuego medio hasta espesar.','Retirar, agregar manteca. Film al contacto.'],
      tips:['No dejar de revolver.','Film al contacto evita la piel.'],
-     notas:'Clase 1. La consistencia ideal es cuando napa la cuchara.'}
-  ];sv();
+     notas:'Clase 1. La consistencia ideal es cuando napa la cuchara.'},
+
+    // ── NUEVAS RECETAS ──
+
+    {id:uid(),favorita:false,createdAt:Date.now()-3000,
+     nombre:'Cheesecake de Frutillas',categoria:'tartas',dificultad:'media',porciones:'10',tiempoPrep:'30',tiempoCoccion:'55',temperatura:'160',
+     descripcion:'Cremosa y suave, con base de galletitas y topping de frutillas frescas.',
+     ingredientes:[
+       {nombre:'galletitas marineras',cantidad:'200',unidad:'g',ico:'🍪'},
+       {nombre:'manteca',cantidad:'80',unidad:'g',ico:'🧈'},
+       {nombre:'queso crema',cantidad:'600',unidad:'g',ico:'🧀'},
+       {nombre:'azúcar',cantidad:'150',unidad:'g',ico:'🍬'},
+       {nombre:'huevos',cantidad:'3',unidad:'',ico:'🥚'},
+       {nombre:'crema',cantidad:'100',unidad:'ml',ico:'🥛'},
+       {nombre:'vainilla',cantidad:'1',unidad:'cdita',ico:'🌿'},
+       {nombre:'frutillas',cantidad:'300',unidad:'g',ico:'🍓'},
+     ],
+     pasos:['Triturar galletitas y mezclar con manteca derretida. Forrar un molde de 22cm y refrigerar.',
+       'Batir queso crema con azúcar hasta suavizar. Agregar huevos de a uno.',
+       'Añadir crema y vainilla. Mezclar sin airear.',
+       'Verter sobre la base. Hornear a 160°C en baño maría 55 min.',
+       'Apagar el horno y dejar adentro 1 hora con la puerta entreabierta.',
+       'Refrigerar mínimo 4 horas. Decorar con frutillas antes de servir.'],
+     tips:['El baño maría evita que se agriete.','No batir en exceso para que no entre aire.','Mejor de un día para el otro.'],
+     notas:''},
+
+    {id:uid(),favorita:true,createdAt:Date.now()-4000,
+     nombre:'Tarta de Manzana Clásica',categoria:'tartas',dificultad:'media',porciones:'8',tiempoPrep:'40',tiempoCoccion:'40',temperatura:'180',
+     descripcion:'Masa quebrada crujiente con relleno de manzanas caramelizadas y canela.',
+     ingredientes:[
+       {nombre:'harina 0000',cantidad:'300',unidad:'g',ico:'🌾'},
+       {nombre:'manteca',cantidad:'150',unidad:'g',ico:'🧈'},
+       {nombre:'azúcar',cantidad:'60',unidad:'g',ico:'🍬'},
+       {nombre:'huevos',cantidad:'1',unidad:'',ico:'🥚'},
+       {nombre:'manzana',cantidad:'4',unidad:'unidad',ico:'🍎'},
+       {nombre:'azúcar negra',cantidad:'80',unidad:'g',ico:'🍯'},
+       {nombre:'canela',cantidad:'1',unidad:'cdita',ico:'🌿'},
+       {nombre:'manteca',cantidad:'20',unidad:'g',ico:'🧈'},
+     ],
+     pasos:['Mezclar harina con manteca fría hasta obtener migas. Agregar azúcar y huevo. Unir sin amasar.',
+       'Envolver en film y refrigerar 30 min.',
+       'Pelar y cortar manzanas en láminas. Saltear con manteca, azúcar negra y canela 5 min.',
+       'Estirar la masa y forrar un molde de 24cm. Pinchar la base.',
+       'Volcar el relleno de manzanas. Tapar con el resto de la masa o hacer una grilla.',
+       'Hornear 40 min hasta dorar. Enfriar antes de desmoldar.'],
+     tips:['La manteca debe estar fría para lograr una masa crujiente.','Agregar 1 cdita de vinagre al relleno para resaltar el sabor.'],
+     notas:''},
+
+    {id:uid(),favorita:false,createdAt:Date.now()-5000,
+     nombre:'Galletitas de Avena y Chips de Chocolate',categoria:'galletas',dificultad:'fácil',porciones:'24',tiempoPrep:'15',tiempoCoccion:'12',temperatura:'175',
+     descripcion:'Galletitas tiernas por dentro y crocantes por fuera. Un clásico irresistible.',
+     ingredientes:[
+       {nombre:'harina 0000',cantidad:'180',unidad:'g',ico:'🌾'},
+       {nombre:'avena',cantidad:'150',unidad:'g',ico:'🌾'},
+       {nombre:'manteca',cantidad:'120',unidad:'g',ico:'🧈'},
+       {nombre:'azúcar negra',cantidad:'100',unidad:'g',ico:'🍯'},
+       {nombre:'azúcar',cantidad:'60',unidad:'g',ico:'🍬'},
+       {nombre:'huevos',cantidad:'1',unidad:'',ico:'🥚'},
+       {nombre:'vainilla',cantidad:'1',unidad:'cdita',ico:'🌿'},
+       {nombre:'bicarbonato',cantidad:'1',unidad:'cdita',ico:'🫧'},
+       {nombre:'sal',cantidad:'1',unidad:'pizca',ico:'🧂'},
+       {nombre:'chips choc.',cantidad:'150',unidad:'g',ico:'🍫'},
+     ],
+     pasos:['Cremar manteca con los azúcares hasta obtener crema pálida.',
+       'Agregar huevo y vainilla. Integrar bien.',
+       'Incorporar harina, avena, bicarbonato y sal. Mezclar.',
+       'Añadir chips de chocolate.',
+       'Hacer bolitas del tamaño de una nuez y aplastar sobre placa enmantecada.',
+       'Hornear 10-12 min hasta dorar los bordes. Enfriar en la placa.'],
+     tips:['Sacarlas del horno cuando los bordes están dorados pero el centro todavía blando.','Se endurecen al enfriar.'],
+     notas:''},
+
+    {id:uid(),favorita:false,createdAt:Date.now()-6000,
+     nombre:'Torta de Limón y Crema',categoria:'tortas',dificultad:'media',porciones:'10',tiempoPrep:'30',tiempoCoccion:'35',temperatura:'180',
+     descripcion:'Bizcocho húmedo de limón con crema de manteca de limón entre capas.',
+     ingredientes:[
+       {nombre:'harina 0000',cantidad:'220',unidad:'g',ico:'🌾'},
+       {nombre:'azúcar',cantidad:'200',unidad:'g',ico:'🍬'},
+       {nombre:'manteca',cantidad:'120',unidad:'g',ico:'🧈'},
+       {nombre:'huevos',cantidad:'3',unidad:'',ico:'🥚'},
+       {nombre:'limón',cantidad:'2',unidad:'unidad',ico:'🍋'},
+       {nombre:'leche',cantidad:'120',unidad:'ml',ico:'🥛'},
+       {nombre:'polvo de hornear',cantidad:'2',unidad:'cdita',ico:'🫧'},
+       {nombre:'crema',cantidad:'200',unidad:'ml',ico:'🥛'},
+       {nombre:'azúcar impalpable',cantidad:'80',unidad:'g',ico:'🍬'},
+     ],
+     pasos:['Rallar la piel de los limones. Exprimir el jugo. Reservar.',
+       'Cremar manteca con azúcar. Agregar huevos de a uno.',
+       'Incorporar ralladura y jugo de limón.',
+       'Alternar secos con leche hasta integrar.',
+       'Hornear 35 min. Enfriar completamente.',
+       'Batir crema con azúcar impalpable hasta chantilly. Agregar jugo de limón.',
+       'Cortar el bizcocho en capas y rellenar con la crema.'],
+     tips:['Usar limones frescos, no de botella.','El bizcocho debe estar frío antes de rellenar.'],
+     notas:''},
+
+    {id:uid(),favorita:true,createdAt:Date.now()-7000,
+     nombre:'Brownies de Chocolate Intenso',categoria:'tortas',dificultad:'fácil',porciones:'16',tiempoPrep:'15',tiempoCoccion:'25',temperatura:'180',
+     descripcion:'Brownies fudgy, densos y con costra crocante. Los mejores que vas a probar.',
+     ingredientes:[
+       {nombre:'choc. amargo',cantidad:'200',unidad:'g',ico:'🍫'},
+       {nombre:'manteca',cantidad:'120',unidad:'g',ico:'🧈'},
+       {nombre:'azúcar',cantidad:'200',unidad:'g',ico:'🍬'},
+       {nombre:'huevos',cantidad:'3',unidad:'',ico:'🥚'},
+       {nombre:'harina 0000',cantidad:'80',unidad:'g',ico:'🌾'},
+       {nombre:'cacao amargo',cantidad:'20',unidad:'g',ico:'🍫'},
+       {nombre:'sal',cantidad:'1',unidad:'pizca',ico:'🧂'},
+       {nombre:'vainilla',cantidad:'1',unidad:'cdita',ico:'🌿'},
+     ],
+     pasos:['Derretir chocolate con manteca a baño maría. Dejar entibiar.',
+       'Batir huevos con azúcar hasta espumar (5 min).',
+       'Incorporar el chocolate derretido.',
+       'Añadir harina, cacao y sal tamizados. Mezclar con espátula.',
+       'Verter en molde cuadrado 20x20 enmantecado.',
+       'Hornear 22-25 min. El centro debe quedar ligeramente húmedo.',
+       'Enfriar completamente antes de cortar.'],
+     tips:['La clave está en no sobrecocinar: palillo sale con migas húmedas, no limpio.','Usar chocolate de buena calidad (mínimo 60% cacao).'],
+     notas:''},
+
+    {id:uid(),favorita:false,createdAt:Date.now()-8000,
+     nombre:'Tarta de Ricota y Dulce de Leche',categoria:'tartas',dificultad:'fácil',porciones:'10',tiempoPrep:'20',tiempoCoccion:'35',temperatura:'170',
+     descripcion:'Suave, cremosa y con una capa irresistible de dulce de leche.',
+     ingredientes:[
+       {nombre:'harina 0000',cantidad:'250',unidad:'g',ico:'🌾'},
+       {nombre:'manteca',cantidad:'120',unidad:'g',ico:'🧈'},
+       {nombre:'azúcar',cantidad:'50',unidad:'g',ico:'🍬'},
+       {nombre:'huevos',cantidad:'1',unidad:'',ico:'🥚'},
+       {nombre:'ricota',cantidad:'500',unidad:'g',ico:'🥛'},
+       {nombre:'dulce de leche',cantidad:'200',unidad:'g',ico:'🍮'},
+       {nombre:'azúcar',cantidad:'80',unidad:'g',ico:'🍬'},
+       {nombre:'yemas',cantidad:'2',unidad:'',ico:'🥚'},
+       {nombre:'vainilla',cantidad:'1',unidad:'cdita',ico:'🌿'},
+       {nombre:'cáscara de limón',cantidad:'1',unidad:'cdita',ico:'🍋'},
+     ],
+     pasos:['Preparar masa quebrada: mezclar harina, manteca fría, azúcar y huevo. Refrigerar 20 min.',
+       'Mezclar ricota escurrida con azúcar, yemas, vainilla y ralladura.',
+       'Estirar la masa y forrar un molde de 24cm. Pinchar la base.',
+       'Extender el dulce de leche sobre la base.',
+       'Volcar el relleno de ricota encima.',
+       'Hornear 35 min hasta que el centro esté firme. Enfriar antes de servir.'],
+     tips:['Escurrir bien la ricota para que no quede aguada.','Mezclar la ricota a mano, sin batidora.'],
+     notas:''},
+
+    {id:uid(),favorita:false,createdAt:Date.now()-9000,
+     nombre:'Galletitas de Jengibre y Miel',categoria:'galletas',dificultad:'fácil',porciones:'30',tiempoPrep:'20',tiempoCoccion:'10',temperatura:'170',
+     descripcion:'Crujientes, aromáticas y perfectas para decorar. Ideales para Navidad.',
+     ingredientes:[
+       {nombre:'harina 0000',cantidad:'350',unidad:'g',ico:'🌾'},
+       {nombre:'manteca',cantidad:'100',unidad:'g',ico:'🧈'},
+       {nombre:'azúcar negra',cantidad:'100',unidad:'g',ico:'🍯'},
+       {nombre:'miel',cantidad:'80',unidad:'g',ico:'🍯'},
+       {nombre:'huevos',cantidad:'1',unidad:'',ico:'🥚'},
+       {nombre:'jengibre en polvo',cantidad:'2',unidad:'cdita',ico:'🌿'},
+       {nombre:'canela',cantidad:'1',unidad:'cdita',ico:'🌿'},
+       {nombre:'bicarbonato',cantidad:'1',unidad:'cdita',ico:'🫧'},
+       {nombre:'sal',cantidad:'1',unidad:'pizca',ico:'🧂'},
+     ],
+     pasos:['Calentar manteca, azúcar y miel hasta disolver. Enfriar 10 min.',
+       'Agregar huevo a la mezcla tibia. Mezclar.',
+       'Incorporar harina con las especias, bicarbonato y sal.',
+       'Amasar hasta obtener una masa lisa. Refrigerar 1 hora.',
+       'Estirar a 4mm y cortar con cortantes.',
+       'Hornear 8-10 min. Enfriar completamente antes de decorar.'],
+     tips:['No sobrecocinar: quedan blandas al salir y se endurecen al enfriarse.','Decorar con glasé real.'],
+     notas:''},
+
+    {id:uid(),favorita:false,createdAt:Date.now()-10000,
+     nombre:'Torta Red Velvet',categoria:'tortas',dificultad:'avanzada',porciones:'12',tiempoPrep:'35',tiempoCoccion:'30',temperatura:'175',
+     descripcion:'La famosa torta roja con frosting de queso crema. Impactante y deliciosa.',
+     ingredientes:[
+       {nombre:'harina 0000',cantidad:'250',unidad:'g',ico:'🌾'},
+       {nombre:'azúcar',cantidad:'200',unidad:'g',ico:'🍬'},
+       {nombre:'cacao amargo',cantidad:'15',unidad:'g',ico:'🍫'},
+       {nombre:'aceite',cantidad:'180',unidad:'ml',ico:'🫙'},
+       {nombre:'huevos',cantidad:'2',unidad:'',ico:'🥚'},
+       {nombre:'leche',cantidad:'200',unidad:'ml',ico:'🥛'},
+       {nombre:'vinagre',cantidad:'1',unidad:'cda',ico:'🫙'},
+       {nombre:'bicarbonato',cantidad:'1',unidad:'cdita',ico:'🫧'},
+       {nombre:'vainilla',cantidad:'1',unidad:'cdita',ico:'🌿'},
+       {nombre:'colorante rojo',cantidad:'2',unidad:'cda',ico:'🌿'},
+       {nombre:'queso crema',cantidad:'400',unidad:'g',ico:'🧀'},
+       {nombre:'azúcar impalpable',cantidad:'200',unidad:'g',ico:'🍬'},
+       {nombre:'manteca',cantidad:'80',unidad:'g',ico:'🧈'},
+     ],
+     pasos:['Mezclar leche con vinagre. Dejar reposar 5 min (buttermilk casero).',
+       'Batir aceite con azúcar. Agregar huevos y vainilla.',
+       'Mezclar cacao con el colorante rojo hasta obtener pasta. Incorporar a la mezcla.',
+       'Alternar los secos con el buttermilk.',
+       'Agregar bicarbonato disuelto en un chorrito de vinagre.',
+       'Hornear en 2 moldes de 20cm por 28-30 min.',
+       'Para el frosting: batir queso crema con manteca y azúcar impalpable hasta suavizar.',
+       'Rellenar y cubrir la torta completamente. Refrigerar.'],
+     tips:['El colorante debe ser en gel para un rojo intenso.','El frosting debe estar frío para que no se corra.'],
+     notas:''},
+
+    {id:uid(),favorita:false,createdAt:Date.now()-11000,
+     nombre:'Medialunas de Manteca',categoria:'panes',dificultad:'avanzada',porciones:'16',tiempoPrep:'90',tiempoCoccion:'18',temperatura:'200',
+     descripcion:'Esponjosas, hojaldradas y con ese brillo dorado perfecto. Un clásico argentino.',
+     ingredientes:[
+       {nombre:'harina 0000',cantidad:'500',unidad:'g',ico:'🌾'},
+       {nombre:'levadura',cantidad:'10',unidad:'g',ico:'🫧'},
+       {nombre:'azúcar',cantidad:'80',unidad:'g',ico:'🍬'},
+       {nombre:'sal',cantidad:'8',unidad:'g',ico:'🧂'},
+       {nombre:'leche',cantidad:'200',unidad:'ml',ico:'🥛'},
+       {nombre:'huevos',cantidad:'2',unidad:'',ico:'🥚'},
+       {nombre:'manteca',cantidad:'200',unidad:'g',ico:'🧈'},
+       {nombre:'azúcar',cantidad:'50',unidad:'g',ico:'🍬'},
+       {nombre:'agua',cantidad:'50',unidad:'ml',ico:'🫙'},
+     ],
+     pasos:['Disolver levadura en leche tibia con una pizca de azúcar. Dejar 10 min.',
+       'Mezclar harina, azúcar y sal. Formar corona.',
+       'Incorporar huevos y la leche con levadura. Amasar 10 min.',
+       'Refrigerar la masa 30 min. Estirar en rectángulo.',
+       'Distribuir la manteca fría en láminas sobre 2/3 de la masa. Doblar y estirar 3 veces (refrigerando entre veces).',
+       'Estirar a 4mm. Cortar triángulos y enrollar.',
+       'Dejar levar 45 min hasta duplicar tamaño.',
+       'Hornear 18 min a 200°C.',
+       'Pintar con almíbar (agua + azúcar hervidos) al salir del horno.'],
+     tips:['La manteca para el hojaldrado debe estar fría pero flexible.','No omitir los descansos en heladera.'],
+     notas:''},
+
+    {id:uid(),favorita:false,createdAt:Date.now()-12000,
+     nombre:'Tarta de Chocolate y Frambuesas',categoria:'tartas',dificultad:'media',porciones:'8',tiempoPrep:'25',tiempoCoccion:'20',temperatura:'175',
+     descripcion:'Base de masa sablée con ganache de chocolate oscuro y frambuesas frescas.',
+     ingredientes:[
+       {nombre:'harina 0000',cantidad:'200',unidad:'g',ico:'🌾'},
+       {nombre:'manteca',cantidad:'100',unidad:'g',ico:'🧈'},
+       {nombre:'azúcar impalpable',cantidad:'50',unidad:'g',ico:'🍬'},
+       {nombre:'yemas',cantidad:'2',unidad:'',ico:'🥚'},
+       {nombre:'cacao amargo',cantidad:'10',unidad:'g',ico:'🍫'},
+       {nombre:'choc. amargo',cantidad:'250',unidad:'g',ico:'🍫'},
+       {nombre:'crema',cantidad:'200',unidad:'ml',ico:'🥛'},
+       {nombre:'manteca',cantidad:'30',unidad:'g',ico:'🧈'},
+       {nombre:'frambuesas',cantidad:'200',unidad:'g',ico:'🫐'},
+     ],
+     pasos:['Hacer la sablée: mezclar harina, manteca fría, azúcar y cacao. Agregar yemas. Refrigerar 30 min.',
+       'Estirar y forrar un molde de 22cm. Hornear en blanco (con peso) 20 min a 175°C.',
+       'Para el ganache: calentar crema hasta hervir. Verter sobre chocolate picado.',
+       'Esperar 2 min y mezclar hasta homogeneizar. Agregar manteca.',
+       'Verter el ganache sobre la base fría.',
+       'Decorar con frambuesas frescas. Refrigerar 2 horas.'],
+     tips:['El ganache debe estar apenas tibio al volcarlo, no caliente.','No mover la tarta hasta que el ganache esté firme.'],
+     notas:''}
+  ];
+  // Stock de muestra
+  STK=[
+    {id:uid(),nombre:'harina 0000',qty:'1',unit:'kg',ico:'🌾',cat:'harinas',nota:''},
+    {id:uid(),nombre:'azúcar',qty:'500',unit:'g',ico:'🍬',cat:'azucares',nota:''},
+    {id:uid(),nombre:'huevos',qty:'6',unit:'unidad',ico:'🥚',cat:'huevos',nota:''},
+    {id:uid(),nombre:'manteca',qty:'200',unit:'g',ico:'🧈',cat:'grasas',nota:''},
+    {id:uid(),nombre:'leche',qty:'1',unit:'l',ico:'🥛',cat:'lacteos',nota:''},
+  ];
+  sv();svStk();
 }
 
 /* ══ PWA ══ */
@@ -793,13 +1501,11 @@ window.addEventListener('beforeinstallprompt',e=>{
   e.preventDefault();deferredPrompt=e;
   if(!sessionStorage.getItem('pwa_x'))$('pwaBanner').classList.add('show');
 });
-window.addEventListener('appinstalled',()=>{
-  $('pwaBanner').classList.remove('show');deferredPrompt=null;toast('✅ App instalada');
-});
+window.addEventListener('appinstalled',()=>{ $('pwaBanner').classList.remove('show');deferredPrompt=null;toast('✅ App instalada'); });
 
 /* ══ INIT ══ */
 document.addEventListener('DOMContentLoaded',()=>{
-  sample();loadN();renderR();
+  sample(); loadN(); renderAll();
 
   $('cNombre').addEventListener('blur',saveN);
   $('cNombre').addEventListener('change',saveN);
@@ -807,30 +1513,27 @@ document.addEventListener('DOMContentLoaded',()=>{
   /* PWA */
   $('pwaInstall').addEventListener('click',async()=>{
     if(!deferredPrompt){toast('Abrí en Chrome para instalar');return;}
-    deferredPrompt.prompt();
-    const{outcome}=await deferredPrompt.userChoice;
-    if(outcome==='accepted')toast('✅ Instalando…');
-    deferredPrompt=null;$('pwaBanner').classList.remove('show');
+    deferredPrompt.prompt();const{outcome}=await deferredPrompt.userChoice;
+    if(outcome==='accepted')toast('✅ Instalando…');deferredPrompt=null;$('pwaBanner').classList.remove('show');
   });
-  $('pwaClose').addEventListener('click',()=>{
-    $('pwaBanner').classList.remove('show');sessionStorage.setItem('pwa_x','1');
-  });
+  $('pwaClose').addEventListener('click',()=>{ $('pwaBanner').classList.remove('show');sessionStorage.setItem('pwa_x','1'); });
 
-  /* Header actions — desktop */
-  $('btnDL').addEventListener('click',dlApp);
-  $('btnExp').addEventListener('click',expJSON);
-  $('btnImp').addEventListener('click',openImp);
-  /* Header actions — dropdown móvil */
-  function closeDD(){$('dropdown').classList.remove('open');}
+  /* Nav */
+  document.querySelectorAll('.nav-btn').forEach(b=>b.addEventListener('click',()=>goPage(b.dataset.page)));
+  $('verTodas').addEventListener('click',()=>goPage('pageRecetas'));
+
+  /* Header */
+  $('btnDL').addEventListener('click',dlApp);$('btnExp').addEventListener('click',expJSON);$('btnImp').addEventListener('click',openImp);
+  function closeDD(){ $('dropdown').classList.remove('open'); }
   $('menuTrigger').addEventListener('click',e=>{e.stopPropagation();$('dropdown').classList.toggle('open');});
   document.addEventListener('click',closeDD);
   $('dropdown').addEventListener('click',e=>e.stopPropagation());
   $('btnDL2').addEventListener('click',()=>{closeDD();dlApp();});
   $('btnExp2').addEventListener('click',()=>{closeDD();expJSON();});
   $('btnImp2').addEventListener('click',()=>{closeDD();openImp();});
-
-  /* Nueva receta */
   $('btnNew').addEventListener('click',()=>openForm());
+
+  /* Form receta */
   $('closeForm').addEventListener('click',closeFormM);
   $('cancelForm').addEventListener('click',closeFormM);
   $('mForm').addEventListener('click',e=>{if(e.target===$('mForm'))closeFormM();});
@@ -838,33 +1541,43 @@ document.addEventListener('DOMContentLoaded',()=>{
   $('addIng').addEventListener('click',()=>addIng($('ingList')));
   $('addPaso').addEventListener('click',()=>addPaso($('pasoList')));
   $('addTip').addEventListener('click',()=>addTip($('tipList')));
+  $('ingManualToggle').addEventListener('click',()=>{
+    const m=$('ingManual');
+    m.style.display=m.style.display==='none'?'block':'none';
+  });
+
+  /* Picker filtro por cat */
+  setupPillFilter('ipcCats', c=>{ pickerCat=c; ingPickerHTML('ingPickerGrid','ipcCats',pickedIng.map(p=>p.id)); });
+  setupPillFilter('spcCats', c=>{ sPickerCat=c; renderSPicker(); });
+
+  /* Stock */
+  $('btnNewIng').addEventListener('click',()=>openStockForm());
+  $('closeStockForm').addEventListener('click',closeStockFormM);
+  $('cancelStockForm').addEventListener('click',closeStockFormM);
+  $('mStockForm').addEventListener('click',e=>{if(e.target===$('mStockForm'))closeStockFormM();});
+  $('saveStockItem').addEventListener('click',saveStockItem);
+
+  /* Filtros recetas */
+  $('catSel').addEventListener('change',e=>{cat=e.target.value;renderAll();});
+  $('difSel').addEventListener('change',e=>{dif=e.target.value;renderAll();});
+  $('srch').addEventListener('input',e=>{q=e.target.value.trim();renderAll();});
+
+  /* Filtros ingredientes */
+  $('ingSearch').addEventListener('input',e=>{ingQ=e.target.value.trim();renderStock();});
+  setupPillFilter('ingCats',c=>{ingCat=c;renderStock();});
 
   /* Importar */
-  $('closeImp').addEventListener('click',closeImpM);
-  $('cancelImp').addEventListener('click',closeImpM);
-  $('doImp').addEventListener('click',doImport);
-  $('mImp').addEventListener('click',e=>{if(e.target===$('mImp'))closeImpM();});
+  $('closeImp').addEventListener('click',closeImpM);$('cancelImp').addEventListener('click',closeImpM);
+  $('doImp').addEventListener('click',doImport);$('mImp').addEventListener('click',e=>{if(e.target===$('mImp'))closeImpM();});
   $('impZone').addEventListener('click',()=>$('impFile').click());
   $('impFile').addEventListener('change',e=>handleFile(e.target.files[0]));
-  $('impZone').addEventListener('dragover',e=>{e.preventDefault();$('impZone').style.background='var(--p100)';});
-  $('impZone').addEventListener('dragleave',()=>{$('impZone').style.background='';});
-  $('impZone').addEventListener('drop',e=>{e.preventDefault();$('impZone').style.background='';handleFile(e.dataTransfer.files[0]);});
 
-  /* Filtros */
-  $('catSel').addEventListener('change',e=>{cat=e.target.value;updTtl();renderR();});
-  $('difPills').addEventListener('click',e=>{
-    const b=e.target.closest('.dif-pill');if(!b)return;
-    $('difPills').querySelectorAll('.dif-pill').forEach(p=>p.classList.remove('on'));
-    b.classList.add('on');dif=b.dataset.dif;updTtl();renderR();
-  });
-  $('srch').addEventListener('input',e=>{q=e.target.value.trim();updTtl();renderR();});
-
-  /* ESC y swipe cierra modales */
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeFormM();closeImpM();}});
-  [$('mForm'),$('mImp')].forEach(el=>{
+  /* ESC + swipe */
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeFormM();closeImpM();closeStockFormM();}});
+  [$('mForm'),$('mImp'),$('mStockForm')].forEach(el=>{
     let sy=0;
     el.addEventListener('touchstart',e=>{sy=e.touches[0].clientY;},{passive:true});
-    el.addEventListener('touchend',e=>{if(e.changedTouches[0].clientY-sy>70){closeFormM();closeImpM();}},{passive:true});
+    el.addEventListener('touchend',e=>{if(e.changedTouches[0].clientY-sy>70){closeFormM();closeImpM();closeStockFormM();}},{passive:true});
   });
 });
 </script>
