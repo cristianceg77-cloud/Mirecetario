@@ -31,15 +31,24 @@ body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--td);min
 
 /* ═══ HEADER ═══ */
 .hdr{background:var(--white);border-bottom:1px solid var(--br);position:sticky;top:0;z-index:100;box-shadow:var(--sh)}
-.hdr-in{max-width:1400px;margin:0 auto;padding:0 1.25rem;height:64px;display:flex;align-items:center;justify-content:space-between;gap:8px}
-.hdr-logo{display:flex;align-items:center;gap:10px;min-width:0;flex:1}
-.logo-icon{font-size:28px;line-height:1;flex-shrink:0}
-.logo-wrap{display:flex;flex-direction:column;min-width:0}
-.logo-input{font-family:'Playfair Display',serif;font-size:18px;font-weight:600;color:var(--td);background:none;border:none;border-bottom:1.5px solid transparent;outline:none;padding:0;width:100%;min-width:50px;cursor:text;transition:border-color .2s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hdr-in{max-width:1400px;margin:0 auto;padding:0 1rem;height:60px;display:flex;align-items:center;justify-content:space-between;gap:8px;overflow:hidden}
+.hdr-logo{display:flex;align-items:center;gap:8px;min-width:0;flex:1;overflow:hidden}
+.logo-icon{font-size:24px;line-height:1;flex-shrink:0}
+.logo-wrap{display:flex;flex-direction:column;min-width:0;overflow:hidden}
+.logo-input{font-family:'Playfair Display',serif;font-size:16px;font-weight:600;color:var(--td);background:none;border:none;border-bottom:1.5px solid transparent;outline:none;padding:0;width:100%;min-width:40px;cursor:text;transition:border-color .2s;overflow:hidden;text-overflow:ellipsis}
 .logo-input:focus{border-bottom-color:var(--p400)}
 .logo-input::placeholder{color:var(--ts)}
-.logo-sub{font-size:10px;color:var(--p600);letter-spacing:.07em;text-transform:uppercase;font-weight:700}
+.logo-sub{font-size:9px;color:var(--p600);letter-spacing:.07em;text-transform:uppercase;font-weight:700}
 .hdr-btns{display:flex;align-items:center;gap:6px;flex-shrink:0}
+/* ── Menú desplegable móvil ── */
+.menu-wrap{position:relative}
+.menu-trigger{background:var(--cream);border:1.5px solid var(--brm);border-radius:50%;width:38px;height:38px;font-size:20px;cursor:pointer;display:none;align-items:center;justify-content:center;color:var(--tm);flex-shrink:0}
+.menu-trigger:active{background:var(--p50)}
+.dropdown{position:absolute;top:calc(100% + 8px);right:0;background:var(--white);border:1px solid var(--br);border-radius:var(--rmd);box-shadow:var(--shm);min-width:170px;overflow:hidden;display:none;z-index:300}
+.dropdown.open{display:block;animation:fi .15s ease}
+.dd-item{display:flex;align-items:center;gap:10px;padding:.72rem 1rem;font-family:'Nunito',sans-serif;font-size:14px;font-weight:600;color:var(--tm);cursor:pointer;border:none;background:none;width:100%;text-align:left}
+.dd-item:active{background:var(--p50);color:var(--p600)}
+.dd-sep{height:1px;background:var(--br)}
 
 /* ═══ BUTTONS ═══ */
 .btn-pri{background:linear-gradient(135deg,var(--p400),var(--v400));color:#fff;border:none;border-radius:50px;padding:.5rem 1.1rem;font-family:'Nunito',sans-serif;font-size:13.5px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px;white-space:nowrap;box-shadow:0 3px 14px rgba(167,139,250,.35)}
@@ -238,15 +247,11 @@ body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--td);min
    RESPONSIVE — móvil 600px
 ═══════════════════════════════ */
 @media(max-width:600px){
-  /* Header */
-  .hdr-in{height:56px;padding:0 .85rem;gap:6px}
-  .logo-icon{font-size:22px}
-  .logo-input{font-size:14px}
-  .logo-sub{font-size:9px}
-  .btn-sm .t{display:none}   /* ocultar texto, dejar solo emoji */
-  .btn-sm{padding:.38rem .55rem;border-radius:10px}
+  /* Header: ocultar botones desktop, mostrar menú ⋯ */
+  .btn-sm{display:none}
+  .menu-trigger{display:flex}
   .btn-pri{padding:.42rem .85rem;font-size:13px}
-  .hdr-btns{gap:4px}
+  .hdr-btns{gap:6px}
 
   /* Layout */
   .layout{padding:.75rem;gap:.75rem}
@@ -316,10 +321,21 @@ body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--td);min
       </div>
     </div>
     <div class="hdr-btns">
+      <!-- Botones visibles en desktop -->
       <button class="btn-sm" id="btnDL" title="Guardar app">💾 <span class="t">Guardar</span></button>
       <button class="btn-sm" id="btnExp" title="Exportar">📤 <span class="t">Exportar</span></button>
       <button class="btn-sm" id="btnImp" title="Importar">📥 <span class="t">Importar</span></button>
-      <button class="btn-pri" id="btnNew"><span>+</span> <span class="pri-txt">Nueva Receta</span></button>
+      <!-- Menú ⋯ visible solo en móvil -->
+      <div class="menu-wrap">
+        <button class="menu-trigger" id="menuTrigger" title="Más opciones">⋯</button>
+        <div class="dropdown" id="dropdown">
+          <button class="dd-item" id="btnDL2">💾 Guardar app</button>
+          <div class="dd-sep"></div>
+          <button class="dd-item" id="btnExp2">📤 Exportar recetas</button>
+          <button class="dd-item" id="btnImp2">📥 Importar recetas</button>
+        </div>
+      </div>
+      <button class="btn-pri" id="btnNew"><span>+</span> Nueva</button>
     </div>
   </div>
 </header>
@@ -761,7 +777,16 @@ document.addEventListener('DOMContentLoaded',()=>{
   $('vList').addEventListener('click',()=>{lv=true;$('vList').classList.add('on');$('vGrid').classList.remove('on');renderR();});
 
   /* ESC */
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeFormM();closeViewM();closeImpM();}});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeFormM();closeViewM();closeImpM();closeMenu();}});
+
+  /* Menú desplegable móvil */
+  function closeMenu(){$('dropdown').classList.remove('open');}
+  $('menuTrigger').addEventListener('click',e=>{e.stopPropagation();$('dropdown').classList.toggle('open');});
+  document.addEventListener('click',()=>closeMenu());
+  $('dropdown').addEventListener('click',e=>e.stopPropagation());
+  $('btnDL2').addEventListener('click',()=>{closeMenu();dlApp();});
+  $('btnExp2').addEventListener('click',()=>{closeMenu();expJSON();});
+  $('btnImp2').addEventListener('click',()=>{closeMenu();openImp();});
 
   /* Swipe-down cierra modales */
   ['mForm','mView','mImp'].forEach(id=>{
